@@ -17,7 +17,6 @@ if (!isset($_GET["act"])) {
         case "dangky":
             include("dangky.php");
                 break;
-
         case "dangnhap":
             if (isset($_POST["submit_dn"])) {
                 $email_dn = $_POST['email_dn'];
@@ -40,7 +39,6 @@ if (!isset($_GET["act"])) {
             case "dangxuat":
                 unset($_SESSION['email_dn']);
             header('location: index.php?dangxuattc');
-
                 break;
             case "sanpham_list":
             include("sanpham_list.php");
@@ -50,6 +48,9 @@ if (!isset($_GET["act"])) {
                 break;
             case "giohang":
             include("giohang.php");
+                break;
+            case "myaccout":
+            include("taikhoan.php");
                 break;
         default:
             include("404.php");
