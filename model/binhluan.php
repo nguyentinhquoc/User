@@ -1,7 +1,7 @@
 <?php
 function hienthi_binhluan($idsp)
 {
-    $sql = "SELECT taikhoan.name,binhluan.date,binhluan.comment FROM taikhoan JOIN binhluan ON binhluan.iduser=taikhoan.id where idsp=$idsp";
+    $sql = "SELECT taikhoan.img, taikhoan.name,binhluan.date,binhluan.comment FROM taikhoan JOIN binhluan ON binhluan.iduser=taikhoan.id where idsp=$idsp";
     $hienthi_binhluan = pdo_query($sql);
     return $hienthi_binhluan;
 }

@@ -54,4 +54,38 @@ Swal.fire({
       
     <?php 
   } ?>
+  <!-- Đổi mật khẩu -->
+    <?php
+if (isset($_GET['doipasstc'])) {
+  
+  ?>
+ <script>
+Swal.fire({
+  position: 'center',
+  icon: 'success',
+  title: 'Đổi mật khẩu thành công !!!',
+  showConfirmButton: false,
+  timer: 1500
+})
+      </script>
+      
+    <?php 
+  } ?>
+  <!-- Đổi thông tin -->
+    <?php
+if (isset($_GET['doitttc'])) {
+  
+  ?>
+ <script>
+Swal.fire({
+  position: 'center',
+  icon: 'success',
+  title: 'Đổi thông tin thành công !!!',
+  showConfirmButton: false,
+  timer: 1500
+})
+      </script>
+      
+    <?php 
+  } ?>
 

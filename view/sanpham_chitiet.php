@@ -70,7 +70,7 @@
         $hienthi_binhluan = hienthi_binhluan($idsp);
         foreach ($hienthi_binhluan as $key) { ?>
             <div class="item">
-                <div class="img"><img class="img" src="assets/images/megamenu/banner/1.jpg" alt="" width="100px">
+                <div class="img"><img class="img" src="<?= $img_path . "avarta_user/" . $key['img'] ?>" alt="" width="100px" height="100px" style="margin: 10px;" >
                 </div>
 
                 <div class="content">
@@ -97,7 +97,7 @@
                     }
                 } -->
             <div class="item">
-                <div class="img"><img class="img" src="assets/images/megamenu/banner/1.jpg" alt="" width="100px">
+                <div class="img"><img class="img" src="<?= $img_path . "avarta_user/" . $taikhoan_email['img'] ?>" alt="" height="100px" width="100px" style="margin: 10px;">
                 </div>
                 <div class="content">
                     <h5><?= $taikhoan_email['name'] ?></h5><br>

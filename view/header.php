@@ -135,21 +135,29 @@
                                                 <span class="quantity">5</span>
                                             </a>
                                         </li>
-                                        <li class="dropdown d-none d-lg-block">
+                       
+                                        <?php if (isset($_SESSION['email_dn'])) {  $email = $_SESSION['email_dn'];
+                $taikhoan_email = taikhoan_email($email);?>
+                                        <li class="dropdown d-none d-lg-block">                    
                                             <button class="btn btn-link dropdown-toggle ht-btn p-0" type="button" id="settingButton" data-bs-toggle="dropdown" aria-label="setting" aria-expanded="false">
-                                                <i class="pe-7s-user"></i>
+                                                <img src="<?=$img_path."avarta_user/".$taikhoan_email['img']?>" alt="" width="40px" height="40px" style="border-radius: 50%;" >
                                             </button>
                                             <ul class="dropdown-menu right-side" aria-labelledby="settingButton">
-                                                <?php if (isset($_SESSION['email_dn'])) { ?>
-                                                    <li><a class="dropdown-item" href="my-account.html">Tài khoản của tôi</a></li>
+                                                    <li><a class="dropdown-item" href="index.php?act=myaccout&profile=1">Tài khoản của tôi</a></li>
                                                     <li><a class="dropdown-item" href="index.php?act=dangxuat">Đang xuất</a></li>
-                                                    <!-- đang xuất chạy trong alert -->
-                                                <?php } else { ?>
-                                                    <li><a class="dropdown-item" href="index.php?act=dangky">Đang ký</a></li>
+                                            </ul>
+                                        </li><?php } else { ?>
+                                            <li class="dropdown d-none d-lg-block">                    
+                                            <button class="btn btn-link dropdown-toggle ht-btn p-0" type="button" id="settingButton" data-bs-toggle="dropdown" aria-label="setting" aria-expanded="false">
+                                            <i class="fa fa-user-o" aria-hidden="true"></i>
+
+                                            </button>
+                                            <ul class="dropdown-menu right-side" aria-labelledby="settingButton">
+                                            <li><a class="dropdown-item" href="index.php?act=dangky">Đang ký</a></li>
                                                     <li><a class="dropdown-item" href="index.php?act=dangnhap">Đang nhập</a></li>
-                                                <?php } ?>
                                             </ul>
                                         </li>
+                                                <?php } ?>
 
                                         
                                     </ul>

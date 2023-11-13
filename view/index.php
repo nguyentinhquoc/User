@@ -18,22 +18,7 @@ if (!isset($_GET["act"])) {
             include("dangky.php");
                 break;
         case "dangnhap":
-            if (isset($_POST["submit_dn"])) {
-                $email_dn = $_POST['email_dn'];
-                $pass_dn = $_POST['pass_dn'];
-                $taikhoan_all = taikhoan_all();
-                foreach ($taikhoan_all as $key) {
-                    if (isset($pass_dn) && isset($email_dn)) {
-                      if($key['email'] == $email_dn && $key['pass'] == $pass_dn){
-                         $_SESSION['email_dn'] = $_POST['email_dn'];
-                            header("Location: index.php?dangnhaptc");
-                            break;
-                        } if($key['email'] != $email_dn || $key['pass'] != $pass_dn){
-                            header("Location: index.php?act=dangnhap&dangnhaptb");
-                        }
-                    }
-                    }
-                }
+           
             include("dangnhap.php");
             break;
             case "dangxuat":
