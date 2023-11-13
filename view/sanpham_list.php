@@ -12,27 +12,28 @@
         </div>
         <div class="loc_danhmuc">
             <p class="h2_loc">Chọn Loại giày</p>
-            <input type="checkbox" id="vehicle1" name="vehicle1" value="Nike">
-            <label for="vehicle1">Nike</label><br>
-            <input type="checkbox" id="vehicle2" name="vehicle2" value="Jordan">
-            <label for="vehicle2">Jordan</label><br>
-            <input type="checkbox" id="vehicle3" name="vehicle3" value="MLB">
-            <label for="vehicle3">MLB</label><br>
+            <?php
+        $danhmuc_all=danhmuc_all();
+foreach ($danhmuc_all as $key) { ?>
+            <input onchange="hien_thi_sp()" type="checkbox" class="chon_ danhmuc" id="<?=$key['name']?>" name="<?=$key['name']?>" value="<?=$key['name']?>">
+            <label for="vehicle1"><?=$key['name']?></label><br>
+        <?php }
+            ?>
+          
         </div>
         <div class="loc_size">
-            <p class="h2_loc">Chọn Loại giày</p>
-            <input type="checkbox" id="vehicle1" name="vehicle1" value="Nike">
+            <p class="h2_loc">Chọn size</p>
+            <input type="checkbox" id="size" name="vehicle1" value="Size 39">
             <label for="vehicle1"> Size 39</label><br>
-            <input type="checkbox" id="vehicle2" name="vehicle2" value="Jordan">
+            <input type="checkbox" id="size" name="vehicle2" value="Size 40">
             <label for="vehicle2">Size 40</label><br>
-            <input type="checkbox" id="vehicle3" name="vehicle3" value="MLB">
+            <input type="checkbox" id="size" name="vehicle3" value="Size 41">
             <label for="vehicle3">Size 40</label><br>
         </div>
         <div class="loc_chatluong">
-            <p class="h2_loc">Chọn Loại giày</p>
+            <p class="h2_loc">Chọn chất lượng</p>
             <input type="checkbox" id="vehicle1" name="vehicle1" value="Nike">
             <label for="vehicle1">
-
                 <?= echo_start_true(1); ?>
                 <?= echo_start_false(4); ?>
             </label><br>
@@ -62,19 +63,18 @@
                     $sanpham_list=sanpham_all_list( $page);
                 }
                 foreach ($sanpham_list as $key) { ?>
-                    <a href="index.php?act=sanpham_chitiet&id=<?= $key['id'] ?>"></a>
                     <div class="swiper-slide swiper-slide_list">
                         <a class="brand-item brand-item-list" href="index.php?act=sanpham_chitiet&id=<?= $key['id'] ?>">
                             <img src="<?= $img_path . "sanpham/" . $key['img'] ?>" alt="Brand Image" style="border-radius: 10px;">
                         </a>
                         <p class="price_sp price_sp_list"><?= $key['price'] ?></p>
                         <p class="name_sp name_sp_list"><?= $key['name'] ?></p>
-                        <p class="dabansp dabansp_list">Đã bán :1222</p>
                         <div class="congcu congcu_list">
                             <i class="fa fa-cart-plus" aria-hidden="true"></i>
                             <i class="fa fa-heart-o" aria-hidden="true"></i>
                             <i class="fa fa-eye" aria-hidden="true"></i>
                         </div>
+                        
                     </div>
                     </a>
                 <?php }

@@ -3,10 +3,10 @@ session_start();
 include("../model/pdo.php");
 include("global.php");
 include("../model/danhgia.php");
+include("../model/binhluan.php");
 include("../model/taikhoan.php");
 include("../model/validate.php");
 include("../model/sanpham.php");
-include("../model/bienthe.php");
 include("../model/danhmuc.php");
 include("header.php");
 if (!isset($_GET["act"])) {
@@ -26,7 +26,7 @@ if (!isset($_GET["act"])) {
                 foreach ($taikhoan_all as $key) {
                     if (isset($pass_dn) && isset($email_dn)) {
                       if($key['email'] == $email_dn && $key['pass'] == $pass_dn){
-                         $_SESSION['email_dn'] ="";
+                         $_SESSION['email_dn'] = $_POST['email_dn'];
                             header("Location: index.php?dangnhaptc");
                             break;
                         } if($key['email'] != $email_dn || $key['pass'] != $pass_dn){

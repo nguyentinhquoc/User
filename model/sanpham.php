@@ -35,19 +35,14 @@ function tong_all_sanpham(){
     return $sanpham_all;
 }
 
-
-
-
-
-
-
-
-
-
-
 function sanpham_chitiet($id){
     $sql="SELECT * FROM sanpham where id = $id";
     $sanpham_chitiet=pdo_query_one($sql);
     return $sanpham_chitiet;
+}
+function sanpham_lienquan($idsp){
+    $sql="SELECT * FROM sanpham where iddm=(SELECT iddm FROM sanpham where id=$idsp)ORDER BY id DESC LIMIT 7 ";
+    $sanpham_lienquan=pdo_query($sql);
+    return $sanpham_lienquan;
 }
 ?>

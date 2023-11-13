@@ -20419,7 +20419,7 @@ font-size: 11px;
 
 .brand-slider .swiper-wrapper_list .swiper-slide{
   width: 150px !important;
-  border: 4px solid #f2e3dc ;
+  border: 3px solid #f2e3dc ;
   text-align: center;
   margin:10px !important;
   border-radius: 20px;
@@ -22203,5 +22203,117 @@ width: 28%;
   border: 1px solid black;
   border-radius: 20px;
   padding: 20px;
+}.sanpham_chitiet .top{
+  display: flex;
+  width: 90%;
+  margin: 0 auto !important;
+
+}.sanpham_chitiet .top .box_left{
+  padding: 20px;
+width: 27%;
+}.sanpham_chitiet .top .box_center{
+  width: 50%;
+  padding: 20px;
+
+}.sanpham_chitiet .top .box_center .gia_sale{
+color: red;
+font-size: 30px;
+font-weight: bold;
+}
+.sanpham_chitiet .top .box_right{
+  width: 23%;
+}.sanpham_chitiet .top .box_right h6{
+  margin: 10px;
+
+}.sanpham_chitiet .top .box_right .item{
+  border: 1px solid red;
+  display: flex;
+  border-radius: 10px;
+  margin: 10px;
+  padding: 5px;
+
   
+  } .sanpham_chitiet .top .box_right .item .tt{
+    font-size: 13px;
+    margin: 0px;
+    padding: 5px;
+    
+  } .sanpham_chitiet .top .box_right .item .price{
+    font-size: 14px;
+    color: red;
+    margin: 0px;
+
+  }
+  .sanpham_chitiet .top .box{
+  border-radius: 10px;
+  border: 1px solid #DD7931;
+  margin: 10px;
+}.sanpham_chitiet .top .box_center .soluong{
+  display: flex;
+}.sanpham_chitiet .top .box_center .tinhtrang{
+  margin-left: 100px;
+}.sanpham_chitiet .top .box_center .price{
+  display: flex;
+}.sanpham_chitiet .top .box_center .uudai{
+border: 1px solid black;
+width: 70%;
+border-radius: 10px;
+margin-left: 20px;
+padding: 10px 10px 30px 10px ;
+}.sanpham_chitiet .top .box_center .uudai li{
+  margin-left: 30px;
+  list-style: circle;
+}.sanpham_chitiet .top .box_center .buttom .dat{
+  background-color: #FF0000;
+  color: white;
+  border-radius: 10px;
+  padding: 10px;
+  font-size: larger;
+  margin: 10px;
+}.sanpham_chitiet .top .box_center .buttom .add_gio{
+  color: #006428;
+  border-radius: 10px;
+  padding: 10px;
+  font-size: larger;
+  border: 2px solid #006428;
+  margin: 10px;
+}.sanpham_chitiet .top .box_center .buttom{
+  display: flex;
+  justify-content: end;
+}.btom .item{
+  border: 1px solid;
+  display: flex;
+  width: 95%;
+  border-radius: 20px;
+  margin: 0 auto;
+  padding: 10px;
+  margin-bottom: 20px;
+}.btom .item .img{
+  border-radius: 70px;
+}.btom {
+  border: 1px solid;
+  border-radius: 10px;
+  width: 90%;
+  padding: 30px;
+  margin: 0 auto;
+  margin-bottom: 20px;
+  margin-top: 20px;
+}.btom .item .content input{
+width: 900px;
+margin-left: 20px;
+padding: 5px;
+border-radius: 5px;
+}.btom .item .content button{
+  float: right;
+  margin: 30px;
+  border-radius: 10px;
+  background-color: #178EA8;
+  color: white;
+  padding: 5px 14px;
+}.btom .item .date{
+  float: right;
+  font-size: small;
+  opacity: 0.7;
+}.btom .content{
+  width: 90%;
 }
