@@ -13,13 +13,13 @@
         <div class="loc_danhmuc">
             <p class="h2_loc">Chọn Loại giày</p>
             <?php
-        $danhmuc_all=danhmuc_all();
-foreach ($danhmuc_all as $key) { ?>
-            <input onchange="hien_thi_sp()" type="checkbox" class="chon_ danhmuc" id="<?=$key['name']?>" name="<?=$key['name']?>" value="<?=$key['name']?>">
-            <label for="vehicle1"><?=$key['name']?></label><br>
-        <?php }
+            $danhmuc_all = danhmuc_all();
+            foreach ($danhmuc_all as $key) { ?>
+                <input onchange="hien_thi_sp()" type="checkbox" class="chon_ danhmuc" id="<?= $key['name'] ?>" name="<?= $key['name'] ?>" value="<?= $key['name'] ?>">
+                <label for="vehicle1"><?= $key['name'] ?></label><br>
+            <?php }
             ?>
-          
+
         </div>
         <div class="loc_size">
             <p class="h2_loc">Chọn size</p>
@@ -54,13 +54,13 @@ foreach ($danhmuc_all as $key) { ?>
     <div class="box_right">
         <div class="swiper-container brand-slider">
             <div class="swiper-wrapper_list">
-                <?php 
-                $page=$_GET['page'];
+                <?php
+                $page = $_GET['page'];
                 if (isset($_GET['danhmuc'])) {
-                    $danhmuc=$_GET['danhmuc'];
-                    $sanpham_list=sanpham_dm_list( $page,$danhmuc);
-                }else {
-                    $sanpham_list=sanpham_all_list( $page);
+                    $danhmuc = $_GET['danhmuc'];
+                    $sanpham_list = sanpham_dm_list($page, $danhmuc);
+                } else {
+                    $sanpham_list = sanpham_all_list($page);
                 }
                 foreach ($sanpham_list as $key) { ?>
                     <div class="swiper-slide swiper-slide_list">
@@ -71,43 +71,59 @@ foreach ($danhmuc_all as $key) { ?>
                         <p class="name_sp name_sp_list"><?= $key['name'] ?></p>
                         <div class="congcu congcu_list">
                             <i class="fa fa-cart-plus" aria-hidden="true"></i>
-                            <i class="fa fa-heart-o" aria-hidden="true"></i>
+                          <?php  $page = $_GET['page'];
+                          ?>
+
+                            <a href="index.php?act=sanpham_list&page=<?= $page ?>&add_love=<?= $key['id'] ?>"><i class="fa fa-heart-o" aria-hidden="true"></i></a>
                             <i class="fa fa-eye" aria-hidden="true"></i>
                         </div>
-                        
+
                     </div>
                     </a>
                 <?php }
+
+                if (isset($_SESSION['email_dn'])) {
+                    $email = $_SESSION['email_dn'];
+                    $sql = "SELECT id FROM taikhoan WHERE email='$email'";
+                    $id_acc = pdo_query_one($sql);
+                    $iduser=$id_acc['id'];
+                    if (isset($_GET['add_love'])) {
+                        $idsp = $_GET['add_love'];
+                        
+                        yeuthich_add($idsp, $iduser);
+
+                    }
+                }
                 ?>
             </div>
         </div>
         <div class="page">
-            
-            <?php
-                if (isset($_GET['danhmuc'])) {
-                    $danhmuc=$_GET['danhmuc'];
-                    $tong_sanpham = tong_dm_sanpham($danhmuc);
-             $link="index.php?act=sanpham_list&danhmuc=$danhmuc";
-                }else{
-                    $tong_sanpham=tong_all_sanpham();
-             $link="index.php?act=sanpham_list";
-                }
 
-            if ( $tong_sanpham['dem']%12==0) {
-                $so_page= $tong_sanpham['dem']/12;
-            }else{
-                $so_page= $tong_sanpham['dem']/12+1;
+            <?php
+            if (isset($_GET['danhmuc'])) {
+                $danhmuc = $_GET['danhmuc'];
+                $tong_sanpham = tong_dm_sanpham($danhmuc);
+                $link = "index.php?act=sanpham_list&danhmuc=$danhmuc";
+            } else {
+                $tong_sanpham = tong_all_sanpham();
+                $link = "index.php?act=sanpham_list";
             }
-            for ($i=1; $i < $so_page;  $i++) { 
-                $page_ht=$_GET['page'];
-                ?>
-            <a href=" <?=$link."&page=$i"?>" 
-            <?php if($page_ht==$i){echo'class="number_page_ht"';}else {
-                echo'class="number_page"';
-            } ?>
-            ><?=$i?></a>
-            <?php }?>
-    
+
+            if ($tong_sanpham['dem'] % 12 == 0) {
+                $so_page = $tong_sanpham['dem'] / 12;
+            } else {
+                $so_page = $tong_sanpham['dem'] / 12 + 1;
+            }
+            for ($i = 1; $i < $so_page; $i++) {
+                $page_ht = $_GET['page'];
+            ?>
+                <a href=" <?= $link . "&page=$i" ?>" <?php if ($page_ht == $i) {
+                                                            echo 'class="number_page_ht"';
+                                                        } else {
+                                                            echo 'class="number_page"';
+                                                        } ?>><?= $i ?></a>
+            <?php } ?>
+
         </div>
     </div>
 </main>

@@ -45,4 +45,30 @@ function sanpham_lienquan($idsp){
     $sanpham_lienquan=pdo_query($sql);
     return $sanpham_lienquan;
 }
+function sanpham_yeuthich($email){
+    $sql= "SELECT sanpham.img, sanpham.name, sanpham.price,phanloaidh.id FROM phanloaidh join sanpham on sanpham.id= phanloaidh.idsp JOIN taikhoan ON taikhoan.id=phanloaidh.iduser WHERE taikhoan.email='$email' and phanloaidh.idtrangthai=1";
+    $sanpham_yeuthich = pdo_query($sql);
+    return $sanpham_yeuthich;
+}
+function yeuthich_add($idsp,$iduser){
+    $sql1= "SELECT iduser,idsp FROM phanloaidh";
+    $check_trung=pdo_query($sql1);
+    $check=true;
+    foreach ($check_trung as $key) {
+        if ($key['iduser'] == $iduser &&  $key['idsp'] == $idsp ) {
+            $check=false;
+        }
+    }
+
+if ($check==true) {
+    $sql2= "INSERT INTO `phanloaidh` (`iduser`, `idsp`, `idtrangthai`) VALUES ('$iduser', '$idsp', '1');";
+    $yeuthich_add=pdo_execute($sql2);
+    return $yeuthich_add;
+}
+}
+function yeuthich_remove($id){
+    $sql="DELETE FROM `phanloaidh` WHERE `phanloaidh`.`id` = $id";
+    $yeuthich_remove=pdo_execute($sql);
+    return $yeuthich_remove;
+}
 ?>

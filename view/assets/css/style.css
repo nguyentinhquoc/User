@@ -26000,4 +26000,7 @@ blockquote .user-name:before {
   border-radius: 10px;
   width: 280px;
   padding: 5px;
+}.container_yeuthich {
+  width: 80%;
+  margin: 0 auto;
 }

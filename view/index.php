@@ -18,11 +18,10 @@ if (!isset($_GET["act"])) {
             include("dangky.php");
                 break;
         case "dangnhap":
-           
             include("dangnhap.php");
             break;
             case "dangxuat":
-                unset($_SESSION['email_dn']);
+                unset( $_SESSION['id_acc']);
             header('location: index.php?dangxuattc');
                 break;
             case "sanpham_list":
@@ -36,6 +35,9 @@ if (!isset($_GET["act"])) {
                 break;
             case "myaccout":
             include("taikhoan.php");
+                break;
+            case "yeuthich":
+            include("yeuthich.php");
                 break;
         default:
             include("404.php");
