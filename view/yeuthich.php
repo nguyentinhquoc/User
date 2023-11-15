@@ -26,19 +26,20 @@ yeuthich_remove($id);
                     <?php
                             $email = $_SESSION['email_dn'];
                     $sanpham_yeuthich = sanpham_yeuthich($email);
-                    $dem = 0;
+                    $dem_love = 0;
                     foreach ($sanpham_yeuthich as $key) {
-                        $dem++;
+                        $dem_love++;
                     ?>
-                        <th scope="row"><?= $dem ?></th>
+                        <th scope="row"><?= $dem_love ?></th>
                         <td><a onclick="return(confirm('Bạn có chắc chắn muốn xóa ?'))" href="index.php?act=yeuthich&yeuthich_remove=<?= $key['id']?>"><i class="fa fa-trash-o" aria-hidden="true"></a></i></td>
                         <td><img src="<?= $img_path . "sanpham/" . $key['img'] ?>" alt="" width="100px"></td>
                         <td><?= $key['name'] ?></td>
                         <td><?= $key['price'] ?></td>
                         <td><i class="fa fa-cart-plus" aria-hidden="true"></i>
                         </td>
-                </tr>
-            <?php }
+                    </tr>
+                    <?php
+                     }
             ?>
             </tbody>
         </table>

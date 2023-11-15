@@ -7,9 +7,12 @@
         <div class="box box_left"><img src="<?= $img_path . "sanpham/" . $sanpham_chitiet['img'] ?>" alt=""></div>
         <div class="box box_center">
             <div class="name">
-                <h3><?= $sanpham_chitiet['name'] ?></h3>
+                <h3><?=$sanpham_chitiet['name'] ?></h3>
+                <?php $star=$sanpham_chitiet['star'] ?>
             </div>
-            <div class="danhgia">Đánh giá: </div>
+            <div class="danhgia">Đánh giá: <?php if (!empty($sanpham_chitiet['star'])) {
+               echo_star($star);
+            } else{ echo "Chưa có đánh giá !"; }?></div>
             <div class="ma">Mã mặt hàng: MA<?= $sanpham_chitiet['id'] ?></div>
             <div class="soluong">
                 <p class="sl">Số lượng: <?= $sanpham_chitiet['soluong'] ?> </p>
@@ -65,7 +68,6 @@
     </div>
     <div class="btom">
         <h3>Bình Luận</h3>
-
         <?php
         $hienthi_binhluan = hienthi_binhluan($idsp);
         foreach ($hienthi_binhluan as $key) { ?>
@@ -90,12 +92,6 @@
             $iduser = $taikhoan_email['id']
 
         ?>
-            <!-- function upload_binhluan($idsp,$iduser,$comment,$date){
-                    if (isset($comment) && $comment!="") {
-                $sql="INSERT INTO `binhluan` (`idsp`, `iduser`, `comment`, `date`) VALUES ('$idsp', '$iduser', '$comment', '$date') ";
-                pdo_execute($sql);
-                    }
-                } -->
             <div class="item">
                 <div class="img"><img class="img" src="<?= $img_path . "avarta_user/" . $taikhoan_email['img'] ?>" alt="" height="100px" width="100px" style="margin: 10px;">
                 </div>

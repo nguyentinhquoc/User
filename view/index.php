@@ -1,8 +1,9 @@
 <?php
 session_start();
+
 include("../model/pdo.php");
 include("global.php");
-include("../model/danhgia.php");
+include("../model/star.php");
 include("../model/binhluan.php");
 include("../model/taikhoan.php");
 include("../model/validate.php");
@@ -21,7 +22,7 @@ if (!isset($_GET["act"])) {
             include("dangnhap.php");
             break;
             case "dangxuat":
-                unset( $_SESSION['id_acc']);
+                unset($_SESSION['email_dn']);
             header('location: index.php?dangxuattc');
                 break;
             case "sanpham_list":

@@ -10,7 +10,7 @@
     <meta name="description" content="Tromic car accessories bootstrap 5 template is an awesome website template for any modern car accessories shop.">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Favicon -->
-    <link rel="shortcut icon" type="image/x-icon" href="<?=$img_path?>favicon.ico" />
+    <link rel="shortcut icon" type="image/x-icon" href="<?= $img_path ?>favicon.ico" />
 
     <!-- CSS
     ============================================ -->
@@ -47,10 +47,10 @@
                             <div class="header-top-left">
                                 <ul class="dropdown-wrap text-matterhorn">
                                     <li>
-                                       PANDA SHOP - Shop giày uy tín số 1 Fpoly
+                                        PANDA SHOP - Shop giày uy tín số 1 Fpoly
                                     </li>
-                                   
-                                    
+
+
                                     <li>
 
                                     </li>
@@ -58,7 +58,7 @@
                             </div>
                         </div>
                         <div class="col-6">
-                            
+
                             <div class="header-top-right text-matterhorn">
                                 Email
                                 <a href="">: nguyentinh140321@gmail.com</a>
@@ -73,7 +73,7 @@
                         <div class="col-lg-12">
                             <div class="header-middle-wrap position-relative">
                                 <a href="index.php" class="header-logo">
-                                    <img src="<?=$img_path?>logo/dark.png" alt="Header Logo" width="100px">
+                                    <img src="<?= $img_path ?>logo/dark.png" alt="Header Logo" width="100px">
                                 </a>
 
                                 <div class="main-menu d-none d-lg-block">
@@ -92,14 +92,14 @@
                                                 </a>
                                                 <ul class="drop-menu">
                                                     <?php
-                                                    $danhmuc_all=danhmuc_all();
-                                                    foreach ($danhmuc_all as $key) {?>
+                                                    $danhmuc_all = danhmuc_all();
+                                                    foreach ($danhmuc_all as $key) { ?>
                                                         <li>
                                                             <a href="index.php?act=sanpham_list&page=1&danhmuc=<?= $key['id'] ?>"><?= $key['name'] ?></a>
                                                         </li>
                                                     <?php }
                                                     ?>
-                                                    
+
                                                 </ul>
                                             </li>
                                             <li class="drop-holder">
@@ -123,43 +123,57 @@
                                 </div>
                                 <div class="header-right">
                                     <ul>
-                                        <li class="minicart-wrap me-3 me-lg-0">
-                                            <a href="#miniCart" class="minicart-btn toolbar-btn">
-                                            <i class="fa fa-bell-o" aria-hidden="true"></i>
-                                            <span class="quantity">5</span>
-
-                                        </li>
-                                    <li class="minicart-wrap me-3 me-lg-0">
-                                            <a href="#miniCart" class="minicart-btn toolbar-btn">
-                                                <i class="pe-7s-shopbag"></i>
-                                                <span class="quantity">5</span>
-                                            </a>
-                                        </li>
-                       
-                                        <?php if (isset($_SESSION['email_dn'])) {  $email = $_SESSION['email_dn'];
-                $taikhoan_email = taikhoan_email($email);?>
-                                        <li class="dropdown d-none d-lg-block">                    
-                                            <button class="btn btn-link dropdown-toggle ht-btn p-0" type="button" id="settingButton" data-bs-toggle="dropdown" aria-label="setting" aria-expanded="false">
-                                                <img src="<?=$img_path."avarta_user/".$taikhoan_email['img']?>" alt="" width="40px" height="40px" style="border-radius: 50%;" >
-                                            </button>
-                                            <ul class="dropdown-menu right-side" aria-labelledby="settingButton">
+                                    <?php 
+                if (isset($_SESSION['email_dn'])) {
+                    $email = $_SESSION['email_dn'];
+                    $sql = "SELECT id FROM taikhoan WHERE email='$email'";
+                    $id_acc = pdo_query_one($sql);
+                    $iduser=$id_acc['id'];
+                    $yeuthich = yeuthich_cout($iduser);
+                }
+                ?>
+                                        <?php if (isset($_SESSION['email_dn'])) {
+                                            $email = $_SESSION['email_dn'];
+                                            $taikhoan_email = taikhoan_email($email); ?>
+                                       
+                                            <li class="minicart-wrap me-3 me-lg-0">
+                                                <a href="#miniCart" class="minicart-btn toolbar-btn">
+                                                    <i class="fa fa-heart-o" aria-hidden="true"></i>
+                                                    <span class="quantity"><?=$yeuthich['dem']?></span>
+    
+                                            </li>
+                                            <li class="minicart-wrap me-3 me-lg-0">
+                                                <a href="#miniCart" class="minicart-btn toolbar-btn">
+                                                    <i class="fa fa-bell-o" aria-hidden="true"></i>
+                                                    <span class="quantity">5</span>
+    
+                                            </li>
+                                            <li class="minicart-wrap me-3 me-lg-0">
+                                                <a href="#miniCart" class="minicart-btn toolbar-btn">
+                                                    <i class="pe-7s-shopbag"></i>
+                                                    <span class="quantity">5</span>
+                                                </a>
+                                            </li>
+                                            <li class="dropdown d-none d-lg-block">
+                                                <button class="btn btn-link dropdown-toggle ht-btn p-0" type="button" id="settingButton" data-bs-toggle="dropdown" aria-label="setting" aria-expanded="false">
+                                                    <img src="<?= $img_path . "avarta_user/" . $taikhoan_email['img'] ?>" alt="" width="40px" height="40px" style="border-radius: 50%;">
+                                                </button>
+                                                <ul class="dropdown-menu right-side" aria-labelledby="settingButton">
                                                     <li><a class="dropdown-item" href="index.php?act=myaccout&profile=1">Tài khoản của tôi</a></li>
                                                     <li><a class="dropdown-item" href="index.php?act=dangxuat">Đang xuất</a></li>
-                                            </ul>
-                                        </li><?php } else { ?>
-                                            <li class="dropdown d-none d-lg-block">                    
-                                            <button class="btn btn-link dropdown-toggle ht-btn p-0" type="button" id="settingButton" data-bs-toggle="dropdown" aria-label="setting" aria-expanded="false">
-                                            <i class="fa fa-user-o" aria-hidden="true"></i>
+                                                </ul>
+                                            </li><?php } else { ?>
+                                            <li class="dropdown d-none d-lg-block">
+                                                <button class="btn btn-link dropdown-toggle ht-btn p-0" type="button" id="settingButton" data-bs-toggle="dropdown" aria-label="setting" aria-expanded="false">
+                                                    <i class="fa fa-user-o" aria-hidden="true"></i>
 
-                                            </button>
-                                            <ul class="dropdown-menu right-side" aria-labelledby="settingButton">
-                                            <li><a class="dropdown-item" href="index.php?act=dangky">Đang ký</a></li>
+                                                </button>
+                                                    <li><a class="dropdown-item" href="index.php?act=dangky">Đang ký</a></li>
                                                     <li><a class="dropdown-item" href="index.php?act=dangnhap">Đang nhập</a></li>
-                                            </ul>
-                                        </li>
-                                                <?php } ?>
+                                            </li>
+                                        <?php } ?>
 
-                                        
+
                                     </ul>
                                 </div>
                             </div>

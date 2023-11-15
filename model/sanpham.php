@@ -71,4 +71,9 @@ function yeuthich_remove($id){
     $yeuthich_remove=pdo_execute($sql);
     return $yeuthich_remove;
 }
+function yeuthich_cout($id){
+    $sql= "SELECT COUNT(*) as 'dem' FROM phanloaidh where  iduser=$id";
+    $yeuthich_count=pdo_query_one($sql);
+    return $yeuthich_count;
+}
 ?>

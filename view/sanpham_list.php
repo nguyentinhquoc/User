@@ -2,6 +2,11 @@
     <div class="box_left">
         <div class="h1_loc"><i class="fa fa-filter" aria-hidden="true"> Bộ lọc sản phẩm</i>
         </div>
+        <div class="search">
+        <p class="h2_loc">Tìm kiếm</p>
+
+            <input type="text">
+        </div>
         <div class="loc_gia">
             <p class="h2_loc">Chọn giá</p>
             <p>
@@ -34,21 +39,21 @@
             <p class="h2_loc">Chọn chất lượng</p>
             <input type="checkbox" id="vehicle1" name="vehicle1" value="Nike">
             <label for="vehicle1">
-                <?= echo_start_true(1); ?>
-                <?= echo_start_false(4); ?>
+                <?= echo_star(1); ?>
+                
             </label><br>
             <input type="checkbox" id="vehicle2" name="vehicle2" value="Jordan">
-            <label for="vehicle2"><?= echo_start_true(1); ?>
-                <?= echo_start_false(4); ?> </label><br>
+            <label for="vehicle2"><?= echo_star(2); ?>
+                 </label><br>
             <input type="checkbox" id="vehicle3" name="vehicle3" value="MLB">
-            <label for="vehicle3"><?= echo_start_true(1); ?>
-                <?= echo_start_false(4); ?> </label><br>
+            <label for="vehicle3"><?= echo_star(3); ?>
+                 </label><br>
             <input type="checkbox" id="vehicle3" name="vehicle3" value="MLB">
-            <label for="vehicle3"><?= echo_start_true(1); ?>
-                <?= echo_start_false(4); ?> </label><br>
+            <label for="vehicle3"><?= echo_star(4); ?>
+                 </label><br>
             <input type="checkbox" id="vehicle3" name="vehicle3" value="MLB">
-            <label for="vehicle3"><?= echo_start_true(1); ?>
-                <?= echo_start_false(4); ?> </label><br>
+            <label for="vehicle3"><?= echo_star(5); ?>
+                 </label><br>
         </div>
     </div>
     <div class="box_right">
@@ -81,20 +86,20 @@
                     </div>
                     </a>
                 <?php }
-
                 if (isset($_SESSION['email_dn'])) {
                     $email = $_SESSION['email_dn'];
                     $sql = "SELECT id FROM taikhoan WHERE email='$email'";
                     $id_acc = pdo_query_one($sql);
                     $iduser=$id_acc['id'];
+      
                     if (isset($_GET['add_love'])) {
                         $idsp = $_GET['add_love'];
-                        
                         yeuthich_add($idsp, $iduser);
 
                     }
                 }
                 ?>
+                
             </div>
         </div>
         <div class="page">
