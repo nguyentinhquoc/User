@@ -1,13 +1,12 @@
 <main class="dathang">
-
-  <div class="top">
-    <h4 style="color: red;"><i class="fa fa-map-marker" aria-hidden="true"></i>
-      Địa chỉ nhận hàng
-    </h4>
-    Họ và tên: Nguyễn Quốc Tình<br>
-    Số điện thoại: 0366904133<br>
-    Địa chỉ nhận hàng: Yên LÂm-Yên Mô-Ninh Bình<br>
-  </div>
+<!-- SELECT CONCAT(
+    YEAR(CURRENT_TIMESTAMP()),
+    LPAD(MONTH('2023-11-20 04:41:05'), 2, '0'),
+    LPAD(DAY('2023-11-20 04:41:05'), 2, '0'),
+    LPAD(HOUR('2023-11-20 04:41:05'), 2, '0'),
+    LPAD(MINUTE('2023-11-20 04:41:05'), 2, '0'),
+    LPAD(SECOND('2023-11-20 04:41:05'), 2, '0')
+) AS converted_datetime; -->
   <div class="center">
     <table class="table table-striped">
       <thead>
@@ -20,28 +19,38 @@
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td><img src="assets/images/sanpham/nike (4).jpeg" alt="" width="100px"></td>
-          <td> Nike Waffle Racer </td>
-          <td>Xanh,XL</td>
-          <td>2000000</td>
-          <td>2</td>
-          <td>4000000</td>
-        </tr>
+        <?php
+        $id_bienthe = $_POST['id_bienthe'];
+        print_r($id_bienthe);
+        $allprice=0;
+        foreach ($id_bienthe as $key => $value) { 
+          $sql="SELECT sanpham.img,sanpham.name,size.size,color.color,sanpham.price,phanloaidh.soluong,phanloaidh.tongtien  from phanloaidh JOIN bienthe ON phanloaidh.bienthe=bienthe.id JOIN sanpham ON bienthe.idsp=sanpham.id JOIN size on size.id=bienthe.idsize JOIN color on color.id=bienthe.idcolor WHERE phanloaidh.id = $value";
+          $bienthe = pdo_query($sql);
+          foreach ($bienthe as $keybt => $valuebt) {
+            $allprice += $valuebt['tongtien'];
+            ?>
+          <tr>
+            <td><img src="<?= $img_path . "sanpham/" . $valuebt['img'] ?>" alt="" width="100px"></td>
+            <td>  <?= $valuebt['name'] ?> </td>
+            <td><?= $valuebt['size'].'<br>'.$valuebt['color'] ?></td>
+            <td><?= $valuebt['price'] ?></td>
+            <td>  <?= $valuebt['soluong'] ?> </td>
+            <td><?= $valuebt['tongtien'] ?></td>
+          </tr>
+          <?php  }
+        }
+        ?>
+
       </tbody>
     </table>
   </div>
-  <div class="vocher">
-    <i class="fa fa-ticket" aria-hidden="true"></i>
-    <p>PANDA SHOP Vocher </p>
-    <input style="margin-left: 900px;" type="text" placeholder="Nhập mã vocher">
-    <input type="submit" name="vocher" id="">
-  </div>
+  <form action="" method="post">
+ 
   <div class="thanhtoan">
     <div class="top">
       <p>PHƯƠNG THỨC THANH TOÁN:</p>
       <div class="radio_thanhtoan">
-        <input type="radio" class="btn-check" name="options-base" id="option5" autocomplete="off" onclick="thanhtoan_text(2)" >
+        <input type="radio" class="btn-check" name="options-base" id="option5" autocomplete="off" onclick="thanhtoan_text(2)">
         <label class="btn" for="option5">Thanh toán khi nhận hàng</label>
         <input type="radio" class="btn-check" name="options-base" id="option6" autocomplete="off" onclick="thanhtoan_text(1)">
         <label class="btn" for="option6">Thanh toán online</label>
@@ -50,7 +59,7 @@
     <div id="thanhtoan_text"></div>
     <script>
       function thanhtoan_text(number) {
-     
+
         if (number == 1) {
           document.getElementById("thanhtoan_text").innerHTML = `
               <form action="" method="POST">
@@ -93,8 +102,9 @@
         } else if (number == 2) {
           document.getElementById("thanhtoan_text").innerHTML = `
           <div class="thongtin_dathang">
-    <div class="tongtienhang"><p>Tổng tiền hàng : </p></div>
-    <div class="tongtienhang"><p>Giảm giá : </p></div>
+    <div class="tongtienhang"><p>Tổng tiền hàng : <?php echo $allprice?></p></div>
+    <p id="selectedValue">Giảm giá : Chưa áp dụng</p>
+
     <div class="tongtienhang"><p>Tổng thanh toán : </p></div>
     <div class="tongtienhang"><input type="submit" value="Đặt hàng" name="" id=""></div>
   </div>
@@ -102,7 +112,9 @@
         }
       }
     </script>
+
   </div>
+</form>
 
   <?php
   error_reporting(E_ALL & ~E_NOTICE & ~E_DEPRECATED);
@@ -174,7 +186,7 @@
   } else {
   }
   ?>
-  
+
 
 
 

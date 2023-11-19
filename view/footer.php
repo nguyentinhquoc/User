@@ -386,6 +386,7 @@
 <script src="assets/js/plugins/tippy.min.js"></script>
 <script src="assets/js/plugins/ion.rangeSlider.min.js"></script>
 <script src="assets/js/plugins/mailchimp-ajax.js"></script>
+
 <script src="assets/js/main.js"></script>
 <script src="assets/js/locsp.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

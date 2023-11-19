@@ -67,6 +67,7 @@
                     if (isset($_GET['add_love'])) {
                         $idsp = $_GET['add_love'];
                         yeuthich_add($idsp, $iduser);
+
                     }
                     if (isset($_GET['add_cart'])) {
                         $idsp = $_GET['add_cart'];

@@ -204,4 +204,7 @@ function timbienthe($id_sp,$color,$size){
        $timbienthe= pdo_query_one($sql);
        return $timbienthe;
 }
+function dathang($id_bienthe){
+    
+}
 ?>

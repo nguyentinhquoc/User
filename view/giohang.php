@@ -1,10 +1,20 @@
 <div class="giohang">
+    
+  <div class="top">
+    <h4 style="color: red;"><i class="fa fa-map-marker" aria-hidden="true"></i>
+      Địa chỉ nhận hàng
+    </h4>
+    Họ và tên: Nguyễn Quốc Tình<br>
+    Số điện thoại: 0366904133<br>
+    Địa chỉ nhận hàng: Yên LÂm-Yên Mô-Ninh Bình<br>
+  </div>
     <?php
     if (isset($_GET['cart_remove'])) {
         $id = $_GET['cart_remove'];
         cart_remove($id);
     }
     ?>
+    <form action="index.php?act=dathang" method="post">
     <table class="table table-striped">
         <thead>
             <tr>
@@ -26,7 +36,7 @@
                 foreach ($sanpham_giohang as $key => $value) {
                 ?>
                     <th scope="row"><?= $key + 1; ?></th>
-                    <td><input type="checkbox" class="checkbox"></td>
+                    <td><input type="checkbox" class="checkbox" name="id_bienthe[]" value="<?=$value['id']?>"></td>
                     <td><img src="<?= $img_path . "sanpham/" . $value['img'] ?>" alt="" width="100px"></td>
                     <td><?= $value['name'] ?></td>
                     <td><?= "Màu:" . $value['color'] . "<br>" . "Size:" . $value['size'] ?></td>
@@ -49,5 +59,17 @@
         </script>
         </tbody>
     </table>
+    <div class="vocher">
+    <i class="fa fa-ticket" aria-hidden="true"></i>
+    <p>PANDA SHOP Vocher </p>
+    
+<select id="vocher" name="vocher" onchange="showSelectedValue()">
+    <option value="option1">Không áp mã</option>
+    <option value="option2">Vocher 1</option>
+    <option value="option3">Vocher 2</option>
+</select>
+
+  </div>
     <button>Đặt hàng</button>
+    </form>
 </div>

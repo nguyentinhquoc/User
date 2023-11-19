@@ -168,6 +168,7 @@
         $bienthe = $bienthe_check['id'];
         echo $bienthe;
         add_gio($iduser,$soluong,$tongtien,$bienthe);
+    
     }
     ?>
 
