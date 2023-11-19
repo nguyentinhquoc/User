@@ -42,7 +42,7 @@
                     <p>Họ tên: <?= $taikhoan_email['name'] ?></p>
                     <p>Email: <?= $taikhoan_email['email'] ?></p>
                     <p>Số điện thoại: <?= $taikhoan_email['tel'] ?></p>
-                    <p>Địa chỉ:<?= $taikhoan_email['address'] ?></p>
+                    <p>Địa chỉ: <?= $taikhoan_email['address'] ?></p>
                 </div>
                 <a class="link_edit" href="index.php?act=myaccout&profile=edit">Chỉnh sửa hồ sơ</a>
     </div>
@@ -54,7 +54,9 @@
 
         ?>
         <form action="index.php?act=myaccout&profile=edit" enctype="multipart/form-data" method="post">
-            <div class="avatar"><img src="<?= $img_path . "avarta_user/" . $taikhoan_email['img'] ?>" alt="" width="100px" height="100px" style=" border-radius: 50px;"><input type="file" name="avatar">
+            <div class="avatar">
+                <img src="<?= $img_path . "avarta_user/" . $taikhoan_email['img'] ?>" alt="" width="100px" height="100px" style=" border-radius: 50px;">
+                <input type="file" name="avatar">
                 <br> <label for="">Họ và tên:</label> <br>
                 <p style="border: 1px solid;  border-radius: 10px;width: 280px; padding: 5px;"><?= $taikhoan_email['name'] ?></p>
                 <p></p>
@@ -68,8 +70,9 @@
                                         if (isset($err_dtt_tel)) {
                                             echo $err_dtt_tel;
                                         } ?></p>
-                <label for="">Địa chỉ:</label><br><input type="text" value="<?= $taikhoan_email['address'] ?>" name="address">
-                <p></p>
+                <label for="">Địa chỉ:</label> <br>
+                <p style="border: 1px solid;  border-radius: 10px;width: 280px; padding: 5px;"><?= $taikhoan_email['address'] ?></p>
+                <p></p>                <p></p>
                 <button class="submit" name="submit_doitt">Xác nhận đổi thông tin</button>
         </form>
     </div>

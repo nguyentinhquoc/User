@@ -1,79 +1,207 @@
 
 <?php
 // home----------------------------------------------------------------
-function sanpham_moi(){
-$sql="SELECT * FROM sanpham ORDER BY id DESC LIMIT 0,10;";
-$sanphammoi=pdo_query($sql);
-return $sanphammoi;
+function sanpham_moi()
+{
+    $sql = "SELECT * FROM sanpham ORDER BY id ASC LIMIT 0,10;";
+    $sanphammoi = pdo_query($sql);
+    return $sanphammoi;
 }
-function sanpham_banchay(){
-$sql="SELECT * FROM sanpham ORDER BY luotxem DESC LIMIT 10;";
-$sanphambanchay=pdo_query($sql);
-return $sanphambanchay;
+function sanpham_banchay()
+{
+    $sql = "SELECT * FROM sanpham ORDER BY luotxem DESC LIMIT 10;";
+    $sanphambanchay = pdo_query($sql);
+    return $sanphambanchay;
 }
 // list------------------------------
-function sanpham_all_list($a){
-    $c=($a-1)*12;
-    $sql="SELECT * FROM sanpham ORDER BY id DESC LIMIT $c,12 ;";
-    $sanpham_all=pdo_query($sql);
+function sapxep($b)
+{
+    if ($b == 1) {
+        $sql = "SELECT * FROM sanpham ORDER BY name ASC";
+        $sanpham_all = pdo_query($sql);
+        return $sanpham_all;
+    }
+    if ($b == 2) {
+        $sql = "SELECT * FROM sanpham ORDER BY name DESC";
+        $sanpham_all = pdo_query($sql);
+        return $sanpham_all;
+    }
+    if ($b == 3) {
+        $sql = "SELECT * FROM sanpham ORDER BY price ASC";
+        $sanpham_all = pdo_query($sql);
+        return $sanpham_all;
+    }
+    if ($b == 4) {
+        $sql = "SELECT * FROM sanpham ORDER BY price DESC";
+        $sanpham_all = pdo_query($sql);
+        return $sanpham_all;
+    }
+    if ($b == 5) {
+        $sql = "SELECT * FROM sanpham ORDER BY star ASC";
+        $sanpham_all = pdo_query($sql);
+        return $sanpham_all;
+    }
+}
+function sanpham_search_list($a){
+    $sql = "SELECT * FROM sanpham where name LIKE '%$a%'";
+    $sanpham_all = pdo_query($sql);
     return $sanpham_all;
 }
-function sanpham_dm_list($a,$b){
-    $c=($a-1)*12;
-    $sql="SELECT * FROM sanpham where iddm=$b ORDER BY id DESC LIMIT $c,12 ;";
-    $sanpham_all=pdo_query($sql);
+function sanpham_all_list($a)
+{
+    $c = ($a - 1) * 20;
+    $sql = "SELECT * FROM sanpham ORDER BY id DESC LIMIT $c,20 ;";
+    $sanpham_all = pdo_query($sql);
     return $sanpham_all;
 }
-function tong_dm_sanpham($a){
-    $sql="SELECT COUNT(id) 'dem' FROM sanpham where iddm = $a";
-    $sanpham_all=pdo_query_one($sql);
+function sanpham_dm_list($a, $b)
+{
+    $c = ($a - 1) * 20;
+    $sql = "SELECT * FROM sanpham where iddm=$b ORDER BY id DESC LIMIT $c,20 ;";
+    $sanpham_all = pdo_query($sql);
     return $sanpham_all;
 }
-function tong_all_sanpham(){
-    $sql="SELECT COUNT(id) 'dem' FROM sanpham ";
-    $sanpham_all=pdo_query_one($sql);
+function tong_dm_sanpham($a)
+{
+    $sql = "SELECT COUNT(id) 'dem' FROM sanpham where iddm = $a";
+    $sanpham_all = pdo_query_one($sql);
+    return $sanpham_all;
+}
+function tong_all_sanpham()
+{
+    $sql = "SELECT COUNT(id) 'dem' FROM sanpham ";
+    $sanpham_all = pdo_query_one($sql);
     return $sanpham_all;
 }
 
-function sanpham_chitiet($id){
-    $sql="SELECT * FROM sanpham where id = $id";
-    $sanpham_chitiet=pdo_query_one($sql);
+function sanpham_chitiet($id)
+{
+    $sql = "SELECT * FROM sanpham where id = $id";
+    $sanpham_chitiet = pdo_query_one($sql);
     return $sanpham_chitiet;
 }
-function sanpham_lienquan($idsp){
-    $sql="SELECT * FROM sanpham where iddm=(SELECT iddm FROM sanpham where id=$idsp)ORDER BY id DESC LIMIT 7 ";
-    $sanpham_lienquan=pdo_query($sql);
+function sanpham_lienquan($idsp)
+{
+    $sql = "SELECT * FROM sanpham where iddm=(SELECT iddm FROM sanpham where id=$idsp)ORDER BY id DESC LIMIT 7 ";
+    $sanpham_lienquan = pdo_query($sql);
     return $sanpham_lienquan;
 }
-function sanpham_yeuthich($email){
-    $sql= "SELECT sanpham.img, sanpham.name, sanpham.price,phanloaidh.id FROM phanloaidh join sanpham on sanpham.id= phanloaidh.idsp JOIN taikhoan ON taikhoan.id=phanloaidh.iduser WHERE taikhoan.email='$email' and phanloaidh.idtrangthai=1";
+function sanpham_yeuthich($email)
+{
+    $sql = "SELECT sanpham.img, sanpham.name, sanpham.price,phanloaidh.id,bienthe.idsp,taikhoan.email FROM phanloaidh join bienthe on bienthe.id= phanloaidh.bienthe JOIN taikhoan ON taikhoan.id=phanloaidh.iduser JOIN sanpham ON sanpham.id=bienthe.idsp WHERE taikhoan.email='$email' AND phanloaidh.idtrangthai=1";
     $sanpham_yeuthich = pdo_query($sql);
     return $sanpham_yeuthich;
 }
-function yeuthich_add($idsp,$iduser){
-    $sql1= "SELECT iduser,idsp FROM phanloaidh";
-    $check_trung=pdo_query($sql1);
-    $check=true;
+function yeuthich_add($idsp, $iduser)
+{
+    $sql1 = "SELECT taikhoan.id,idsp FROM phanloaidh JOIN bienthe on phanloaidh.bienthe=bienthe.id JOIN taikhoan ON phanloaidh.iduser=taikhoan.id where phanloaidh.idtrangthai=1";
+    $check_trung = pdo_query($sql1);
+    $check = true;
     foreach ($check_trung as $key) {
-        if ($key['iduser'] == $iduser &&  $key['idsp'] == $idsp ) {
-            $check=false;
+        if ($key['id'] == $iduser &&  $key['idsp'] == $idsp) {
+            $check = false;
         }
     }
 
-if ($check==true) {
-    $sql2= "INSERT INTO `phanloaidh` (`iduser`, `idsp`, `idtrangthai`) VALUES ('$iduser', '$idsp', '1');";
-    $yeuthich_add=pdo_execute($sql2);
-    return $yeuthich_add;
+    if ($check == true) {
+        $sql2 = "SELECT id FROM `bienthe` WHERE bienthe.idsp=$idsp LIMIT 1";
+       $id_bienthe = pdo_query_one($sql2);
+       $id_bienthex=$id_bienthe['id'];
+       $sql3="INSERT INTO `phanloaidh` (`iduser`, `bienthe`, `idtrangthai`) VALUES ('$iduser', '$id_bienthex', '1');";
+        $yeuthich_add = pdo_execute($sql3);
+        return $yeuthich_add;
+    }
 }
-}
-function yeuthich_remove($id){
-    $sql="DELETE FROM `phanloaidh` WHERE `phanloaidh`.`id` = $id";
-    $yeuthich_remove=pdo_execute($sql);
+function yeuthich_remove($id)
+{
+    $sql = "DELETE FROM `phanloaidh` WHERE `phanloaidh`.`id` = $id";
+    $yeuthich_remove = pdo_execute($sql);
     return $yeuthich_remove;
 }
-function yeuthich_cout($id){
-    $sql= "SELECT COUNT(*) as 'dem' FROM phanloaidh where  iduser=$id";
-    $yeuthich_count=pdo_query_one($sql);
+function yeuthich_cout($id)
+{
+    $sql = "SELECT COUNT(*) as 'dem' FROM phanloaidh where  iduser=$id and idtrangthai=1";
+    $yeuthich_count = pdo_query_one($sql);
     return $yeuthich_count;
+}
+
+function sanpham_giohang($email)
+{
+
+    // SELECT sanpham.img,sanpham.name,sanpham.price,size.size,color.color from sanpham JOIN bienthe on sanpham.id= bienthe.idsp JOIN size ON bienthe.idsize=size.id JOIN color ON color.id=bienthe.idcolor JOIN phanloaidh on sanpham.id=phanloaidh.idsp JOIN taikhoan on taikhoan.id=phanloaidh.iduser WHERE taikhoan.email='nguyentinh140321@gmail.com' AND phanloaidh.idtrangthai=2 AND bienthe.soluong>0
+    $sql = "SELECT sanpham.img,color.color,size.size,sanpham.name, phanloaidh.tongtien,phanloaidh.soluong,phanloaidh.id,bienthe.idsp,taikhoan.email FROM phanloaidh join bienthe on bienthe.id= phanloaidh.bienthe JOIN taikhoan ON taikhoan.id=phanloaidh.iduser JOIN sanpham ON sanpham.id=bienthe.idsp JOIN size ON size.id=bienthe.idsize JOIN color ON color.id=bienthe.idcolor WHERE taikhoan.email='$email' AND phanloaidh.idtrangthai=2";
+    $sanpham_giohang = pdo_query($sql);
+    return $sanpham_giohang;
+}
+function cart_add($idsp, $iduser)
+{
+    $sql1 = "SELECT taikhoan.id,idsp FROM phanloaidh JOIN bienthe on phanloaidh.bienthe=bienthe.id JOIN taikhoan ON phanloaidh.iduser=taikhoan.id where phanloaidh.idtrangthai=2";
+    $check_trung = pdo_query($sql1);
+    $check = true;
+    foreach ($check_trung as $key) {
+        if ($key['id'] == $iduser &&  $key['idsp'] == $idsp) {
+            $check = false;
+        }
+    }
+    if ($check == true) {
+        $sql2 = "SELECT id FROM `bienthe` WHERE bienthe.idsp=$idsp LIMIT 1";
+        $id_bienthe = pdo_query_one($sql2);
+        $id_bienthex=$id_bienthe['id'];
+        $sql3="INSERT INTO `phanloaidh` (`iduser`, `bienthe`, `idtrangthai`) VALUES ('$iduser', '$id_bienthex', '2');";
+         $cart_add = pdo_execute($sql3);
+         return $cart_add;
+
+    }
+}
+function cart_remove($id)
+{
+    $sql = "DELETE FROM `phanloaidh` WHERE `phanloaidh`.`id` = $id";
+    $yeuthich_remove = pdo_execute($sql);
+    return $yeuthich_remove;
+}
+function cart_cout($id)
+{
+    $sql = "SELECT COUNT(*) as 'dem' FROM phanloaidh where  iduser=$id and idtrangthai=2";
+    $yeuthich_count = pdo_query_one($sql);
+    return $yeuthich_count;
+}
+
+function all_size(){
+    $sql="SELECT * FROM size";
+    $all_size= pdo_query($sql);
+    return $all_size;
+}
+function size_color($idcolor,$idsp){
+    $sql="SELECT * FROM bienthe join size on bienthe.idsize=size.id where idcolor = $idcolor and idsp = $idsp and soluong>0";
+    $size_color= pdo_query($sql);
+    return $size_color;
+}
+function all_color(){
+    $sql="SELECT * FROM color";
+    $all_color= pdo_query($sql);
+    return $all_color;
+}
+function add_gio($iduser,$soluong,$tongtien,$bienthe){
+
+    $sql1="SELECT * FROM phanloaidh";
+    $check_trung=pdo_query($sql1);
+    $check = true;
+    foreach ($check_trung as $value) {
+        if ($value['iduser'] == $iduser && $value['bienthe']==$bienthe) {
+            $check = false;
+        }
+    }
+    if ($check == true) {
+        $sql2="INSERT INTO `phanloaidh` (`iduser`, `soluong`, `idtrangthai`, `tongtien`, `bienthe`) VALUES ('$iduser', '$soluong', '2', '$tongtien', $bienthe);";
+        $add_gio=pdo_execute($sql2);
+        return $add_gio;
+        }
+
+
+}
+function timbienthe($id_sp,$color,$size){
+        $sql="SELECT `id` FROM `bienthe` WHERE idcolor=$color AND idsize=$size AND idsp=$id_sp;";
+       $timbienthe= pdo_query_one($sql);
+       return $timbienthe;
 }
 ?>

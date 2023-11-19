@@ -5,12 +5,12 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Tromic - Error 404</title>
+    <title>Panda Shop</title>
     <meta name="robots" content="index, follow" />
     <meta name="description" content="Tromic car accessories bootstrap 5 template is an awesome website template for any modern car accessories shop.">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Favicon -->
-    <link rel="shortcut icon" type="image/x-icon" href="<?= $img_path ?>favicon.ico" />
+    <link rel="shortcut icon" type="image/x-icon" href="<?= $img_path ?>logo/dark.png" />
 
     <!-- CSS
     ============================================ -->
@@ -118,40 +118,55 @@
                                             <li>
                                                 <a href="contact.html">Liên hệ</a>
                                             </li>
+                                            <li>
+                                                <form action="" method="GET">
+                                                    <input class="search" type="text" name="search" placeholder="Tìm kiếm">
+                                                </form>
+                                                <?php if (isset($_GET['search'])) {
+                                                    $_SESSION['search']=$_GET['search'];
+                                                    header('Location: index.php?act=sanpham_list&page=1');
+
+                                                }?>
+                                            </li>
                                         </ul>
                                     </nav>
                                 </div>
                                 <div class="header-right">
                                     <ul>
-                                    <?php 
-                if (isset($_SESSION['email_dn'])) {
-                    $email = $_SESSION['email_dn'];
-                    $sql = "SELECT id FROM taikhoan WHERE email='$email'";
-                    $id_acc = pdo_query_one($sql);
-                    $iduser=$id_acc['id'];
-                    $yeuthich = yeuthich_cout($iduser);
-                }
-                ?>
+                                        <?php
+                                        if (isset($_SESSION['email_dn'])) {
+                                            $email = $_SESSION['email_dn'];
+                                            $sql = "SELECT id FROM taikhoan WHERE email='$email'";
+                                            $id_acc = pdo_query_one($sql);
+                                            $iduser = $id_acc['id'];
+                                            $yeuthich = yeuthich_cout($iduser);
+                                            $cart = cart_cout($iduser);
+                                        }
+                                        ?>
                                         <?php if (isset($_SESSION['email_dn'])) {
                                             $email = $_SESSION['email_dn'];
                                             $taikhoan_email = taikhoan_email($email); ?>
+
+
                                        
                                             <li class="minicart-wrap me-3 me-lg-0">
-                                                <a href="#miniCart" class="minicart-btn toolbar-btn">
-                                                    <i class="fa fa-heart-o" aria-hidden="true"></i>
-                                                    <span class="quantity"><?=$yeuthich['dem']?></span>
-    
+                                                <a href="index.php?act=yeuthich" class="minicart-btn">
+                                                <i class="fa fa-heart-o" aria-hidden="true"></i>
+                                                <span class="quantity"><?= $yeuthich['dem'] ?>          </span>
+                                                </a>
                                             </li>
                                             <li class="minicart-wrap me-3 me-lg-0">
-                                                <a href="#miniCart" class="minicart-btn toolbar-btn">
-                                                    <i class="fa fa-bell-o" aria-hidden="true"></i>
-                                                    <span class="quantity">5</span>
-    
+                                                <a href="index.php?act=giohang" class="minicart-btn">
+                                                <i class="fa fa-bell-o" aria-hidden="true"></i>
+                                                <span class="quantity">5</span>
+                                                </a>
                                             </li>
+
+
                                             <li class="minicart-wrap me-3 me-lg-0">
-                                                <a href="#miniCart" class="minicart-btn toolbar-btn">
+                                                <a href="index.php?act=giohang" class="minicart-btn">
                                                     <i class="pe-7s-shopbag"></i>
-                                                    <span class="quantity">5</span>
+                                                    <span class="quantity"><?= $cart['dem'] ?>          </span>
                                                 </a>
                                             </li>
                                             <li class="dropdown d-none d-lg-block">
@@ -168,8 +183,8 @@
                                                     <i class="fa fa-user-o" aria-hidden="true"></i>
 
                                                 </button>
-                                                    <li><a class="dropdown-item" href="index.php?act=dangky">Đang ký</a></li>
-                                                    <li><a class="dropdown-item" href="index.php?act=dangnhap">Đang nhập</a></li>
+                                            <li><a class="dropdown-item" href="index.php?act=dangky">Đang ký</a></li>
+                                            <li><a class="dropdown-item" href="index.php?act=dangnhap">Đang nhập</a></li>
                                             </li>
                                         <?php } ?>
 

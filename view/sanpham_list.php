@@ -1,62 +1,19 @@
 <main class="container_sanpham_list">
-    <div class="box_left">
-        <div class="h1_loc"><i class="fa fa-filter" aria-hidden="true"> Bộ lọc sản phẩm</i>
-        </div>
-        <div class="search">
-        <p class="h2_loc">Tìm kiếm</p>
+<?php $check_page=0 ;?>
 
-            <input type="text">
-        </div>
-        <div class="loc_gia">
-            <p class="h2_loc">Chọn giá</p>
-            <p>
-                <label for="amount">Price range:</label>
-                <input type="text" id="amount" readonly style="border:0; color:#f6931f; font-weight:bold;">
-            </p>
-            <div id="slider-range"></div>
-        </div>
-        <div class="loc_danhmuc">
-            <p class="h2_loc">Chọn Loại giày</p>
-            <?php
-            $danhmuc_all = danhmuc_all();
-            foreach ($danhmuc_all as $key) { ?>
-                <input onchange="hien_thi_sp()" type="checkbox" class="chon_ danhmuc" id="<?= $key['name'] ?>" name="<?= $key['name'] ?>" value="<?= $key['name'] ?>">
-                <label for="vehicle1"><?= $key['name'] ?></label><br>
-            <?php }
-            ?>
-
-        </div>
-        <div class="loc_size">
-            <p class="h2_loc">Chọn size</p>
-            <input type="checkbox" id="size" name="vehicle1" value="Size 39">
-            <label for="vehicle1"> Size 39</label><br>
-            <input type="checkbox" id="size" name="vehicle2" value="Size 40">
-            <label for="vehicle2">Size 40</label><br>
-            <input type="checkbox" id="size" name="vehicle3" value="Size 41">
-            <label for="vehicle3">Size 40</label><br>
-        </div>
-        <div class="loc_chatluong">
-            <p class="h2_loc">Chọn chất lượng</p>
-            <input type="checkbox" id="vehicle1" name="vehicle1" value="Nike">
-            <label for="vehicle1">
-                <?= echo_star(1); ?>
-                
-            </label><br>
-            <input type="checkbox" id="vehicle2" name="vehicle2" value="Jordan">
-            <label for="vehicle2"><?= echo_star(2); ?>
-                 </label><br>
-            <input type="checkbox" id="vehicle3" name="vehicle3" value="MLB">
-            <label for="vehicle3"><?= echo_star(3); ?>
-                 </label><br>
-            <input type="checkbox" id="vehicle3" name="vehicle3" value="MLB">
-            <label for="vehicle3"><?= echo_star(4); ?>
-                 </label><br>
-            <input type="checkbox" id="vehicle3" name="vehicle3" value="MLB">
-            <label for="vehicle3"><?= echo_star(5); ?>
-                 </label><br>
-        </div>
-    </div>
     <div class="box_right">
+        <form action="" method="POST">
+            <label>Sắp xếp theo</label>
+            <select name="sapxep" id="">
+                <option value="">Sắp xêp</option>
+                <option value="1">Từ A-Z</option>
+                <option value="2">Từ Z-A</option>
+                <option value="3">Giá tăng dần</option>
+                <option value="4">Giá giảm dần</option>
+                <option value="5">Lượt đánh giá</option>
+            </select>
+            <input type="submit" name="submit_sapxep">
+        </form>
         <div class="swiper-container brand-slider">
             <div class="swiper-wrapper_list">
                 <?php
@@ -64,23 +21,38 @@
                 if (isset($_GET['danhmuc'])) {
                     $danhmuc = $_GET['danhmuc'];
                     $sanpham_list = sanpham_dm_list($page, $danhmuc);
-                } else {
+                }
+                if(isset($_POST['submit_sapxep']) &&  $_POST['sapxep']!="") {
+                    $sapxep = $_POST['sapxep'];
+                    $sanpham_list = sapxep($sapxep);
+                }
+                else {
                     $sanpham_list = sanpham_all_list($page);
+                }
+                if (isset($_SESSION['search']) && $_SESSION['search']!="") {
+                    $check_page=1;
+                    $search=$_SESSION['search'];
+                    $sanpham_list = sanpham_search_list($search);
+                    unset($_SESSION['search']);
+                    
                 }
                 foreach ($sanpham_list as $key) { ?>
                     <div class="swiper-slide swiper-slide_list">
-                        <a class="brand-item brand-item-list" href="index.php?act=sanpham_chitiet&id=<?= $key['id'] ?>">
+                        <a class="brand-item brand-item-list" href="index.php?act=sanpham_chitiet&id=<?= $key['id'] ?>&soluong=1">
                             <img src="<?= $img_path . "sanpham/" . $key['img'] ?>" alt="Brand Image" style="border-radius: 10px;">
                         </a>
-                        <p class="price_sp price_sp_list"><?= $key['price'] ?></p>
+                        <p class="price_sp price_sp_list"><?=number_format($key['price'], 0, ',', '.');  ?>
+                        <del style="color: #ccc9c2;"><?= number_format($key['price']+($key['price']*($key['sale']/100)), 0, ',', '.');  ?></del>
+                    </p>
                         <p class="name_sp name_sp_list"><?= $key['name'] ?></p>
+                        <?php $page = $_GET['page'];
+                        ?>
                         <div class="congcu congcu_list">
-                            <i class="fa fa-cart-plus" aria-hidden="true"></i>
-                          <?php  $page = $_GET['page'];
-                          ?>
-
-                            <a href="index.php?act=sanpham_list&page=<?= $page ?>&add_love=<?= $key['id'] ?>"><i class="fa fa-heart-o" aria-hidden="true"></i></a>
-                            <i class="fa fa-eye" aria-hidden="true"></i>
+                            <a href="<?= $_SERVER['REQUEST_URI']; ?>&add_cart=<?= $key['id'] ?>"> <i class="fa fa-cart-plus" aria-hidden="true"></i>
+                            </a>
+                            <a href="<?= $_SERVER['REQUEST_URI']; ?>&add_love=<?= $key['id'] ?>"><i class="fa fa-heart-o" aria-hidden="true"></i></a>
+                            <a href="index.php?act=sanpham_chitiet&id=<?= $key['id'] ?>&soluong=1"> <i class="fa fa-eye" aria-hidden="true"></i>
+                            </a>
                         </div>
 
                     </div>
@@ -90,16 +62,19 @@
                     $email = $_SESSION['email_dn'];
                     $sql = "SELECT id FROM taikhoan WHERE email='$email'";
                     $id_acc = pdo_query_one($sql);
-                    $iduser=$id_acc['id'];
-      
+                    $iduser = $id_acc['id'];
+
                     if (isset($_GET['add_love'])) {
                         $idsp = $_GET['add_love'];
                         yeuthich_add($idsp, $iduser);
-
+                    }
+                    if (isset($_GET['add_cart'])) {
+                        $idsp = $_GET['add_cart'];
+                        cart_add($idsp, $iduser);
                     }
                 }
                 ?>
-                
+
             </div>
         </div>
         <div class="page">
@@ -114,10 +89,16 @@
                 $link = "index.php?act=sanpham_list";
             }
 
-            if ($tong_sanpham['dem'] % 12 == 0) {
-                $so_page = $tong_sanpham['dem'] / 12;
+            if ($tong_sanpham['dem'] % 20 == 0) {
+                $so_page = $tong_sanpham['dem'] / 20;
             } else {
-                $so_page = $tong_sanpham['dem'] / 12 + 1;
+                $so_page = $tong_sanpham['dem'] / 20 + 1;
+            }
+            if(isset($_POST['submit_sapxep']) &&  $_POST['sapxep']!="" ) {
+                $so_page = 1;
+            }
+            if ($check_page==1) {
+                $so_page = 1;
             }
             for ($i = 1; $i < $so_page; $i++) {
                 $page_ht = $_GET['page'];

@@ -25721,15 +25721,10 @@ blockquote .user-name:before {
   margin: 0 auto;
 }
 
-.container_sanpham_list .box_left {
-  border: 1px solid black;
-  border-radius: 20px;
-  padding: 20px;
-  width: 28%;
-}
+
 
 .container_sanpham_list .box_right {
-  width: 70%;
+  width: 90%;
   ;
   border: 1px solid black;
   border-radius: 20px;
@@ -25854,7 +25849,7 @@ blockquote .user-name:before {
   border-radius: 20px;
   margin: 0 auto;
   padding: 10px;
-  margin-bottom: 20px; 
+  margin-bottom: 20px;
 }
 
 .btom .item .img {
@@ -25943,7 +25938,7 @@ blockquote .user-name:before {
 }
 
 .myacc .box_right .profile {
-  width: 50%;
+  width: 70%;
   margin: 0 auto;
 }
 
@@ -25951,11 +25946,15 @@ blockquote .user-name:before {
   width: 40%;
   margin: 0 auto;
   margin-bottom: 50px;
-}.myacc .box_right .doi_pass{
+}
+
+.myacc .box_right .doi_pass {
   width: 40%;
   margin: 0 auto;
   height: 100%;
-}.myacc .box_right .doi_pass .submit{
+}
+
+.myacc .box_right .doi_pass .submit {
   border: 1px solid;
   padding: 10px;
   border-radius: 10px;
@@ -25964,28 +25963,38 @@ blockquote .user-name:before {
   font-weight: bolder;
   float: right;
   margin-top: 20px;
-}.myacc .box_right .doi_pass label{
+}
+
+.myacc .box_right .doi_pass label {
   margin-bottom: 5px;
-}.myacc .box_right .doi_pass input{
+}
+
+.myacc .box_right .doi_pass input {
   border-radius: 10px;
   width: 280px;
   padding: 5px;
 
-}.myacc .box_right .thongbao {
+}
+
+.myacc .box_right .thongbao {
   height: 300px;
   overflow-y: scroll;
   border: 1px solid #ccc;
   padding: 10px;
-}.myacc .box_right .thongbao .item{
-  display: flex;
-  margin-bottom:20px ;
 }
 
-.myacc .box_right .edit{
+.myacc .box_right .thongbao .item {
+  display: flex;
+  margin-bottom: 20px;
+}
+
+.myacc .box_right .edit {
   width: 40%;
   margin: 0 auto;
   height: 100%;
-}.myacc .box_right .edit .submit{
+}
+
+.myacc .box_right .edit .submit {
   border: 1px solid;
   padding: 10px;
   border-radius: 10px;
@@ -25994,15 +26003,116 @@ blockquote .user-name:before {
   font-weight: bolder;
   float: right;
   margin-top: 20px;
-}.myacc .box_right .edit label{
+}
+
+.myacc .box_right .edit label {
   margin-bottom: 5px;
-}.myacc .box_right .edit input{
+}
+
+.myacc .box_right .edit input {
   border-radius: 10px;
   width: 280px;
   padding: 5px;
-}.container_yeuthich {
+}
+
+.container_yeuthich {
   width: 80%;
   margin: 0 auto;
-}.h2_loc{
+}
+
+.h2_loc {
   margin-top: 40px;
+}
+
+.search {
+  margin-top: 30px;
+  border-radius: 10px;
+  width: 300px;
+  padding-left: 10px;
+}
+
+.adress {
+  display: flex;
+  margin-top: 20px;
+  justify-content: space-around;
+}
+
+.form-select {
+  width: 30%;
+  height: 30px;
+}
+
+.dathang {
+  width: 90%;
+  margin: 0 auto;
+
+}
+
+.dathang>.top {
+
+  border: 5px dashed #ec8255;
+  padding: 20px;
+}
+
+.dathang .center table {
+  width: 100%;
+
+}
+
+.dathang .vocher {
+  width: 100%;
+  height: 70px;
+  border: 1px solid #ec8255;
+  padding: 20px;
+  display: flex;
+}
+
+.dathang .thanhtoan .top {
+  display: flex;
+  justify-content: space-between;
+}
+
+.radio_thanhtoan {
+  margin-left: 600px;
+}
+
+.dathang .thanhtoan {
+  border: 1px solid #ec8255;
+  padding: 20px;
+  margin: 20px 0px;
+}
+.dathang .thongtin_dathang {
+  border: 1px solid #ec8255;
+  padding: 20px;
+  margin: 20px 0px;
+}
+
+.custom-radio input[type="radio"] {
+  display: none;
+  
+}
+.custom-radio label {
+  display: inline-block;
+  margin-left: 20px;
+  padding: 10px 20px;
+  font-size: 16px;
+  border: 2px solid #3498db;
+  color: #3498db;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.custom-radio input[type="radio"]:checked + label {
+  background-color: #3498db;
+  color: white;
+}.sanpham_chitiet .mau,.sanpham_chitiet .size{
+  display: flex;
+  margin: 10px;
+}.sanpham_chitiet .soluongmua{
+  display: flex;
+}.sanpham_chitiet .soluongmua table{
+  width: 100px;
+  text-align: center;
+}.sanpham_chitiet .soluongmua table p{
+  margin: 0px;
 }

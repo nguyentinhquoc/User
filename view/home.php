@@ -153,12 +153,14 @@
                     <div class="swiper-wrapper">
                         <?php $sanphammoi = sanpham_moi();
                         foreach ($sanphammoi as $key) { ?>
-                            <a href="index.php?act=sanpham_chitiet&id=<?= $key['id'] ?>"></a>
+                            <a href="index.php?act=sanpham_chitiet&id=<?= $key['id'] ?>&soluong=1"></a>
                             <div class="swiper-slide">
-                                <a class="brand-item" href="index.php?act=sanpham_chitiet&id=<?= $key['id'] ?>">
+                                <a class="brand-item" href="index.php?act=sanpham_chitiet&id=<?= $key['id'] ?>&soluong=1">
                                     <img src="<?=$img_path."sanpham/".$key['img'] ?>" alt="Brand Image" height="300px" width="200px" style="border-radius: 10px;">
                                 </a>
-                                <p class="price_sp"><?= $key['price'] ?></p>
+                                <p class="price_sp"><?=number_format($key['price'], 0, ',', '.');  ?>
+                                <del style="color: #ccc9c2;"><?= number_format($key['price']+($key['price']*($key['sale']/100)), 0, ',', '.');  ?></del>
+                                </p>
                                 <p class="name_sp"><?= $key['name'] ?></p>
                                 <p class="dabansp">Đã bán :1222</p>
                                 <div class="congcu">
@@ -221,12 +223,15 @@
                 <div class="swiper-wrapper">
                 <?php $sanphambanchay = sanpham_banchay();
                         foreach ($sanphambanchay as $key) { ?>
-                            <a href="index.php?act=sanpham_chitiet&id=<?= $key['id'] ?>"></a>
+                            <a href="index.php?act=sanpham_chitiet&id=<?= $key['id'] ?>&soluong=1"></a>
                             <div class="swiper-slide">
-                                <a class="brand-item" href="index.php?act=sanpham_chitiet&id=<?= $key['id'] ?>">
+                                <a class="brand-item" href="index.php?act=sanpham_chitiet&id=<?= $key['id'] ?>&soluong=1">
                                     <img src="<?= $img_path."sanpham/". $key['img'] ?>" alt="Brand Image" height="300px" width="200px" style="border-radius: 10px;">
                                 </a>
-                                <p class="price_sp"><?= $key['price'] ?></p>
+                                <p class="price_sp"><?=number_format($key['price'], 0, ',', '.');  ?>
+                                <del style="color: #ccc9c2;"><?= number_format($key['price']+($key['price']*($key['sale']/100)), 0, ',', '.');  ?></del>
+                            
+                            </p>
                                 <p class="name_sp"><?= $key['name'] ?></p>
                                 <p class="dabansp">Đã bán :1222</p>
                                 <div class="congcu">

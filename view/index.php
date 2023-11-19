@@ -1,6 +1,6 @@
 <?php
+ob_start();
 session_start();
-
 include("../model/pdo.php");
 include("global.php");
 include("../model/star.php");
@@ -17,29 +17,38 @@ if (!isset($_GET["act"])) {
     switch ($act) {
         case "dangky":
             include("dangky.php");
-                break;
+            break;
         case "dangnhap":
             include("dangnhap.php");
             break;
-            case "dangxuat":
-                unset($_SESSION['email_dn']);
+        case "dangxuat":
+            unset($_SESSION['email_dn']);
             header('location: index.php?dangxuattc');
-                break;
-            case "sanpham_list":
+            break;
+        case "sanpham_list":
             include("sanpham_list.php");
-                break;
-            case "sanpham_chitiet":
+            break;
+        case "sanpham_chitiet":
             include("sanpham_chitiet.php");
-                break;
-            case "giohang":
+            break;
+        case "giohang":
             include("giohang.php");
-                break;
-            case "myaccout":
+            break;
+        case "myaccout":
             include("taikhoan.php");
-                break;
-            case "yeuthich":
+            break;
+        case "yeuthich":
             include("yeuthich.php");
-                break;
+            break;
+        case "giohang":
+            include("giohang.php");
+            break;
+        case "dathang":
+            include("dathang.php");
+            break;
+        case "dathangtc":
+            include("dathangtc.php");
+            break;
         default:
             include("404.php");
             break;

@@ -7,6 +7,7 @@ if (isset($_POST['submit_dk'])) {
     $email_dk = $_POST['email_dk'];
     $pass_dk = $_POST['pass_dk'];
     $repass_dk = $_POST['repass_dk'];
+    $address= $_POST['tinh']."-".$_POST['huyen']."-".$_POST['xa'];
     $check_dk = true;
     $taikhoan_all = taikhoan_all();
     foreach ($taikhoan_all as $key) {
@@ -21,7 +22,11 @@ if (isset($_POST['submit_dk'])) {
             }
         }
     }
+    if($_POST['xa'] == "" ){
+        $err6='* Vui lòng nhập địa chỉ';
+        $check_dk = false;
 
+    }
     if (!preg_match($pattern_tel, $tel_dk)) {
         if (isset($tel_dk)) {
             $check_dk = false;
@@ -55,7 +60,8 @@ if (isset($_POST['submit_dk'])) {
         $check_dk = false;
     }
     if ($check_dk == true) {
-        $sql = "INSERT INTO `taikhoan` (`name`, `pass`, `tel`, `email`) VALUES ('$name_dk', '$pass_dk', $tel_dk, '$email_dk');";
+
+        $sql = "INSERT INTO `taikhoan` (`name`, `pass`, `tel`, `email`,`address`,`img`) VALUES ('$name_dk', '$pass_dk', $tel_dk, '$email_dk','$address','avatar.png');";
         pdo_execute($sql);
         header("Location: index.php?act=dangnhap&dangkytc");
     }
@@ -80,7 +86,6 @@ if (isset($_POST["submit_dn"])) {
 }
 // ĐỔI THÔNG TIN=========================
 if (isset($_POST['submit_doitt'])) {
-
     $pattern_tel = '/^(03[2-9]|07[0-9]|08[1-9]|09[0-9])[0-9]{7}$/';
     $pattern_email = '/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/';
     $check_doitt = true;
@@ -168,3 +173,9 @@ if (isset($_POST['submit_doipass'])) {
         header('location: index.php?act=myaccout&profile=1&doipasstc');
     }
 }
+
+
+
+
+
+

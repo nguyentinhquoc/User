@@ -1,11 +1,21 @@
 <main class="yeuthich">
 
-<?php 
-if (isset($_GET['yeuthich_remove'])) {
-$id=$_GET['yeuthich_remove'];
-yeuthich_remove($id);
-}
-?>
+    <?php
+    if (isset($_GET['yeuthich_remove'])) {
+        $id = $_GET['yeuthich_remove'];
+        yeuthich_remove($id);
+    }
+    if (isset($_SESSION['email_dn'])) {
+        $email = $_SESSION['email_dn'];
+        $sql = "SELECT id FROM taikhoan WHERE email='$email'";
+        $id_acc = pdo_query_one($sql);
+        $iduser = $id_acc['id'];
+        if (isset($_GET['add_cart'])) {
+            $idsp = $_GET['add_cart'];
+            cart_add($idsp, $iduser);
+        }
+    }
+    ?>
 
     <div class="container_yeuthich">
         <h4>Sản phẩm yêu thích</h4>
@@ -13,7 +23,6 @@ yeuthich_remove($id);
             <thead>
                 <tr>
                     <th scope="col">#</th>
-                    <th scope="col">Xóa</th>
                     <th scope="col">Ảnh sản phẩm</th>
                     <th scope="col">Tên sản phẩm </th>
                     <th scope="col">Giá sản phẩm</th>
@@ -24,22 +33,23 @@ yeuthich_remove($id);
             <tbody>
                 <tr>
                     <?php
-                            $email = $_SESSION['email_dn'];
+                    $email = $_SESSION['email_dn'];
                     $sanpham_yeuthich = sanpham_yeuthich($email);
                     $dem_love = 0;
-                    foreach ($sanpham_yeuthich as $key) {
-                        $dem_love++;
+                    foreach ($sanpham_yeuthich as $key=>$value) {
                     ?>
-                        <th scope="row"><?= $dem_love ?></th>
-                        <td><a onclick="return(confirm('Bạn có chắc chắn muốn xóa ?'))" href="index.php?act=yeuthich&yeuthich_remove=<?= $key['id']?>"><i class="fa fa-trash-o" aria-hidden="true"></a></i></td>
-                        <td><img src="<?= $img_path . "sanpham/" . $key['img'] ?>" alt="" width="100px"></td>
-                        <td><?= $key['name'] ?></td>
-                        <td><?= $key['price'] ?></td>
-                        <td><i class="fa fa-cart-plus" aria-hidden="true"></i>
+                        <th scope="row"><?= $key+1 ?></th>
+                        <td><img src="<?= $img_path . "sanpham/" . $value['img'] ?>" alt="" width="100px"></td>
+                        <td><?= $value['name'] ?></td>
+                        <td><?=number_format($value['price'], 0, ',', '.');  ?></td>
+                        <td><a onclick="return(confirm('Bạn có chắc chắn muốn xóa ?'))" href="index.php?act=yeuthich&yeuthich_remove=<?= $value['id'] ?>"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+                            <a href="<?= $_SERVER['REQUEST_URI'] ?>&add_cart=<?= $value['idsp'] ?>"> <i class="fa fa-cart-plus" aria-hidden="true"></i>
+                            </a>
                         </td>
-                    </tr>
-                    <?php
-                     }
+                </tr>
+            <?php
+                    }
+
             ?>
             </tbody>
         </table>

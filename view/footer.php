@@ -378,6 +378,7 @@
 <script src="assets/js/vendor/modernizr-3.11.2.min.js"></script>
 <script src="assets/js/plugins/wow.min.js"></script>
 <script src="assets/js/plugins/jquery-ui.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script src="assets/js/plugins/swiper-bundle.min.js"></script>
 <script src="assets/js/plugins/jquery.nice-select.js"></script>
 <script src="assets/js/plugins/parallax.min.js"></script>
@@ -390,7 +391,49 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <?php include 'assets/js/sweet_alert.php'; ?>
 <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+    <script>
+	var citis = document.getElementById("city");
+var districts = document.getElementById("district");
+var wards = document.getElementById("ward");
+var Parameter = {
+  url: "https://raw.githubusercontent.com/kenzouno1/DiaGioiHanhChinhVN/master/data.json", 
+  method: "GET", 
+  responseType: "application/json", 
+};
+var promise = axios(Parameter);
+promise.then(function (result) {
+  renderCity(result.data);
+});
 
+function renderCity(data) {
+  for (const x of data) {
+    citis.options[citis.options.length] = new Option(x.Name, x.Name);
+  }
+  citis.onchange = function () {
+    district.length = 1;
+    ward.length = 1;
+    if(this.value != ""){
+      const result = data.filter(n => n.Name === this.value);
+
+      for (const k of result[0].Districts) {
+        district.options[district.options.length] = new Option(k.Name, k.Name);
+      }
+    }
+  };
+  district.onchange = function () {
+    ward.length = 1;
+    const dataCity = data.filter((n) => n.Name === citis.value);
+    if (this.value != "") {
+      const dataWards = dataCity[0].Districts.filter(n => n.Name === this.value)[0].Wards;
+
+      for (const w of dataWards) {
+        wards.options[wards.options.length] = new Option(w.Name, w.Name);
+      }
+    }
+  };
+}
+	</script>
 </body>
 
 
