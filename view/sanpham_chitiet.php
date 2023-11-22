@@ -47,46 +47,60 @@
                 <input type="hidden" name="soluong" value="<?= $soluong ?> ">
                 <input type="hidden" name="act" value="sanpham_chitiet">
                 <div class="soluongmua">
-                    <?php
-                    $id = $_GET['id'];
-                    $soluong = $_GET['soluong'];
-                    if ($soluong < 0) {
-                        $soluong = 0;
-                    }
-                    ?>
-                    <p>Số lượng:</p>
+                    <p style="margin-right: 20px;">Số lượng: </p>
                     <table border="3px">
                         <tr>
                             <th>
-                                <a href="index.php?act=sanpham_chitiet&id=<?= $id ?>&soluong=<?= $soluong - 1 ?>">-</a>
+                                <span style="cursor: pointer;" onclick="changeQuantity(-1)">-</span>
+                            </th>
+                            <th>
+                                <p style="margin: 0px;"><span id="quantityDisplay"><?= $soluong ?></span></p>
 
                             </th>
                             <th>
-
-                                <p><?= $soluong ?></p>
-                            </th>
-                            <th>
-                                <a href="index.php?act=sanpham_chitiet&id=<?= $id ?>&soluong=<?= $soluong + 1 ?>">+</a>
-
+                                <span style="cursor: pointer;" onclick="changeQuantity(1)">+</span>
                             </th>
                         </tr>
                     </table>
                 </div>
+                <script>
+                    function changeQuantity(amount) {
+                        var url = new URL(window.location.href);
+
+                        // Lấy giá trị hiện tại của soluong từ URL
+                        var currentQuantity = parseInt(url.searchParams.get("soluong")) || 1;
+
+                        // Tăng hoặc giảm giá trị soluong
+                        currentQuantity += amount;
+
+                        // Đảm bảo giá trị không âm
+                        currentQuantity = Math.max(1, currentQuantity);
+
+                        // Cập nhật giá trị soluong trong URL
+                        url.searchParams.set("soluong", currentQuantity);
+
+                        // Thay đổi URL mà không tải lại trang
+                        window.history.replaceState({}, '', url);
+
+                        // Cập nhật hiển thị số lượng trên trang
+                        document.getElementById("quantityDisplay").innerText = currentQuantity;
+                    }
+                </script>
                 <div class="mau">Màu
-
-
                     <?php
                     $all_color = all_color();
                     foreach ($all_color as $key => $value) {
                     ?>
                         <div class="custom-radio">
-                            <input type="radio" id="<?= $value['color'] ?>" name="color" value="<?= $value['id'] ?>" onclick="updateUrl('<?= $value['id'] ?>' <?php if (isset($_GET['color']) && $_GET['color'] == $value['id']) {
+                            <input type="radio" id="<?= $value['color'] ?>" name="color" value="<?= $value['id'] ?>" onclick="updateUrl(<?= $value['id'] ?>)" <?php if (isset($_GET['color']) && $_GET['color'] == $value['id']) {
                                                                                                                                                                     echo 'checked';
-                                                                                                                                                                } ?> )">
+                                                                                                                                                                } ?>>
                             <label for="<?= $value['color'] ?>"><?= $value['color'] ?></label>
                         </div>
                     <?php } ?>
                 </div>
+
+
                 <script>
                     function updateUrl(value) {
                         // Lấy URL hiện tại
@@ -100,7 +114,6 @@
                             // Thêm tham số 'color' vào URL
                             var updatedUrl = currentUrl + (currentUrl.includes('?') ? '&' : '?') + 'color=' + value;
                         }
-
                         // Chuyển hướng đến URL mới và reload lại trang
                         window.location.href = updatedUrl;
                     }
@@ -126,7 +139,7 @@
                         </div>
                     <?php } ?>
                 </div>
-
+                
                 <div class="buttom">
                     <button class="add_gio" name="add_cart_chitiet">Thêm vào giỏ hàng <i style="font-size: larger; color: #0B5717;" class="fa fa-cart-plus" aria-hidden="true"></i>
                     </button>
@@ -156,19 +169,20 @@
     <?php
     $sanpham_chitiet['price'];
     if (isset($_GET['add_cart_chitiet'])) {
-        $taikhoan_email = taikhoan_email($email);
-        $iduser = $taikhoan_email['id'];
-        $soluong = $_GET['soluong'];
-        $gia_sp = $sanpham_chitiet['price'];
-        $tongtien = $gia_sp * $soluong;
-        $idsp = $_GET["id"];
-        $color = $_GET['color'];
-        $size = $_GET['size'];
-        $bienthe_check = timbienthe($idsp, $color, $size);
-        $bienthe = $bienthe_check['id'];
-        echo $bienthe;
-        add_gio($iduser,$soluong,$tongtien,$bienthe);
-    
+        if ($sanpham_chitiet['soluong'] > 0) {
+            $taikhoan_email = taikhoan_email($email);
+            $iduser = $taikhoan_email['id'];
+            $soluong = $_GET['soluong'];
+            $gia_sp = $sanpham_chitiet['price'];
+            $tongtien = $gia_sp * $soluong;
+            $idsp = $_GET["id"];
+            $color = $_GET['color'];
+            $size = $_GET['size'];
+            $bienthe_check = timbienthe($idsp, $color, $size);
+            $bienthe = $bienthe_check['id'];
+            echo $bienthe;
+            add_gio($iduser, $soluong, $tongtien, $bienthe);
+        } 
     }
     ?>
 

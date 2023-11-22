@@ -15,6 +15,7 @@
             cart_add($idsp, $iduser);
         }
     }
+    
     ?>
 
     <div class="container_yeuthich">
@@ -23,7 +24,7 @@
             <thead>
                 <tr>
                     <th scope="col">#</th>
-                    <th scope="col">Ảnh sản phẩm</th>
+                    <th scope="col">Ảnh sản phẩm </th>
                     <th scope="col">Tên sản phẩm </th>
                     <th scope="col">Giá sản phẩm</th>
 

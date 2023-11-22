@@ -127,8 +127,6 @@ function yeuthich_cout($id)
 
 function sanpham_giohang($email)
 {
-
-    // SELECT sanpham.img,sanpham.name,sanpham.price,size.size,color.color from sanpham JOIN bienthe on sanpham.id= bienthe.idsp JOIN size ON bienthe.idsize=size.id JOIN color ON color.id=bienthe.idcolor JOIN phanloaidh on sanpham.id=phanloaidh.idsp JOIN taikhoan on taikhoan.id=phanloaidh.iduser WHERE taikhoan.email='nguyentinh140321@gmail.com' AND phanloaidh.idtrangthai=2 AND bienthe.soluong>0
     $sql = "SELECT sanpham.img,color.color,size.size,sanpham.name, phanloaidh.tongtien,phanloaidh.soluong,phanloaidh.id,bienthe.idsp,taikhoan.email FROM phanloaidh join bienthe on bienthe.id= phanloaidh.bienthe JOIN taikhoan ON taikhoan.id=phanloaidh.iduser JOIN sanpham ON sanpham.id=bienthe.idsp JOIN size ON size.id=bienthe.idsize JOIN color ON color.id=bienthe.idcolor WHERE taikhoan.email='$email' AND phanloaidh.idtrangthai=2";
     $sanpham_giohang = pdo_query($sql);
     return $sanpham_giohang;

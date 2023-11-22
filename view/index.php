@@ -9,6 +9,7 @@ include("../model/taikhoan.php");
 include("../model/validate.php");
 include("../model/sanpham.php");
 include("../model/danhmuc.php");
+include("../model/vocher.php");
 include("header.php");
 if (!isset($_GET["act"])) {
     include("home.php");
