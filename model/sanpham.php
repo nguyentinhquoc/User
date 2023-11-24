@@ -50,7 +50,7 @@ function sanpham_search_list($a){
 function sanpham_all_list($a)
 {
     $c = ($a - 1) * 20;
-    $sql = "SELECT * FROM sanpham ORDER BY id DESC LIMIT $c,20 ;";
+    $sql = "SELECT * FROM sanpham ORDER BY id ASC LIMIT $c,20 ;";
     $sanpham_all = pdo_query($sql);
     return $sanpham_all;
 }

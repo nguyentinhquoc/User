@@ -8,8 +8,11 @@ include("../model/binhluan.php");
 include("../model/taikhoan.php");
 include("../model/validate.php");
 include("../model/sanpham.php");
+include("../model/dathang.php");
+include("../model/donhang.php");
 include("../model/danhmuc.php");
 include("../model/vocher.php");
+include("../model/thongbao.php");
 include("header.php");
 if (!isset($_GET["act"])) {
     include("home.php");
@@ -47,8 +50,14 @@ if (!isset($_GET["act"])) {
         case "dathang":
             include("dathang.php");
             break;
+        case "thongbao":
+            include("thongbao.php");
+            break;
         case "dathangtc":
             include("dathangtc.php");
+            break;
+        case "donhang":
+            include("donhang.php");
             break;
         default:
             include("404.php");

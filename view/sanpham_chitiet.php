@@ -218,7 +218,7 @@
                 <div class="content">
                     <h5><?= $taikhoan_email['name'] ?></h5><br>
                     <form action="index.php?act=sanpham_chitiet&id=<?= $idsp ?>" method="post">
-                        <input type="text" name="comment" id="" placeholder="Nhập binh luận">
+                        <input style="width: 90%;" type="text" name="comment" id="" placeholder="Nhập binh luận">
                         <button name="submit_comment">Bình luận</button>
                     </form>
                     <?php

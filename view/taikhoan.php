@@ -4,7 +4,7 @@
         $email = $_SESSION['email_dn'];
         $taikhoan_email = taikhoan_email($email);
         ?>
-        <div class="img"><img src="<?= $img_path."avarta_user/".$taikhoan_email['img'] ?>" alt="" width="100px" height="100px" style=" border-radius: 50px;"></div>
+        <div class="img"><img src="<?= $img_path . "avarta_user/" . $taikhoan_email['img'] ?>" alt="" width="100px" height="100px" style=" border-radius: 50px;"></div>
         <div class="list">
             <ul>
                 <a href="index.php?act=myaccout&profile=1">
@@ -72,7 +72,8 @@
                                         } ?></p>
                 <label for="">Địa chỉ:</label> <br>
                 <p style="border: 1px solid;  border-radius: 10px;width: 280px; padding: 5px;"><?= $taikhoan_email['address'] ?></p>
-                <p></p>                <p></p>
+                <p></p>
+                <p></p>
                 <button class="submit" name="submit_doitt">Xác nhận đổi thông tin</button>
         </form>
     </div>
@@ -82,55 +83,102 @@
     <div class="doi_pass">
         <form action="" method="post">
 
-            <label for="">Nhập mật khẩu:</label> <br> <input  type="password" name="pass_old">
-             <p style="color: red;"><?php
-                                        if (isset($err_pass_old)) {
-                                            echo $err_pass_old;
-                                        } ?></p>
+            <label for="">Nhập mật khẩu:</label> <br> <input type="password" name="pass_old">
+            <p style="color: red;"><?php
+                                    if (isset($err_pass_old)) {
+                                        echo $err_pass_old;
+                                    } ?></p>
             <label for=""> Nhập mật khẩu mới:</label><br> <input type="password" name="pass_new">
-             <p style="color: red;"><?php
-                                        if (isset($err_pass_new)) {
-                                            echo $err_pass_new;
-                                        } ?></p>
+            <p style="color: red;"><?php
+                                    if (isset($err_pass_new)) {
+                                        echo $err_pass_new;
+                                    } ?></p>
             <label for="">Nhập lại mật khẩu mới:</label><br><input type="password" name="repass_new">
-             <p style="color: red;"><?php
-                                        if (isset($err_repass_new)) {
-                                            echo $err_repass_new;
-                                        } ?></p>
+            <p style="color: red;"><?php
+                                    if (isset($err_repass_new)) {
+                                        echo $err_repass_new;
+                                    } ?></p>
             <button class="submit" name="submit_doipass">Đổi mật khẩu</button>
         </form>
     </div>
 <?php
                 break;
             case '3': ?>
-    <h4>Thông bao</h4>
-    <div class="thongbao">
-        <div class="item">
-            <img src="<?= $img_path . "avarta_user/" . $taikhoan_email['img'] ?>" alt="" width="100px" height="100px">
-            <div class="content">
-                <h5>heder</h5>
-                <p>Nội dung</p>
-            </div>
-        </div>
+    <h4>Đơn mua</h4>
+    <div class="menu">
+        <a href="index.php?act=myaccout&profile=3&trangthai=3">Chờ xác nhận</a>
+        <a href="index.php?act=myaccout&profile=3&trangthai=4">Đang giao hàng</a>
+        <a href="index.php?act=myaccout&profile=3&trangthai=5">Đã nhận hàng</a>
     </div>
-<?php
+    
+    <div class="donhang">
+    <?php
+    if (isset($_GET['trangthai'])) {
+        $idtrangthai=$_GET['trangthai'];
+    }else{
+        $idtrangthai=3;
+    }
+    $load_chitietdh=load_chitietdh($email,$idtrangthai);
+    foreach ($load_chitietdh as $key2 => $value1) { 
+        $tongtiehoadon=0;
+        $madonhang=$value1['madh'];?>
+        <div class="donhangct">
+            Mã đơn hàng:<?=$madonhang?>
+<?php             $load_chitietdh_sp=load_chitietdh_sp($madonhang);
+    foreach ($load_chitietdh_sp as $key1 => $value2) { ?>
+   
+            <div class="item">
+                <img src="<?= $img_path.'sanpham/'.$value2['img']?>" alt="" width="100px">
+                <div class="content" style="width: 80%;">
+                    <h4><?= $value2['name'] ?></h4>
+                    <p>Biến thể sản phẩm : <?= 'Size'.$value2['size'].','.$value2['color'] ?></p>
+                    <p>Số lượng: <?=$value2['soluong']?></p>
+                </div>
+                <div class="gia"><?=$value2['tongtien']?></div>
+            </div>
+      <?php   $tongtiehoadon+=$value2['tongtien'];
+       }
+?>
+            <hr>
+          <table>
+            <tr>
+                <td>Tổng tiền hàng :</td>
+                <td style="width: 10%;"><?=$tongtiehoadon?>đ</td>
+            </tr>
+            <tr>
+            <td>Vocher :</td>
+            <td><?=-$value2['sale']?>đ</td>
+
+            </tr>
+            <tr>
+            <td>Thành tiền :</td>
+            <td style="color:red; font-size: larger; font-weight: bolder;"><?=$value2['thanhtien']?>đ</td>
+
+            </tr>
+          </table>
+        </div>
+<?php     }
+    ?>
+
+    </div>
+    <?php
                 break;
             case '4': ?>
-    <h4>Vocher</h4>
-    <div class="thongbao">
-        <div class="item">
-            <img src="<?= $img_path . "avarta_user/" . $taikhoan_email['img'] ?>" alt="" width="100px" height="100px">
-            <div class="content">
-                <h5>heder</h5>
-                <p>Nội dung</p>
+        <h4>Vocher</h4>
+        <div class="thongbao">
+            <div class="item">
+                <img src="<?= $img_path . "avarta_user/" . $taikhoan_email['img'] ?>" alt="" width="100px" height="100px">
+                <div class="content">
+                    <h5>heder</h5>
+                    <p>Nội dung</p>
+                </div>
             </div>
         </div>
-    </div>
 <?php
                 break;
         } ?>
 
 
 
-</div>
+    </div>
 </main>

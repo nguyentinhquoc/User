@@ -25976,17 +25976,40 @@ blockquote .user-name:before {
 
 }
 
-.myacc .box_right .thongbao {
-  height: 300px;
-  overflow-y: scroll;
-  border: 1px solid #ccc;
-  padding: 10px;
-}
 
-.myacc .box_right .thongbao .item {
+.myacc .box_right .donhang .item {
   display: flex;
   margin-bottom: 20px;
+}.myacc .box_right .donhang{
+  width: 700px;
+}.myacc .box_right .donhang .gia{
+  width: 20%;
+  padding-top: 80px;
+  color: red;
+  font-weight: bolder;
+}.myacc .box_right .donhang .item p{
+  margin: 0;
+  margin-left: 10px;
+  font-size: small;
+}.myacc .box_right .donhang .donhangct{
+  padding: 20px;
+  border: 1px solid;
+  margin-bottom: 20px;
 }
+/* .donhang .donhang_item .item {
+  display: flex;
+}
+
+.donhang .donhang_item .item p {
+
+}
+
+.donhang .donhang_item .item .gia {
+  width: 10%;
+  padding-top: 80px;
+  color: red;
+  font-weight: bolder;
+} */
 
 .myacc .box_right .edit {
   width: 40%;
@@ -26048,7 +26071,12 @@ blockquote .user-name:before {
 
 }
 
-.giohang>.top {
+.giohang {
+  width: 90%;
+  margin: 0 auto;
+}
+
+.dathang>.top {
 
   border: 5px dashed #ec8255;
   padding: 20px;
@@ -26081,6 +26109,7 @@ blockquote .user-name:before {
   padding: 20px;
   margin: 20px 0px;
 }
+
 .dathang .thongtin_dathang {
   border: 1px solid #ec8255;
   padding: 20px;
@@ -26089,8 +26118,9 @@ blockquote .user-name:before {
 
 .custom-radio input[type="radio"] {
   display: none;
-  
+
 }
+
 .custom-radio label {
   display: inline-block;
   margin-left: 20px;
@@ -26102,17 +26132,47 @@ blockquote .user-name:before {
   transition: background-color 0.3s, color 0.3s;
 }
 
-.custom-radio input[type="radio"]:checked + label {
+.custom-radio input[type="radio"]:checked+label {
   background-color: #3498db;
   color: white;
-}.sanpham_chitiet .mau,.sanpham_chitiet .size{
+}
+
+.sanpham_chitiet .mau,
+.sanpham_chitiet .size {
   display: flex;
   margin: 10px;
-}.sanpham_chitiet .soluongmua{
+}
+
+.sanpham_chitiet .soluongmua {
   display: flex;
-}.sanpham_chitiet .soluongmua table{
+}
+
+.sanpham_chitiet .soluongmua table {
   width: 100px;
   text-align: center;
-}.sanpham_chitiet .soluongmua table p{
+}
+
+.sanpham_chitiet .soluongmua table p {
   margin: 0px;
+}
+
+.container_thongbao .item {
+  display: flex;
+}
+
+.container_thongbao .thongbao {
+  height: 500px;
+  /* Điều chỉnh chiều cao theo ý muốn */
+  width: 80%;
+  margin: 0 auto;
+  overflow: auto;
+  /* Tạo thanh cuộn khi nội dung vượt quá kích thước của phần tử */
+  border: 1px solid #ccc;
+}
+
+.donhang .menu {
+  display: flex;
+  justify-content: space-around;
+  text-align: center;
+
 }

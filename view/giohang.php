@@ -1,15 +1,6 @@
 <div class="giohang">
 
-    <div class="top">
-        <h4 style="color: red;"><i class="fa fa-map-marker" aria-hidden="true"></i>
-            Địa chỉ nhận hàng
-
-
-        </h4>
-        Họ và tên: Nguyễn Quốc Tình<br>
-        Số điện thoại: 0366904133<br>
-        Địa chỉ nhận hàng: Yên LÂm-Yên Mô-Ninh Bình<br>
-    </div>
+   
     <?php
     if (isset($_GET['cart_remove'])) {
         $id = $_GET['cart_remove'];
@@ -38,7 +29,7 @@
                     foreach ($sanpham_giohang as $key => $value) {
                     ?>
                         <th scope="row"><?= $key + 1; ?></th>
-                        <td><input type="checkbox" class="checkbox" name="id_bienthe[]" value="<?= $value['id'] ?>"></td>
+                        <td><input type="checkbox" class="checkbox" name="idphanloaidh[]" value="<?= $value['id'] ?>"></td>
                         <td><img src="<?= $img_path . "sanpham/" . $value['img'] ?>" alt="" width="100px"></td>
                         <td><?= $value['name'] ?></td>
                         <td><?= "Màu:" . $value['color'] . "<br>" . "Size:" . $value['size'] ?></td>
@@ -70,7 +61,7 @@
 
                 $vocher_where_user = vocher_where_user($user);
                 foreach ($vocher_where_user as $key => $value) { ?>
-                    <option value="<?= $value['sale']?>"><?= 'Giảm giá: ' . $value['sale'] . '%' ?></option>
+                    <option value="<?= $value['sale']?>"><?= 'Giảm giá: ' . $value['sale'] ?></option>
                 <?php }
 
                 ?>

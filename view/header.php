@@ -143,7 +143,7 @@
                                             $cart = cart_cout($iduser);
                                         }
                                         ?>
-                                        <?php if (isset($_SESSION['email_dn'])) {
+                                        <?php if (isset($_SESSION['email_dn'])) {   
                                             $email = $_SESSION['email_dn'];
                                             $taikhoan_email = taikhoan_email($email); ?>
 
@@ -156,13 +156,11 @@
                                                 </a>
                                             </li>
                                             <li class="minicart-wrap me-3 me-lg-0">
-                                                <a href="index.php?act=giohang" class="minicart-btn">
+                                                <a href="index.php?act=thongbao" class="minicart-btn">
                                                 <i class="fa fa-bell-o" aria-hidden="true"></i>
-                                                <span class="quantity">5</span>
+                                                <span class="quantity">6</span>
                                                 </a>
                                             </li>
-
-
                                             <li class="minicart-wrap me-3 me-lg-0">
                                                 <a href="index.php?act=giohang" class="minicart-btn">
                                                     <i class="pe-7s-shopbag"></i>
@@ -174,6 +172,7 @@
                                                     <img src="<?= $img_path . "avarta_user/" . $taikhoan_email['img'] ?>" alt="" width="40px" height="40px" style="border-radius: 50%;">
                                                 </button>
                                                 <ul class="dropdown-menu right-side" aria-labelledby="settingButton">
+                                                    <li><a class="dropdown-item" href="index.php?act=donhang">Đơn hàng của tôi</a></li>
                                                     <li><a class="dropdown-item" href="index.php?act=myaccout&profile=1">Tài khoản của tôi</a></li>
                                                     <li><a class="dropdown-item" href="index.php?act=dangxuat">Đang xuất</a></li>
                                                 </ul>
