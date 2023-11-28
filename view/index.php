@@ -25,7 +25,7 @@ if (!isset($_GET["act"])) {
         case "dangnhap":
             include("dangnhap.php");
             break;
-        case "dangxuat":
+        case "dangxuat":    
             unset($_SESSION['email_dn']);
             header('location: index.php?dangxuattc');
             break;

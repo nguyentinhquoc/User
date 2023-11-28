@@ -3,8 +3,8 @@
 
     <div class="box_right">
         <form action="" method="POST">
-            <label>Sắp xếp theo</label>
-            <select name="sapxep" id="">
+            <label>Sắp xếp theo:</label>
+            <select name="sapxep"  >
                 <option value="">Sắp xêp</option>
                 <option value="1">Từ A-Z</option>
                 <option value="2">Từ Z-A</option>
@@ -12,7 +12,7 @@
                 <option value="4">Giá giảm dần</option>
                 <option value="5">Lượt đánh giá</option>
             </select>
-            <input type="submit" name="submit_sapxep">
+            <input type="submit" name="submit_sapxep" value="Sắp xếp">
         </form>
         <div class="swiper-container brand-slider">
             <div class="swiper-wrapper_list">

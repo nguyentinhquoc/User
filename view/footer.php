@@ -375,6 +375,7 @@
 <script src="assets/js/vendor/bootstrap.bundle.min.js"></script>
 <script src="assets/js/vendor/jquery-3.6.0.min.js"></script>
 <script src="assets/js/vendor/jquery-migrate-3.3.2.min.js"></script>
+<script src="Download the compressed, production jQuery 3.7.1"></script>
 <script src="assets/js/vendor/modernizr-3.11.2.min.js"></script>
 <script src="assets/js/plugins/wow.min.js"></script>
 <script src="assets/js/plugins/jquery-ui.min.js"></script>
@@ -386,7 +387,6 @@
 <script src="assets/js/plugins/tippy.min.js"></script>
 <script src="assets/js/plugins/ion.rangeSlider.min.js"></script>
 <script src="assets/js/plugins/mailchimp-ajax.js"></script>
-
 <script src="assets/js/main.js"></script>
 <script src="assets/js/locsp.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

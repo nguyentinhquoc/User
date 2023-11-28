@@ -1,6 +1,18 @@
+<?php
+if (isset($_GET['trupl'])) {
+    $id = $_GET['trupl'];
+    $sql = "UPDATE `phanloaidh` SET `soluong` = soluong-1 WHERE `phanloaidh`.`id` = $id";
+    pdo_execute($sql);
+}
+if (isset($_GET['congpl'])) {
+    $id = $_GET['congpl'];
+    $sql = "UPDATE `phanloaidh` SET `soluong` = soluong+1 WHERE `phanloaidh`.`id` = $id";
+    pdo_execute($sql);
+}
+?>
 <div class="giohang">
+    <h3> Giỏ hàng </h3>
 
-   
     <?php
     if (isset($_GET['cart_remove'])) {
         $id = $_GET['cart_remove'];
@@ -18,7 +30,14 @@
                     <th scope="col"> Phân loại</th>
                     <th scope="col"> Số lượng</th>
                     <th scope="col">Giá sản phẩm</th>
-                    <th scope="col">Thao tác</th>
+                    <th scope="col">Thao tác     <?php
+                        if (isset($_POST['idhihi'])) {
+                            echo $_POST['idhihi'];
+                        }
+                        ?>
+
+                       
+                    </th>
                 </tr>
             </thead>
             <tbody>
@@ -33,15 +52,27 @@
                         <td><img src="<?= $img_path . "sanpham/" . $value['img'] ?>" alt="" width="100px"></td>
                         <td><?= $value['name'] ?></td>
                         <td><?= "Màu:" . $value['color'] . "<br>" . "Size:" . $value['size'] ?></td>
-                        <td><?= $value['soluong'] ?></td>
-                        <td><?= number_format($value['tongtien'], 0, ',', '.');  ?></td>
+                        <td><input type="number" value="<?= $value['soluong'] ?>" min="1" style="width: 50px;" id="soluong_<?= $value['id'] ?>" oninput="setsoluong(<?= $value['id'] ?>)"></td>
+                        <td><?= number_format($value['soluong'] * $value['price'], 0, ',', '.');  ?></td>
                         <td><a onclick="return(confirm('Bạn có chắc chắn muốn xóa ?'))" href="index.php?act=giohang&cart_remove=<?= $value['id'] ?>"><i class="fa fa-trash-o" aria-hidden="true"></a></i></td>
                         </td>
                 </tr>
             <?php
                     }
             ?>
+            </tbody>
+        </table>
+                
             <script>
+                function setsoluong(id) {
+                     let soluong_new = $('#soluong_' + id).val();
+                    if (soluong_new <= 0) {
+                        soluong_new = 1;
+                    }
+                   $.post("ajax/sl_giohang.php",{id:id, soluong_new: soluong_new},function(data) {
+                    $(".table").html(data);
+                   });
+                }
                 var checkBoxAll = document.getElementById('checkboxAll');
                 var checkBox = document.getElementsByClassName('checkbox');
                 checkBoxAll.addEventListener('click', function() {
@@ -50,10 +81,8 @@
                     }
                 });
             </script>
-            </tbody>
-        </table>
         <div class="vocher">
-            <i class="fa fa-ticket" aria-hidden="true"></i>
+            <i class="fa fa-ticket" aria-hidden="true" style="font-size: 40px; color: orange;"></i>
             <p>PANDA SHOP Vocher </p>
             <select id="vocher" name="vocher">
                 <option value="">Không áp mã</option>
@@ -61,15 +90,11 @@
 
                 $vocher_where_user = vocher_where_user($user);
                 foreach ($vocher_where_user as $key => $value) { ?>
-                    <option value="<?= $value['sale']?>"><?= 'Giảm giá: ' . $value['sale'] ?></option>
+                    <option value="<?= $value['sale'] ?>"><?= 'Giảm giá: ' . $value['sale'] ?></option>
                 <?php }
-
                 ?>
-
             </select>
-
-
         </div>
-        <button>Đặt hàng </button>
+        <button name="submit_giohang">Đặt hàng </button>
     </form>
 </div>

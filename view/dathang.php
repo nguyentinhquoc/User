@@ -1,17 +1,17 @@
 <main class="dathang">
-<div class="top">
-        <h4 style="color: red;"><i class="fa fa-map-marker" aria-hidden="true"></i>
-            Địa chỉ nhận hàng
+  <div class="top">
+    <h4 style="color: red;"><i class="fa fa-map-marker" aria-hidden="true"></i>
+      Địa chỉ nhận hàng
 
 
-        </h4>
-        <?php
-        $email=$_SESSION['email_dn'];
-        $taikhoan_email = taikhoan_email($email); ?>
-        Họ và tên: <?=$taikhoan_email['name']?><br>
-        Số điện thoại: <?=$taikhoan_email['tel']?><br>
-        Địa chỉ nhận hàng: <?=$taikhoan_email['address']?><br>
-    </div>
+    </h4>
+    <?php
+    $email = $_SESSION['email_dn'];
+    $taikhoan_email = taikhoan_email($email); ?>
+    Họ và tên: <?= $taikhoan_email['name'] ?><br>
+    Số điện thoại: <?= $taikhoan_email['tel'] ?><br>
+    Địa chỉ nhận hàng: <?= $taikhoan_email['address'] ?><br>
+  </div>
   <div class="center">
     <table class="table table-striped">
       <thead>
@@ -31,10 +31,10 @@
         $idphanloaidh = $_SESSION['idphanloaidh'];
         $allprice = 0;
         foreach ($idphanloaidh as $key => $value) {
-          $sql = "SELECT sanpham.img,sanpham.name,size.size,color.color,sanpham.price,phanloaidh.soluong,phanloaidh.tongtien  from phanloaidh JOIN bienthe ON phanloaidh.bienthe=bienthe.id JOIN sanpham ON bienthe.idsp=sanpham.id JOIN size on size.id=bienthe.idsize JOIN color on color.id=bienthe.idcolor WHERE phanloaidh.id = $value";
+          $sql = "SELECT sanpham.img,sanpham.name,size.size,color.color,sanpham.price,phanloaidh.soluong  from phanloaidh JOIN bienthe ON phanloaidh.bienthe=bienthe.id JOIN sanpham ON bienthe.idsp=sanpham.id JOIN size on size.id=bienthe.idsize JOIN color on color.id=bienthe.idcolor WHERE phanloaidh.id = $value";
           $bienthe = pdo_query($sql);
           foreach ($bienthe as $keybt => $valuebt) {
-            $allprice += $valuebt['tongtien'];
+            $allprice+=$valuebt['soluong']*$valuebt['price'];
         ?>
             <tr>
               <td><img src="<?= $img_path . "sanpham/" . $valuebt['img'] ?>" alt="" width="100px"></td>
@@ -42,18 +42,17 @@
               <td><?= $valuebt['size'] . '<br>' . $valuebt['color'] ?></td>
               <td><?= $valuebt['price'] ?></td>
               <td> <?= $valuebt['soluong'] ?> </td>
-              <td><?= $valuebt['tongtien'] ?></td>
+              <td><?= $valuebt['soluong']*$valuebt['price'] ?></td>
             </tr>
         <?php  }
         }
         ?>
-
       </tbody>
     </table>
   </div>
   <form action="" method="POST">
     <?php $vocher = 0;
-    
+
     if (isset($_POST['vocher']) && $_POST['vocher'] != "") {
       $_SESSION['vocher'] = $_POST['vocher'];
       $vocher = $_SESSION['vocher'];
@@ -74,9 +73,9 @@
       $mahd = pdo_query_one($sql);
       $sql2 = "SELECT CURRENT_TIMESTAMP;";
       $date = pdo_query_one($sql2);
-  $date_ht=$date['CURRENT_TIMESTAMP'];
-  $madh_ht=$mahd['mahd'];
-  $tongthanhtoan=$allprice - $vocher;
+      $date_ht = $date['CURRENT_TIMESTAMP'];
+      $madh_ht = $mahd['mahd'];
+      $tongthanhtoan = $allprice - $vocher;
 
       ?>
       <script>
@@ -94,7 +93,7 @@
    <input type="hidden" name="amount" value="<?= $tongthanhtoan ?>">
    <input type="hidden" name="vocher" value="<?= $vocher ?>">
    <input type="hidden" name="date" value="<?= $date_ht ?>">
-   <input type="hidden" name="order_type" value="<?='Giày Panda shop' ?>">
+   <input type="hidden" name="order_type" value="<?= 'Giày Panda shop' ?>">
 
 
     <div class="tongtienhang"><p>Tổng thanh toán : <?= $tongthanhtoan ?></p></div>
@@ -126,7 +125,7 @@
 
               <input type="submit" name="dathang" value="Thanh toán">
             `;
-      
+
           } else if (number == 2) {
             // http://localhost:3000/DU_AN_1/user/view/index.php?options-base=on&order_id=20231123082614&order_desc=20231123082614&amount=1499950
             document.getElementById("thanhtoan_text").innerHTML = `
@@ -134,7 +133,7 @@
               <input type="hidden" name="order_desc" value="<?= 'Thanh toán hóa đơn: ' . $madh_ht ?>"> 
    <input type="hidden" name="amount" value="<?= $tongthanhtoan ?>">
    <input type="hidden" name="vocher" value="<?= $vocher ?>">
-   <input type="hidden" name="date" value="<?=  $date_ht ?>">
+   <input type="hidden" name="date" value="<?= $date_ht ?>">
     <div class="thongtin_dathang">
     <div class="tongtienhang"><p>Tổng tiền hàng : <?php echo $allprice ?></p></div>
     <p id="selectedValue">Giảm giá : <?php echo  -$vocher; ?></p>
@@ -148,7 +147,7 @@
 
     </div>
   </form>
- 
+
   <?php
   error_reporting(E_ALL & ~E_NOTICE & ~E_DEPRECATED);
   date_default_timezone_set('Asia/Ho_Chi_Minh');
@@ -188,7 +187,6 @@
       $inputData['vnp_Bill_State'] = $vnp_Bill_State;
     }
 
-    //var_dump($inputData);
     ksort($inputData);
     $query = "";
     $i = 0;
@@ -205,7 +203,7 @@
 
     $vnp_Url = $vnp_Url . "?" . $query;
     if (isset($vnp_HashSecret)) {
-      $vnpSecureHash =   hash_hmac('sha512', $hashdata, $vnp_HashSecret); //  
+      $vnpSecureHash =   hash_hmac('sha512', $hashdata, $vnp_HashSecret);
       $vnp_Url .= 'vnp_SecureHash=' . $vnpSecureHash;
     }
   }
@@ -219,30 +217,18 @@
   } else {
   }
   ?>
-<?php
-if (isset($_POST['thanhtoan'])) {
-  $hinhthuc=$_POST['thanhtoan'];
-  $tongtien=$_POST['amount'];
-  $sale=$_POST['vocher'];
-  $date=$_POST['date'];
-  $madh=$_POST['order_id'];
-  foreach ($idphanloaidh as $key => $value) {
-    update_trangthai($madh,$value);
+  <?php
+  if (isset($_POST['thanhtoan'])) {
+    $hinhthuc = $_POST['thanhtoan'];
+    $tongtien = $_POST['amount'];
+    $sale = $_POST['vocher'];
+    $date = $_POST['date'];
+    $madh = $_POST['order_id'];
+    foreach ($idphanloaidh as $key => $value) {
+      update_trangthai($madh, $value);
+    }
+    insert_chitietdh($hinhthuc, $sale, $date, $madh, $tongtien);
   }
-  insert_chitietdh($hinhthuc,$sale,$date,$madh,$tongtien);
-}
-if (isset($_GET['thanhtoan'])) {
-  $hinhthuc=$_GET['thanhtoan'];
-  $tongtien=$_GET['amount'];
-  $sale=$_GET['vocher'];
-  $date=$_GET['date'];
-  $madh=$_GET['order_id'];
-  foreach ($idphanloaidh as $key => $value) {
-    update_trangthai($madh,$value);
-  }
-  insert_chitietdh($hinhthuc,$sale,$date,$madh,$tongtien);
-}
-http://localhost:3000/DU_AN_1/user/view/index.php?act=dathang&vnp_Amount=400000000&vnp_BankCode=NCB&vnp_BankTranNo=VNP14193964&vnp_CardType=ATM&vnp_OrderInfo=Thanh+to%C3%A1n+h%C3%B3a+%C4%91%C6%A1n%3A+20231123095501&vnp_PayDate=20231123095634&vnp_ResponseCode=00&vnp_TmnCode=UWG6PCZA&vnp_TransactionNo=14193964&vnp_TransactionStatus=00&vnp_TxnRef=20231123095501&vnp_SecureHash=cdd08e7c57f61068e9ff94f5b9d92e906d9b2004451dcb06198c3aab889143f22131667458811ab2dde92bf608f3140bfcc2e98235c61fa934a3bdc46930fad4
-?>
+  ?>
 
 </main>

@@ -46,47 +46,8 @@
                 <input type="hidden" name="id" value="<?= $idsp ?>">
                 <input type="hidden" name="soluong" value="<?= $soluong ?> ">
                 <input type="hidden" name="act" value="sanpham_chitiet">
-                <div class="soluongmua">
-                    <p style="margin-right: 20px;">Số lượng: </p>
-                    <table border="3px">
-                        <tr>
-                            <th>
-                                <span style="cursor: pointer;" onclick="changeQuantity(-1)">-</span>
-                            </th>
-                            <th>
-                                <p style="margin: 0px;"><span id="quantityDisplay"><?= $soluong ?></span></p>
-
-                            </th>
-                            <th>
-                                <span style="cursor: pointer;" onclick="changeQuantity(1)">+</span>
-                            </th>
-                        </tr>
-                    </table>
-                </div>
-                <script>
-                    function changeQuantity(amount) {
-                        var url = new URL(window.location.href);
-
-                        // Lấy giá trị hiện tại của soluong từ URL
-                        var currentQuantity = parseInt(url.searchParams.get("soluong")) || 1;
-
-                        // Tăng hoặc giảm giá trị soluong
-                        currentQuantity += amount;
-
-                        // Đảm bảo giá trị không âm
-                        currentQuantity = Math.max(1, currentQuantity);
-
-                        // Cập nhật giá trị soluong trong URL
-                        url.searchParams.set("soluong", currentQuantity);
-
-                        // Thay đổi URL mà không tải lại trang
-                        window.history.replaceState({}, '', url);
-
-                        // Cập nhật hiển thị số lượng trên trang
-                        document.getElementById("quantityDisplay").innerText = currentQuantity;
-                    }
-                </script>
-                <div class="mau">Màu
+         
+                <div class="mau">Màu:
                     <?php
                     $all_color = all_color();
                     foreach ($all_color as $key => $value) {
@@ -129,7 +90,7 @@
 
                 ?>
 
-                <div class="size">Size
+                <div class="size">Size:
                     <?php
                     foreach ($all_size as $key => $value) {
                     ?>
@@ -139,20 +100,34 @@
                         </div>
                     <?php } ?>
                 </div>
-                
+                <div class="soluongmua">
+                    <p style="margin-right: 20px;">Số lượng: </p>
+                    <input type="number" name="soluong" value="1" min="1" max="<?= $sanpham_chitiet['soluong'] ?>" style="width: 50px; border-radius: 10px; border-color: #3498db;">
+
+                </div>
                 <div class="buttom">
                     <button class="add_gio" name="add_cart_chitiet">Thêm vào giỏ hàng <i style="font-size: larger; color: #0B5717;" class="fa fa-cart-plus" aria-hidden="true"></i>
                     </button>
                     <button class="dat" name="dat_chitiet">Đặt ngay</button>
                 </div>
             </form>
+            <?php
+            if (isset($_GET['dat_chitiet'])) {
+                $_SESSION['dathang'] = [];
+                $_SESSION['dathang'][0] = $_GET['id'];
+                $_SESSION['dathang'][1] = $_GET['soluong'];
+                $_SESSION['dathang'][2] = $_GET['color'];
+                $_SESSION['dathang'][3] = $_GET['size'];
+                header('Location: index.php?act=dathang');
+            }
+            ?>
         </div>
         <div class="box box_right">
             <h6>Sản phẩm liên quan</h6>
             <?php
             $sanpham_lienquan = sanpham_lienquan($idsp);
             foreach ($sanpham_lienquan as $key) { ?>
-                <a href="index.php?act=sanpham_chitiet&id=<?= $key['id'] ?>&soluong=1">
+                <a href="index.php?act=sanpham_chitiet&id=<?= $key['id'] ?>">
 
                     <div class="item">
                         <img src="<?= $img_path . "sanpham/" . $key['img'] ?>" alt="" width="50px" height="60px">
@@ -174,15 +149,14 @@
             $iduser = $taikhoan_email['id'];
             $soluong = $_GET['soluong'];
             $gia_sp = $sanpham_chitiet['price'];
-            $tongtien = $gia_sp * $soluong;
             $idsp = $_GET["id"];
             $color = $_GET['color'];
             $size = $_GET['size'];
             $bienthe_check = timbienthe($idsp, $color, $size);
             $bienthe = $bienthe_check['id'];
             echo $bienthe;
-            add_gio($iduser, $soluong, $tongtien, $bienthe);
-        } 
+            add_gio($iduser, $soluong, $bienthe);
+        }
     }
     ?>
 

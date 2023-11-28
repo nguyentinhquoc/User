@@ -164,7 +164,7 @@
                                             <li class="minicart-wrap me-3 me-lg-0">
                                                 <a href="index.php?act=giohang" class="minicart-btn">
                                                     <i class="pe-7s-shopbag"></i>
-                                                    <span class="quantity"><?= $cart['dem'] ?>          </span>
+                                                    <span class="quantity"><?= $cart['dem'] ?></span>
                                                 </a>
                                             </li>
                                             <li class="dropdown d-none d-lg-block">

@@ -7,7 +7,7 @@ if (isset($_POST['submit_dk'])) {
     $email_dk = $_POST['email_dk'];
     $pass_dk = $_POST['pass_dk'];
     $repass_dk = $_POST['repass_dk'];
-    $address= $_POST['tinh']."-".$_POST['huyen']."-".$_POST['xa'];
+    $address = $_POST['tinh'] . "-" . $_POST['huyen'] . "-" . $_POST['xa'];
     $check_dk = true;
     $taikhoan_all = taikhoan_all();
     foreach ($taikhoan_all as $key) {
@@ -22,10 +22,9 @@ if (isset($_POST['submit_dk'])) {
             }
         }
     }
-    if($_POST['xa'] == "" ){
-        $err6='* Vui lòng nhập địa chỉ';
+    if ($_POST['xa'] == "") {
+        $err6 = '* Vui lòng nhập địa chỉ';
         $check_dk = false;
-
     }
     if (!preg_match($pattern_tel, $tel_dk)) {
         if (isset($tel_dk)) {
@@ -73,12 +72,27 @@ if (isset($_POST["submit_dn"])) {
     $taikhoan_all = taikhoan_all();
     foreach ($taikhoan_all as $key) {
         if (isset($pass_dn) && isset($email_dn)) {
-            if ($key['email'] == $email_dn && $key['pass'] == $pass_dn) {
-                $_SESSION['email_dn'] = $_POST['email_dn'];
-                header("Location: index.php?dangnhaptc");
-                break;
-            }
-            if ($key['email'] != $email_dn || $key['pass'] != $pass_dn) {
+            if ($key['email'] == $email_dn && $key['pass'] == $pass_dn && $key['role'] == 1) {
+                if ($key['trangthai'] == 1) {
+                    $_SESSION['email_dn'] = $_POST['email_dn'];
+                    header("Location: index.php?dangnhaptc");
+                    break;
+                } elseif ($key['trangthai'] == 0) {
+                    header("Location: index.php?act=dangnhap&lock");
+                    break;
+
+                }
+            } elseif ($key['email'] == $email_dn && $key['pass'] == $pass_dn && $key['role'] == 2) {
+                if ($key['trangthai'] == 1) {
+                    $_SESSION['email_dn'] = $_POST['email_dn'];
+                    header("Location: ../../Admin/View/index.php");
+                    break;
+                } elseif ($key['trangthai'] == 0) {
+                    header("Location: index.php?act=dangnhap&lock");
+                    break;
+
+                }
+            } elseif ($key['email'] != $email_dn || $key['pass'] != $pass_dn) {
                 header("Location: index.php?act=dangnhap&dangnhaptb");
             }
         }
@@ -97,11 +111,11 @@ if (isset($_POST['submit_doitt'])) {
     $email_old = $taikhoan_email['email'];
     $taikhoan_all = taikhoan_all();
     foreach ($taikhoan_all as $key) {
-        if ($key['tel'] ==  $tel_new &&  $tel_old!=$tel_new ) {
+        if ($key['tel'] ==  $tel_new &&  $tel_old != $tel_new) {
             $err_dtt_tel = "* Số điện thoại đã tồn tại";
             $check_doitt = false;
         }
-        if ($key['email'] == $email_new &&$email_new != $email_old) {
+        if ($key['email'] == $email_new && $email_new != $email_old) {
             $err_dtt_email = "* Email đã tồn tại";
             $check_doitt = false;
         }
@@ -120,9 +134,9 @@ if (isset($_POST['submit_doitt'])) {
         }
     }
     if ($check_doitt == true) {
-        
+
         $file = $_FILES['avatar']['tmp_name'];
-        $path = "assets/images/avarta_user/".$_FILES['avatar']['name'];
+        $path = "assets/images/avarta_user/" . $_FILES['avatar']['name'];
         move_uploaded_file($file, $path);
         $img_new = $_FILES['avatar']['name'];
         $email_old = $_SESSION['email_dn'];
@@ -173,9 +187,3 @@ if (isset($_POST['submit_doipass'])) {
         header('location: index.php?act=myaccout&profile=1&doipasstc');
     }
 }
-
-
-
-
-
-

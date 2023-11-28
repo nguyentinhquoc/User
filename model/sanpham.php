@@ -42,7 +42,8 @@ function sapxep($b)
         return $sanpham_all;
     }
 }
-function sanpham_search_list($a){
+function sanpham_search_list($a)
+{
     $sql = "SELECT * FROM sanpham where name LIKE '%$a%'";
     $sanpham_all = pdo_query($sql);
     return $sanpham_all;
@@ -105,9 +106,9 @@ function yeuthich_add($idsp, $iduser)
 
     if ($check == true) {
         $sql2 = "SELECT id FROM `bienthe` WHERE bienthe.idsp=$idsp LIMIT 1";
-       $id_bienthe = pdo_query_one($sql2);
-       $id_bienthex=$id_bienthe['id'];
-       $sql3="INSERT INTO `phanloaidh` (`iduser`, `bienthe`, `idtrangthai`) VALUES ('$iduser', '$id_bienthex', '1');";
+        $id_bienthe = pdo_query_one($sql2);
+        $id_bienthex = $id_bienthe['id'];
+        $sql3 = "INSERT INTO `phanloaidh` (`iduser`, `bienthe`, `idtrangthai`) VALUES ('$iduser', '$id_bienthex', '1');";
         $yeuthich_add = pdo_execute($sql3);
         return $yeuthich_add;
     }
@@ -127,7 +128,7 @@ function yeuthich_cout($id)
 
 function sanpham_giohang($email)
 {
-    $sql = "SELECT sanpham.img,color.color,size.size,sanpham.name, phanloaidh.tongtien,phanloaidh.soluong,phanloaidh.id,bienthe.idsp,taikhoan.email FROM phanloaidh join bienthe on bienthe.id= phanloaidh.bienthe JOIN taikhoan ON taikhoan.id=phanloaidh.iduser JOIN sanpham ON sanpham.id=bienthe.idsp JOIN size ON size.id=bienthe.idsize JOIN color ON color.id=bienthe.idcolor WHERE taikhoan.email='$email' AND phanloaidh.idtrangthai=2";
+    $sql = "SELECT sanpham.img,color.color,size.size,sanpham.name,sanpham.price,phanloaidh.soluong,phanloaidh.id,bienthe.idsp,taikhoan.email FROM phanloaidh join bienthe on bienthe.id= phanloaidh.bienthe JOIN taikhoan ON taikhoan.id=phanloaidh.iduser JOIN sanpham ON sanpham.id=bienthe.idsp JOIN size ON size.id=bienthe.idsize JOIN color ON color.id=bienthe.idcolor WHERE taikhoan.email='$email' AND phanloaidh.idtrangthai=2";
     $sanpham_giohang = pdo_query($sql);
     return $sanpham_giohang;
 }
@@ -144,11 +145,10 @@ function cart_add($idsp, $iduser)
     if ($check == true) {
         $sql2 = "SELECT id FROM `bienthe` WHERE bienthe.idsp=$idsp LIMIT 1";
         $id_bienthe = pdo_query_one($sql2);
-        $id_bienthex=$id_bienthe['id'];
-        $sql3="INSERT INTO `phanloaidh` (`iduser`, `bienthe`, `idtrangthai`) VALUES ('$iduser', '$id_bienthex', '2');";
-         $cart_add = pdo_execute($sql3);
-         return $cart_add;
-
+        $id_bienthex = $id_bienthe['id'];
+        $sql3 = "INSERT INTO `phanloaidh` (`iduser`, `bienthe`, `idtrangthai`) VALUES ('$iduser', '$id_bienthex', '2');";
+        $cart_add = pdo_execute($sql3);
+        return $cart_add;
     }
 }
 function cart_remove($id)
@@ -164,45 +164,52 @@ function cart_cout($id)
     return $yeuthich_count;
 }
 
-function all_size(){
-    $sql="SELECT * FROM size";
-    $all_size= pdo_query($sql);
+function all_size()
+{
+    $sql = "SELECT * FROM size";
+    $all_size = pdo_query($sql);
     return $all_size;
 }
-function size_color($idcolor,$idsp){
-    $sql="SELECT * FROM bienthe join size on bienthe.idsize=size.id where idcolor = $idcolor and idsp = $idsp and soluong>0";
-    $size_color= pdo_query($sql);
+function size_color($idcolor, $idsp)
+{
+    $sql = "SELECT * FROM bienthe join size on bienthe.idsize=size.id where idcolor = $idcolor and idsp = $idsp and soluong>0";
+    $size_color = pdo_query($sql);
     return $size_color;
 }
-function all_color(){
-    $sql="SELECT * FROM color";
-    $all_color= pdo_query($sql);
+function all_color()
+{
+    $sql = "SELECT * FROM color";
+    $all_color = pdo_query($sql);
     return $all_color;
 }
-function add_gio($iduser,$soluong,$tongtien,$bienthe){
+function add_gio($iduser, $soluong, $bienthe)
+{
 
-    $sql1="SELECT * FROM phanloaidh";
-    $check_trung=pdo_query($sql1);
+    $sql1 = "SELECT * FROM phanloaidh";
+    $check_trung = pdo_query($sql1);
     $check = true;
     foreach ($check_trung as $value) {
-        if ($value['iduser'] == $iduser && $value['bienthe']==$bienthe) {
+        if ($value['iduser'] == $iduser && $value['bienthe'] == $bienthe && $value['idtrangthai'] == 2) {
+            $soluongnew = $soluong + $value['soluong'];
+            $idpl = $value['id'];
+            $sql2 = "UPDATE `phanloaidh` SET `soluong` = '$soluongnew' WHERE `phanloaidh`.`id` = $idpl;";
+            $add_gio = pdo_execute($sql2);
             $check = false;
         }
     }
     if ($check == true) {
-        $sql2="INSERT INTO `phanloaidh` (`iduser`, `soluong`, `idtrangthai`, `tongtien`, `bienthe`) VALUES ('$iduser', '$soluong', '2', '$tongtien', $bienthe);";
-        $add_gio=pdo_execute($sql2);
+        $sql2 = "INSERT INTO `phanloaidh` (`iduser`, `soluong`, `idtrangthai`, `bienthe`) VALUES ('$iduser', '$soluong', '2',  $bienthe);";
+        $add_gio = pdo_execute($sql2);
         return $add_gio;
-        }
-
-
+    }
 }
-function timbienthe($id_sp,$color,$size){
-        $sql="SELECT `id` FROM `bienthe` WHERE idcolor=$color AND idsize=$size AND idsp=$id_sp;";
-       $timbienthe= pdo_query_one($sql);
-       return $timbienthe;
+function timbienthe($id_sp, $color, $size)
+{
+    $sql = "SELECT `id` FROM `bienthe` WHERE idcolor=$color AND idsize=$size AND idsp=$id_sp;";
+    $timbienthe = pdo_query_one($sql);
+    return $timbienthe;
 }
-function dathang($id_bienthe){
-    
+function dathang($id_bienthe)
+{
 }
 ?>

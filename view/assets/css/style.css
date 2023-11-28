@@ -23577,7 +23577,7 @@ blockquote .user-name:before {
 
 .page .number_page_ht {
   padding: 13px;
-  background-color: #F64C17;
+  background-color: #e78178;
   color: white;
   border-radius: 10px;
   margin: 6px;
@@ -23589,7 +23589,7 @@ blockquote .user-name:before {
   color: black;
   border-radius: 10px;
   margin: 6px;
-  background-color: #f7e4ed;
+  background-color: #ffffff;
   border: 1px solid #F64C17;
 }
 
@@ -25719,6 +25719,8 @@ blockquote .user-name:before {
   justify-content: space-between;
   width: 1140px;
   margin: 0 auto;
+  margin-bottom: 100px;
+  margin-top: 50px;
 }
 
 
@@ -25729,6 +25731,28 @@ blockquote .user-name:before {
   border: 1px solid black;
   border-radius: 20px;
   padding: 20px;
+}
+
+.container_sanpham_list .box_right form {
+  display: flex;
+  margin-left: 550px;
+}
+
+.container_sanpham_list .box_right form input {
+  background-color: #ff8000;
+  border-radius: 5px;
+  color: White;
+  border: 0;
+  margin-left: 10px;
+  width: 80px;
+
+}
+
+.container_sanpham_list .box_right form select {
+  width: 200px;
+  margin-left: 10px;
+  border-radius: 5px;
+
 }
 
 .sanpham_chitiet .top {
@@ -25942,6 +25966,29 @@ blockquote .user-name:before {
   margin: 0 auto;
 }
 
+.myacc .box_right .chat {
+  width: 90%;
+  margin: 0 auto;
+  border: 1px solid;
+}
+
+.myacc .box_right .chat .user {
+  width: 50%;
+  margin-left: 350px;
+}
+
+.myacc .box_right .chat .admin {
+  width: 50%;
+}
+
+.myacc .box_right .chat .admin .chat {
+  width: 50%;
+}
+
+.myacc .box_right .chat .user .chat {
+  width: 50px;
+}
+
 .myacc .box_right .profile .avatar {
   width: 40%;
   margin: 0 auto;
@@ -25980,22 +26027,31 @@ blockquote .user-name:before {
 .myacc .box_right .donhang .item {
   display: flex;
   margin-bottom: 20px;
-}.myacc .box_right .donhang{
+}
+
+.myacc .box_right .donhang {
   width: 700px;
-}.myacc .box_right .donhang .gia{
+}
+
+.myacc .box_right .donhang .gia {
   width: 20%;
   padding-top: 80px;
   color: red;
   font-weight: bolder;
-}.myacc .box_right .donhang .item p{
+}
+
+.myacc .box_right .donhang .item p {
   margin: 0;
   margin-left: 10px;
   font-size: small;
-}.myacc .box_right .donhang .donhangct{
+}
+
+.myacc .box_right .donhang .donhangct {
   padding: 20px;
   border: 1px solid;
   margin-bottom: 20px;
 }
+
 /* .donhang .donhang_item .item {
   display: flex;
 }
@@ -26076,6 +26132,17 @@ blockquote .user-name:before {
   margin: 0 auto;
 }
 
+.giohang button {
+  background-color: #ec8255;
+  color: white;
+  border: 0;
+  font-size: 22px;
+  width: 300px;
+  height: 50px;
+  margin-left: 1000px;
+  margin-top: 50px;
+}
+
 .dathang>.top {
 
   border: 5px dashed #ec8255;
@@ -26093,6 +26160,18 @@ blockquote .user-name:before {
   border: 1px solid #ec8255;
   padding: 20px;
   display: flex;
+}
+
+.giohang .vocher select {
+  width: 200px;
+  border-radius: 5px;
+  height: 30px;
+}
+
+.giohang .vocher p {
+  width: 90%;
+  font-size: 20px;
+  margin-left: 20px;
 }
 
 .dathang .thanhtoan .top {
@@ -26145,6 +26224,7 @@ blockquote .user-name:before {
 
 .sanpham_chitiet .soluongmua {
   display: flex;
+  margin: 10px 0px;
 }
 
 .sanpham_chitiet .soluongmua table {
@@ -26174,5 +26254,4 @@ blockquote .user-name:before {
   display: flex;
   justify-content: space-around;
   text-align: center;
-
 }

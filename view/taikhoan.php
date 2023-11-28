@@ -110,75 +110,92 @@
         <a href="index.php?act=myaccout&profile=3&trangthai=4">Đang giao hàng</a>
         <a href="index.php?act=myaccout&profile=3&trangthai=5">Đã nhận hàng</a>
     </div>
-    
+
     <div class="donhang">
-    <?php
-    if (isset($_GET['trangthai'])) {
-        $idtrangthai=$_GET['trangthai'];
-    }else{
-        $idtrangthai=3;
-    }
-    $load_chitietdh=load_chitietdh($email,$idtrangthai);
-    foreach ($load_chitietdh as $key2 => $value1) { 
-        $tongtiehoadon=0;
-        $madonhang=$value1['madh'];?>
-        <div class="donhangct">
-            Mã đơn hàng:<?=$madonhang?>
-<?php             $load_chitietdh_sp=load_chitietdh_sp($madonhang);
-    foreach ($load_chitietdh_sp as $key1 => $value2) { ?>
-   
-            <div class="item">
-                <img src="<?= $img_path.'sanpham/'.$value2['img']?>" alt="" width="100px">
-                <div class="content" style="width: 80%;">
-                    <h4><?= $value2['name'] ?></h4>
-                    <p>Biến thể sản phẩm : <?= 'Size'.$value2['size'].','.$value2['color'] ?></p>
-                    <p>Số lượng: <?=$value2['soluong']?></p>
-                </div>
-                <div class="gia"><?=$value2['tongtien']?></div>
+        <?php
+                if (isset($_GET['trangthai'])) {
+                    $idtrangthai = $_GET['trangthai'];
+                } else {
+                    $idtrangthai = 3;
+                }
+                $load_chitietdh = load_chitietdh($email, $idtrangthai);
+                foreach ($load_chitietdh as $key2 => $value1) {
+                    $tongtiehoadon = 0;
+                    $madonhang = $value1['madh']; ?>
+            <div class="donhangct">
+                Mã đơn hàng:<?= $madonhang ?>
+                <?php $load_chitietdh_sp = load_chitietdh_sp($madonhang);
+                    foreach ($load_chitietdh_sp as $key1 => $value2) { ?>
+
+                    <div class="item">
+                        <img src="<?= $img_path . 'sanpham/' . $value2['img'] ?>" alt="" width="100px">
+                        <div class="content" style="width: 80%;">
+                            <h4><?= $value2['name'] ?></h4>
+                            <p>Biến thể sản phẩm : <?= 'Size' . $value2['size'] . ',' . $value2['color'] ?></p>
+                            <p>Số lượng: <?= $value2['soluong'] ?></p>
+                        </div>
+                        <div class="gia"><?= $value2['tongtien'] ?></div>
+                    </div>
+                <?php $tongtiehoadon += $value2['tongtien'];
+                    }
+                ?>
+                <hr>
+                <table>
+                    <tr>
+                        <td>Tổng tiền hàng :</td>
+                        <td style="width: 10%;"><?= $tongtiehoadon ?>đ</td>
+                    </tr>
+                    <tr>
+                        <td>Vocher :</td>
+                        <td><?= -$value2['sale'] ?>đ</td>
+
+                    </tr>
+                    <tr>
+                        <td>Thành tiền :</td>
+                        <td style="color:red; font-size: larger; font-weight: bolder;"><?= $value2['thanhtien'] ?>đ</td>
+
+                    </tr>
+                </table>
             </div>
-      <?php   $tongtiehoadon+=$value2['tongtien'];
-       }
-?>
-            <hr>
-          <table>
-            <tr>
-                <td>Tổng tiền hàng :</td>
-                <td style="width: 10%;"><?=$tongtiehoadon?>đ</td>
-            </tr>
-            <tr>
-            <td>Vocher :</td>
-            <td><?=-$value2['sale']?>đ</td>
-
-            </tr>
-            <tr>
-            <td>Thành tiền :</td>
-            <td style="color:red; font-size: larger; font-weight: bolder;"><?=$value2['thanhtien']?>đ</td>
-
-            </tr>
-          </table>
-        </div>
-<?php     }
-    ?>
+        <?php     }
+        ?>
 
     </div>
-    <?php
+<?php
                 break;
             case '4': ?>
-        <h4>Vocher</h4>
-        <div class="thongbao">
-            <div class="item">
-                <img src="<?= $img_path . "avarta_user/" . $taikhoan_email['img'] ?>" alt="" width="100px" height="100px">
-                <div class="content">
-                    <h5>heder</h5>
-                    <p>Nội dung</p>
-                </div>
+    <h4>Vocher</h4>
+    <div class="thongbao">
+        <div class="item">
+            <img src="<?= $img_path . "avarta_user/" . $taikhoan_email['img'] ?>" alt="" width="100px" height="100px">
+            <div class="content">
+                <h5>heder</h5>
+                <p>Nội dung</p>
             </div>
         </div>
+    </div>
+<?php
+                break;
+            case '5': ?>
+    <h4>Vocher</h4>
+    <div class="chat">
+        <div class="item">
+            <div class="admin">
+                <p class="chat">ADMIN</p>
+                <p>21-11-2023</p>
+            </div>
+            <div class="user">
+                <p class="chat">USERssssssssssssssssssssssssssssssssssssss</p>
+                <p>21-11-2023</p>
+            </div>
+        </div>
+    </div>
+    </div>
 <?php
                 break;
         } ?>
 
 
 
-    </div>
+</div>
 </main>
