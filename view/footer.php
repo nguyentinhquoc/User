@@ -373,13 +373,10 @@
 </a>
 </div>
 <script src="assets/js/vendor/bootstrap.bundle.min.js"></script>
-<script src="assets/js/vendor/jquery-3.6.0.min.js"></script>
 <script src="assets/js/vendor/jquery-migrate-3.3.2.min.js"></script>
-<script src="Download the compressed, production jQuery 3.7.1"></script>
 <script src="assets/js/vendor/modernizr-3.11.2.min.js"></script>
 <script src="assets/js/plugins/wow.min.js"></script>
 <script src="assets/js/plugins/jquery-ui.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script src="assets/js/plugins/swiper-bundle.min.js"></script>
 <script src="assets/js/plugins/jquery.nice-select.js"></script>
 <script src="assets/js/plugins/parallax.min.js"></script>
@@ -388,10 +385,8 @@
 <script src="assets/js/plugins/ion.rangeSlider.min.js"></script>
 <script src="assets/js/plugins/mailchimp-ajax.js"></script>
 <script src="assets/js/main.js"></script>
-<script src="assets/js/locsp.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<?php include 'assets/js/sweet_alert.php'; ?>
-<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+<?php include 'assets/js/sweet_alert.php'; ?> 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
     <script>
 	var citis = document.getElementById("city");

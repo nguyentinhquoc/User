@@ -14,7 +14,6 @@
 
     <!-- CSS
     ============================================ -->
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
 
     <!-- Vendor CSS (Contain Bootstrap, Icon Fonts) -->
     <link rel="stylesheet" href="assets/css/vendor/font-awesome.min.css" />
@@ -28,8 +27,13 @@
     <link rel="stylesheet" href="assets/css/plugins/nice-select.css">
     <link rel="stylesheet" href="assets/css/plugins/magnific-popup.min.css" />
     <link rel="stylesheet" href="assets/css/plugins/ion.rangeSlider.min.css" />
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
 
     <!-- Style CSS -->
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="/resources/demos/style.css">
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
     <link rel="stylesheet" href="assets/css/style.css">
 
 </head>
@@ -123,10 +127,9 @@
                                                     <input class="search" type="text" name="search" placeholder="Tìm kiếm">
                                                 </form>
                                                 <?php if (isset($_GET['search'])) {
-                                                    $_SESSION['search']=$_GET['search'];
+                                                    $_SESSION['search'] = $_GET['search'];
                                                     header('Location: index.php?act=sanpham_list&page=1');
-
-                                                }?>
+                                                } ?>
                                             </li>
                                         </ul>
                                     </nav>
@@ -143,22 +146,22 @@
                                             $cart = cart_cout($iduser);
                                         }
                                         ?>
-                                        <?php if (isset($_SESSION['email_dn'])) {   
+                                        <?php if (isset($_SESSION['email_dn'])) {
                                             $email = $_SESSION['email_dn'];
                                             $taikhoan_email = taikhoan_email($email); ?>
 
 
-                                       
+
                                             <li class="minicart-wrap me-3 me-lg-0">
                                                 <a href="index.php?act=yeuthich" class="minicart-btn">
-                                                <i class="fa fa-heart-o" aria-hidden="true"></i>
-                                                <span class="quantity"><?= $yeuthich['dem'] ?>          </span>
+                                                    <i class="fa fa-heart-o" aria-hidden="true"></i>
+                                                    <span class="quantity"><?= $yeuthich['dem'] ?> </span>
                                                 </a>
                                             </li>
                                             <li class="minicart-wrap me-3 me-lg-0">
                                                 <a href="index.php?act=thongbao" class="minicart-btn">
-                                                <i class="fa fa-bell-o" aria-hidden="true"></i>
-                                                <span class="quantity">6</span>
+                                                    <i class="fa fa-bell-o" aria-hidden="true"></i>
+                                                    <span class="quantity">6</span>
                                                 </a>
                                             </li>
                                             <li class="minicart-wrap me-3 me-lg-0">

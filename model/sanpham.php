@@ -14,33 +14,42 @@ function sanpham_banchay()
     return $sanphambanchay;
 }
 // list------------------------------
-function sapxep($b)
-{
+function sapxep($b,$a){
+    $c = ($a - 1) * 20;
     if ($b == 1) {
-        $sql = "SELECT * FROM sanpham ORDER BY name ASC";
+        $sql = "SELECT * FROM sanpham ORDER BY name ASC LIMIT $c,20 ";
         $sanpham_all = pdo_query($sql);
         return $sanpham_all;
     }
     if ($b == 2) {
-        $sql = "SELECT * FROM sanpham ORDER BY name DESC";
+        $sql = "SELECT * FROM sanpham ORDER BY name DESC LIMIT $c,20 ";
         $sanpham_all = pdo_query($sql);
         return $sanpham_all;
     }
     if ($b == 3) {
-        $sql = "SELECT * FROM sanpham ORDER BY price ASC";
+        $sql = "SELECT * FROM sanpham ORDER BY price ASC LIMIT $c,20 ";
         $sanpham_all = pdo_query($sql);
         return $sanpham_all;
     }
     if ($b == 4) {
-        $sql = "SELECT * FROM sanpham ORDER BY price DESC";
+        $sql = "SELECT * FROM sanpham ORDER BY price DESC LIMIT $c,20 ";
         $sanpham_all = pdo_query($sql);
         return $sanpham_all;
     }
     if ($b == 5) {
-        $sql = "SELECT * FROM sanpham ORDER BY star ASC";
+        $sql = "SELECT * FROM sanpham ORDER BY star ASC LIMIT $c,20 ";
         $sanpham_all = pdo_query($sql);
         return $sanpham_all;
     }
+}
+function sanpham_price_list($a,$b)
+{
+    $sql = "SELECT *
+    FROM sanpham
+    WHERE price BETWEEN $a AND $b;
+    ";
+    $sanpham_price_list = pdo_query($sql);
+    return $sanpham_price_list;
 }
 function sanpham_search_list($a)
 {

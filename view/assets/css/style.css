@@ -25725,12 +25725,20 @@ blockquote .user-name:before {
 
 
 
-.container_sanpham_list .box_right {
-  width: 90%;
+.container_sanpham_list .box_left {
+  width: 30%;
   ;
   border: 1px solid black;
   border-radius: 20px;
   padding: 20px;
+}
+.container_sanpham_list .box_right {
+  width: 70%;
+  ;
+  border: 1px solid black;
+  border-radius: 20px;
+  padding: 20px;
+  margin-left: 20px;
 }
 
 .container_sanpham_list .box_right form {
