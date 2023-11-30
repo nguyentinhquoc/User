@@ -23567,31 +23567,7 @@ blockquote .user-name:before {
 /*----------------------------------------*/
 /*  10. Brand
 /*----------------------------------------*/
-.page {
-  display: flex;
-  width: 50%;
-  text-align: center;
-  justify-content: start;
 
-}
-
-.page .number_page_ht {
-  padding: 13px;
-  background-color: #e78178;
-  color: white;
-  border-radius: 10px;
-  margin: 6px;
-  border: 1px solid #F64C17;
-}
-
-.number_page {
-  padding: 13px;
-  color: black;
-  border-radius: 10px;
-  margin: 6px;
-  background-color: #ffffff;
-  border: 1px solid #F64C17;
-}
 
 .brand-item-list {
   width: 126px !important;
@@ -25715,7 +25691,6 @@ blockquote .user-name:before {
 }
 
 .container_sanpham_list {
-  display: flex;
   justify-content: space-between;
   width: 1140px;
   margin: 0 auto;
@@ -25725,22 +25700,34 @@ blockquote .user-name:before {
 
 
 
-.container_sanpham_list .box_left {
-  width: 30%;
-  ;
-  border: 1px solid black;
+.container_sanpham_list .box_top {
+  width: 90%;
   border-radius: 20px;
   padding: 20px;
+  display: flex;
+  justify-content: space-around;
 }
 .container_sanpham_list .box_right {
-  width: 70%;
-  ;
+  width: 90%;
   border: 1px solid black;
   border-radius: 20px;
   padding: 20px;
-  margin-left: 20px;
+}.ip_search{
+  border-radius: 10px;
+  padding-left: 10px;
+}.container_sanpham_list .box_right .page a{
+padding: 10px 15px ;
+background-color: #f38123;
+margin: 10px;
+color: white;
+border-radius: 5px;
 }
-
+.container_sanpham_list .box_right .page a:hover{
+background-color: #b9590b;
+}.container_sanpham_list .box_right .page {
+  margin: 20px;
+  height: 50px;
+}
 .container_sanpham_list .box_right form {
   display: flex;
   margin-left: 550px;

@@ -14,49 +14,75 @@ function sanpham_banchay()
     return $sanphambanchay;
 }
 // list------------------------------
-function sapxep($b,$a){
-    $c = ($a - 1) * 20;
-    if ($b == 1) {
-        $sql = "SELECT * FROM sanpham ORDER BY name ASC LIMIT $c,20 ";
-        $sanpham_all = pdo_query($sql);
-        return $sanpham_all;
-    }
-    if ($b == 2) {
-        $sql = "SELECT * FROM sanpham ORDER BY name DESC LIMIT $c,20 ";
-        $sanpham_all = pdo_query($sql);
-        return $sanpham_all;
-    }
-    if ($b == 3) {
-        $sql = "SELECT * FROM sanpham ORDER BY price ASC LIMIT $c,20 ";
-        $sanpham_all = pdo_query($sql);
-        return $sanpham_all;
-    }
-    if ($b == 4) {
-        $sql = "SELECT * FROM sanpham ORDER BY price DESC LIMIT $c,20 ";
-        $sanpham_all = pdo_query($sql);
-        return $sanpham_all;
-    }
-    if ($b == 5) {
-        $sql = "SELECT * FROM sanpham ORDER BY star ASC LIMIT $c,20 ";
-        $sanpham_all = pdo_query($sql);
-        return $sanpham_all;
-    }
-}
-function sanpham_price_list($a,$b)
+// function sapxep($b,$a){
+//     $c = ($a - 1) * 20;
+//     if ($b == 1) {
+//         $sql = "SELECT * FROM sanpham ORDER BY name ASC LIMIT $c,20 ";
+//         $sanpham_all = pdo_query($sql);
+//         return $sanpham_all;
+//     }
+//     if ($b == 2) {
+//         $sql = "SELECT * FROM sanpham ORDER BY name DESC LIMIT $c,20 ";
+//         $sanpham_all = pdo_query($sql);
+//         return $sanpham_all;
+//     }
+//     if ($b == 3) {
+//         $sql = "SELECT * FROM sanpham ORDER BY price ASC LIMIT $c,20 ";
+//         $sanpham_all = pdo_query($sql);
+//         return $sanpham_all;
+//     }
+//     if ($b == 4) {
+//         $sql = "SELECT * FROM sanpham ORDER BY price DESC LIMIT $c,20 ";
+//         $sanpham_all = pdo_query($sql);
+//         return $sanpham_all;
+//     }
+//     if ($b == 5) {
+//         $sql = "SELECT * FROM sanpham ORDER BY star ASC LIMIT $c,20 ";
+//         $sanpham_all = pdo_query($sql);
+//         return $sanpham_all;
+//     }
+// }
+function sanpham_list($gia_bd, $gia_kt,$search,$danhmuc,$page)
 {
+    $c = ($page - 1) * 20;
+    if ($danhmuc == 0) {
     $sql = "SELECT *
     FROM sanpham
-    WHERE price BETWEEN $a AND $b;
-    ";
+    WHERE price BETWEEN $gia_bd AND $gia_kt AND sanpham.name LIKE '%$search%' AND (iddm = 1 or iddm = 3 or iddm = 2) ORDER BY id ASC LIMIT $c,20 ;
+   ";
+    }elseif($danhmuc != ""){
+        $sql = "SELECT *
+        FROM sanpham
+        WHERE price BETWEEN $gia_bd AND $gia_kt AND sanpham.name LIKE '%$search%' AND iddm = $danhmuc ORDER BY id ASC LIMIT $c,20 ;
+       ";
+    }
     $sanpham_price_list = pdo_query($sql);
     return $sanpham_price_list;
 }
-function sanpham_search_list($a)
+// }
+function cout_sanpham_list($gia_bd, $gia_kt,$search,$danhmuc)
 {
-    $sql = "SELECT * FROM sanpham where name LIKE '%$a%'";
-    $sanpham_all = pdo_query($sql);
-    return $sanpham_all;
+    if ($danhmuc == "" || empty($danhmuc)) {
+    $sql = "SELECT COUNT(id) 'dem'
+    FROM sanpham
+    WHERE price BETWEEN $gia_bd AND $gia_kt AND sanpham.name LIKE '%$search%' AND (iddm = 1 or iddm = 3 or iddm = 2) ;
+   ";
+    }elseif($danhmuc != ""){
+        $sql = "SELECT COUNT(id) 'dem'
+        FROM sanpham
+        WHERE price BETWEEN $gia_bd AND $gia_kt AND sanpham.name LIKE '%$search%' AND iddm = $danhmuc ;
+       ";
+    }
+    $cout_sanpham_list = pdo_query_one($sql);
+    return $cout_sanpham_list;
 }
+
+// function sanpham_search_list($a)
+// {
+//     $sql = "SELECT * FROM sanpham where name LIKE '%$a%'";
+//     $sanpham_all = pdo_query($sql);
+//     return $sanpham_all;
+// }
 function sanpham_all_list($a)
 {
     $c = ($a - 1) * 20;
@@ -64,10 +90,10 @@ function sanpham_all_list($a)
     $sanpham_all = pdo_query($sql);
     return $sanpham_all;
 }
-function sanpham_dm_list($a, $b)
+function sanpham_dm_list($a, $b, $d, $e)
 {
     $c = ($a - 1) * 20;
-    $sql = "SELECT * FROM sanpham where iddm=$b ORDER BY id DESC LIMIT $c,20 ;";
+    $sql = "SELECT * FROM sanpham WHERE price BETWEEN $d AND $e and iddm=$b ORDER BY id DESC LIMIT $c,20;";
     $sanpham_all = pdo_query($sql);
     return $sanpham_all;
 }

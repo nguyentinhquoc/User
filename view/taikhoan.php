@@ -134,9 +134,9 @@
                             <p>Biến thể sản phẩm : <?= 'Size' . $value2['size'] . ',' . $value2['color'] ?></p>
                             <p>Số lượng: <?= $value2['soluong'] ?></p>
                         </div>
-                        <div class="gia"><?= $value2['tongtien'] ?></div>
+                        <div class="gia"><?= $value2['price']*$value2['soluong'] ?></div>
                     </div>
-                <?php $tongtiehoadon += $value2['tongtien'];
+                <?php $tongtiehoadon += $value2['price']*$value2['soluong'];
                     }
                 ?>
                 <hr>

@@ -91,7 +91,7 @@
                                             </li>
 
                                             <li class="drop-holder">
-                                                <a href="index.php?act=sanpham_list&page=1">Sản phẩm
+                                                <a href="index.php?act=sanpham_list&page=1&danhmuc=0">Sản phẩm
                                                     <i class="pe-7s-angle-down"></i>
                                                 </a>
                                                 <ul class="drop-menu">
@@ -123,9 +123,6 @@
                                                 <a href="contact.html">Liên hệ</a>
                                             </li>
                                             <li>
-                                                <form action="" method="GET">
-                                                    <input class="search" type="text" name="search" placeholder="Tìm kiếm">
-                                                </form>
                                                 <?php if (isset($_GET['search'])) {
                                                     $_SESSION['search'] = $_GET['search'];
                                                     header('Location: index.php?act=sanpham_list&page=1');

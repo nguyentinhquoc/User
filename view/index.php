@@ -59,6 +59,9 @@ if (!isset($_GET["act"])) {
         case "donhang":
             include("donhang.php");
             break;
+        case "quenpass":
+            include("quenpass.php");
+            break;
         default:
             include("404.php");
             break;

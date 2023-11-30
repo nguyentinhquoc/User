@@ -97,4 +97,36 @@ Swal.fire({
       
     <?php 
   } ?>
-
+<!--  Quên pass================ -->
+<?php
+if (isset($_GET['laylaipasstc'])) {
+  
+  ?>
+ <script>
+Swal.fire({
+  position: 'center',
+  icon: 'success',
+  title: 'Mật khẩu đã được gửi về email của bạn !!!',
+  showConfirmButton: false,
+  timer: 1500
+})
+      </script>
+      
+    <?php 
+  } ?>
+<?php
+if (isset($_GET['laylaipasstb'])) {
+  
+  ?>
+ <script>
+Swal.fire({
+  position: 'center',
+  icon: 'error',
+  title: 'Email không đúng !!!',
+  showConfirmButton: false,
+  timer: 1500
+})
+      </script>
+      
+    <?php 
+  } ?>

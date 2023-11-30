@@ -6,9 +6,8 @@ $load_chitietdh=pdo_query($sql);
 return $load_chitietdh;
 }
 function load_chitietdh_sp($madh){
-$sql="SELECT sanpham.img,sanpham.name,phanloaidh.soluong,size.size,color.color,chitietdh.sale,chitietdh.thanhtien From phanloaidh JOIN bienthe on phanloaidh.bienthe=bienthe.id JOIN sanpham ON sanpham.id=bienthe.idsp JOIN chitietdh ON chitietdh.madh=phanloaidh.madh JOIN color ON color.id=bienthe.idcolor JOIN size ON size.id=bienthe.idsize WHERE phanloaidh.madh=$madh;";
+$sql="SELECT sanpham.img,sanpham.name,sanpham.price,phanloaidh.soluong,size.size,color.color,chitietdh.sale,chitietdh.thanhtien From phanloaidh JOIN bienthe on phanloaidh.bienthe=bienthe.id JOIN sanpham ON sanpham.id=bienthe.idsp JOIN chitietdh ON chitietdh.madh=phanloaidh.madh JOIN color ON color.id=bienthe.idcolor JOIN size ON size.id=bienthe.idsize WHERE phanloaidh.madh=$madh;";
 $load_chitietdh_sp=pdo_query($sql);
 return $load_chitietdh_sp;
 }
-
 ?>

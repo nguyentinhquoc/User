@@ -1,3 +1,17 @@
+<?php
+if (isset($_SESSION['email_dn'])) {
+    $email = $_SESSION['email_dn'];
+    $sql = "SELECT id FROM taikhoan WHERE email='$email'";
+    $id_acc = pdo_query_one($sql);
+    $iduser = $id_acc['id'];
+
+    if (isset($_GET['add_love'])) {
+        $idsp = $_GET['add_love'];
+        yeuthich_add($idsp, $iduser);
+    }
+
+};
+?>
 <main class="sanpham_chitiet">
     <?php
     $idsp = $_GET["id"];
@@ -105,6 +119,7 @@
                     <input type="number" name="soluong" value="1" min="1" max="<?= $sanpham_chitiet['soluong'] ?>" style="width: 50px; border-radius: 10px; border-color: #3498db;">
 
                 </div>
+                <a href="<?= $_SERVER['REQUEST_URI']; ?>&add_love=<?= $sanpham_chitiet['id'] ?>"><i class="fa fa-heart-o" aria-hidden="true"></i></a>
                 <div class="buttom">
                     <button class="add_gio" name="add_cart_chitiet">Thêm vào giỏ hàng <i style="font-size: larger; color: #0B5717;" class="fa fa-cart-plus" aria-hidden="true"></i>
                     </button>

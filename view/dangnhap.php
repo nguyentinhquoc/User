@@ -22,13 +22,12 @@
                                         </div>
                                         <div class="col-md-8">
                                             <div class="check-box">
-                                                <input type="checkbox" id="remember_me">
-                                                <label for="remember_me">Nhớ mật khẩu</label>
+                                                <a href="index.php?act=dangky">Đang ký</a>
                                             </div>
                                         </div>
                                         <div class="col-md-4 pt-1 mt-md-0">
                                             <div class="forgotton-password_info">
-                                                <a href="#">Quên mật khẩu ?</a>
+                                                <a href="index.php?act=quenpass">Quên mật khẩu ?</a>
                                             </div>
                                         </div>
                                         <div class="">
