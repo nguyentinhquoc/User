@@ -25743,12 +25743,6 @@ background-color: #b9590b;
 
 }
 
-.container_sanpham_list .box_right form select {
-  width: 200px;
-  margin-left: 10px;
-  border-radius: 5px;
-
-}
 
 .sanpham_chitiet .top {
   display: flex;
@@ -25930,7 +25924,7 @@ background-color: #b9590b;
 }
 
 .myacc .box_left .list {
-  width: 50%;
+  width: 75%;
   margin: 40px;
   margin-left: 30%;
 }
@@ -25960,7 +25954,19 @@ background-color: #b9590b;
   width: 70%;
   margin: 0 auto;
 }
-
+.myacc .box_right .menu {
+  display: flex;
+  justify-content: space-around;
+margin-bottom: 50px;
+}
+.myacc .box_right .menu a {
+background-color: red;
+width: 30%;
+text-align: center;
+padding: 20px;
+font-weight: bolder;
+color: white;
+}
 .myacc .box_right .chat {
   width: 90%;
   margin: 0 auto;
@@ -26023,9 +26029,16 @@ background-color: #b9590b;
   display: flex;
   margin-bottom: 20px;
 }
+.myacc .box_right .donhang .item {
+
+}
 
 .myacc .box_right .donhang {
   width: 700px;
+}
+.myacc .box_right .donhang .donhangct .top {
+display: flex;
+justify-content: space-between;
 }
 
 .myacc .box_right .donhang .gia {
@@ -26045,6 +26058,7 @@ background-color: #b9590b;
   padding: 20px;
   border: 1px solid;
   margin-bottom: 20px;
+  border-radius: 10px;
 }
 
 /* .donhang .donhang_item .item {

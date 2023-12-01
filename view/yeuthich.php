@@ -43,9 +43,8 @@
                         <td><img src="<?= $img_path . "sanpham/" . $value['img'] ?>" alt="" width="100px"></td>
                         <td><?= $value['name'] ?></td>
                         <td><?=number_format($value['price'], 0, ',', '.');  ?></td>
-                        <td><a onclick="return(confirm('Bạn có chắc chắn muốn xóa ?'))" href="index.php?act=yeuthich&yeuthich_remove=<?= $value['id'] ?>"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
-                            <a href="<?= $_SERVER['REQUEST_URI'] ?>&add_cart=<?= $value['idsp'] ?>"> <i class="fa fa-cart-plus" aria-hidden="true"></i>
-                            </a>
+                        <td><a style="margin-left: 20px;" onclick="return(confirm('Bạn có chắc chắn muốn xóa ?'))" href="index.php?act=yeuthich&yeuthich_remove=<?= $value['id'] ?>"><i class="fa fa-trash-o" aria-hidden="true" style="font-size: 30px; "></i></a>
+                            
                         </td>
                 </tr>
             <?php

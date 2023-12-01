@@ -12,6 +12,7 @@
     Số điện thoại: <?= $taikhoan_email['tel'] ?><br>
     Địa chỉ nhận hàng: <?= $taikhoan_email['address'] ?><br>
   </div>
+  
   <div class="center">
     <table class="table table-striped">
       <thead>
@@ -94,8 +95,6 @@
    <input type="hidden" name="vocher" value="<?= $vocher ?>">
    <input type="hidden" name="date" value="<?= $date_ht ?>">
    <input type="hidden" name="order_type" value="<?= 'Giày Panda shop' ?>">
-
-
     <div class="tongtienhang"><p>Tổng thanh toán : <?= $tongthanhtoan ?></p></div>
                         <select name="bank_code">
                             <option value="">Chọn ngân hàng</option>

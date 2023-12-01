@@ -269,12 +269,44 @@
                 <div class="newsletter-content">
                     <h2 class="newsletter-title mb-4">Cùng nhau mua sắm.</h2>
                     <h3 class="newsletter-sub-title text-primary mb-8">Giúp nhau săn sale !!!</h3>
-                    <form class="newsletter-form" id="mc-form" action="#">
-                        <input class="input-field" id="mc-email" type="email" autocomplete="off" name="Your Email Address" placeholder="Nhập email người giới thiệu">
+                    <form action="index.php" method="post"  style="display: flex;"> 
+                        <input style="width: 400px; border:0; background-color: #dfdfdf;" type="email"name="marketing_email" placeholder="Nhập email người giới thiệu">
                         <div class="button-wrap">
-                            <button class="btn btn-custom-size btn-primary" id="mc-submit">Subscribe</button>
+                            <button class="btn btn-custom-size btn-primary" " name="marketing_submit">Subscribe</button>
                         </div>
                     </form>
+                    <?php
+                    if (isset($_POST['marketing_submit']) && isset($_SESSION['email_dn'])) {
+                        $mail_marketing = $_POST['marketing_email'];
+                        $email_dn=($_SESSION['email_dn']);                
+
+                        $sql = "SELECT * FROM taikhoan where email='$mail_marketing'";
+                        $check = pdo_query_one($sql);
+                        $sql2 = "SELECT * FROM taikhoan where email='$email_dn'";
+                        $check_mr = pdo_query_one($sql2);
+                        if (!$check) {?>
+                        <p style="color: red;"><?="Email giới thiệu không hợp lệ."?></p>
+
+                        <?php }
+                        
+                        elseif($check==true and $check_mr['marketing'] != 1) {
+                            $email_dn=($_SESSION['email_dn']);                
+                            $sql="SELECT DATE(DATE_ADD(NOW(), INTERVAL 15 DAY)) AS 'date' ;";
+                            $day_15 = pdo_query_one($sql);
+                            $date_15=$day_15['date'];
+                            $id_dn=taikhoan_email($email_dn);
+                            $iddn=$id_dn['id'];
+                            $id_marketing=taikhoan_email($mail_marketing);
+                            $idmarketing=$id_marketing['id'];
+                            $sql1="UPDATE `taikhoan` SET `marketing` = '1' WHERE `taikhoan`.`email` = '$email_dn';";
+                            $sql2="INSERT INTO `vocher` (`sale`, `iduser`, `date`) VALUES ('50000', '$iddn', '$date_15');";
+                            $sql3="INSERT INTO `vocher` (`sale`, `iduser`, `date`) VALUES ('100000', ' $idmarketing', '$date_15');";
+                            pdo_execute($sql1);
+                            pdo_execute($sql2);
+                            pdo_execute($sql3);
+                        }
+                    }
+                    ?>
                     <!-- Mailchimp Alerts -->
                     <div class="mailchimp-alerts text-centre pt-5">
                         <div class="mailchimp-submitting"></div>

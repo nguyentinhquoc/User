@@ -163,7 +163,7 @@ function yeuthich_cout($id)
 
 function sanpham_giohang($email)
 {
-    $sql = "SELECT sanpham.img,color.color,size.size,sanpham.name,sanpham.price,phanloaidh.soluong,phanloaidh.id,bienthe.idsp,taikhoan.email FROM phanloaidh join bienthe on bienthe.id= phanloaidh.bienthe JOIN taikhoan ON taikhoan.id=phanloaidh.iduser JOIN sanpham ON sanpham.id=bienthe.idsp JOIN size ON size.id=bienthe.idsize JOIN color ON color.id=bienthe.idcolor WHERE taikhoan.email='$email' AND phanloaidh.idtrangthai=2";
+    $sql = "SELECT bienthe.soluong 'slmax',sanpham.img,color.color,size.size,sanpham.name,sanpham.price,phanloaidh.soluong,phanloaidh.id,bienthe.idsp,taikhoan.email FROM phanloaidh join bienthe on bienthe.id= phanloaidh.bienthe JOIN taikhoan ON taikhoan.id=phanloaidh.iduser JOIN sanpham ON sanpham.id=bienthe.idsp JOIN size ON size.id=bienthe.idsize JOIN color ON color.id=bienthe.idcolor WHERE taikhoan.email='$email' AND phanloaidh.idtrangthai=2;";
     $sanpham_giohang = pdo_query($sql);
     return $sanpham_giohang;
 }
@@ -219,7 +219,6 @@ function all_color()
 }
 function add_gio($iduser, $soluong, $bienthe)
 {
-
     $sql1 = "SELECT * FROM phanloaidh";
     $check_trung = pdo_query($sql1);
     $check = true;

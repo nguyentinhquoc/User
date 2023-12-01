@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 30, 2023 at 09:04 AM
+-- Generation Time: Dec 01, 2023 at 04:27 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -18,8 +18,101 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
+-- Database: `db_plane`
+--
+CREATE DATABASE IF NOT EXISTS `db_plane` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+USE `db_plane`;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `airlines`
+--
+
+CREATE TABLE `airlines` (
+  `airline_id` int(11) NOT NULL,
+  `airline_name` varchar(225) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `airlines`
+--
+
+INSERT INTO `airlines` (`airline_id`, `airline_name`) VALUES
+(1, 'Vietnamenline'),
+(2, 'vietJack');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `flights`
+--
+
+CREATE TABLE `flights` (
+  `flight_id` int(11) NOT NULL,
+  `flight_number` int(11) NOT NULL,
+  `image` varchar(225) NOT NULL,
+  `total_passengers` int(11) NOT NULL,
+  `description` varchar(225) NOT NULL,
+  `airline_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `flights`
+--
+
+INSERT INTO `flights` (`flight_id`, `flight_number`, `image`, `total_passengers`, `description`, `airline_id`) VALUES
+(14, 12, '1701342445', 0, ' sasa', 2),
+(15, 0, '1701342603', 0, ' ', 1),
+(16, 312, '1701342667', 321, ' dsadsa', 1);
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `airlines`
+--
+ALTER TABLE `airlines`
+  ADD PRIMARY KEY (`airline_id`);
+
+--
+-- Indexes for table `flights`
+--
+ALTER TABLE `flights`
+  ADD PRIMARY KEY (`flight_id`),
+  ADD KEY `airline_id` (`airline_id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `airlines`
+--
+ALTER TABLE `airlines`
+  MODIFY `airline_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `flights`
+--
+ALTER TABLE `flights`
+  MODIFY `flight_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `flights`
+--
+ALTER TABLE `flights`
+  ADD CONSTRAINT `flights_ibfk_1` FOREIGN KEY (`airline_id`) REFERENCES `airlines` (`airline_id`);
+--
 -- Database: `du_an_2`
 --
+CREATE DATABASE IF NOT EXISTS `du_an_2` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+USE `du_an_2`;
 
 -- --------------------------------------------------------
 
@@ -1377,26 +1470,6 @@ CREATE TABLE `chitietdh` (
   `madh` varchar(225) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `chitietdh`
---
-
-INSERT INTO `chitietdh` (`thanhtoan`, `date`, `sale`, `thanhtien`, `madh`) VALUES
-('offline', '2023-11-23', 50, 7999950, '20231123232828'),
-('offline', '2023-11-23', 0, 11000000, '20231123232934'),
-('offline', '2023-11-24', 0, 5000000, '20231124120304'),
-('offline', '2023-11-24', 0, 11500000, '20231124140857'),
-('offline', '2023-11-26', 0, 7500000, '20231126234130'),
-('offline', '2023-11-27', 0, 7500000, '20231127041933'),
-('offline', '2023-11-27', 0, 1000000, '20231127042200'),
-('offline', '2023-11-27', 0, 6500000, '20231127042214'),
-('offline', '2023-11-27', 0, 6500000, '20231127042535'),
-('offline', '2023-11-27', 0, 6500000, '20231127042601'),
-('offline', '2023-11-27', 0, 6500000, '20231127042619'),
-('offline', '2023-11-27', 0, 6500000, '20231127042820'),
-('offline', '2023-11-27', 0, 1500000, '20231127043332'),
-('offline', '2023-11-27', 0, 1500000, '20231127043357');
-
 -- --------------------------------------------------------
 
 --
@@ -1452,16 +1525,6 @@ CREATE TABLE `phanloaidh` (
   `bienthe` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `phanloaidh`
---
-
-INSERT INTO `phanloaidh` (`iduser`, `soluong`, `idtrangthai`, `id`, `madh`, `bienthe`) VALUES
-(17, 0, 1, 229, NULL, '2'),
-(17, 1, 2, 236, NULL, '7'),
-(17, 1, 2, 237, NULL, '10'),
-(17, 1, 2, 238, NULL, '8');
-
 -- --------------------------------------------------------
 
 --
@@ -1478,156 +1541,157 @@ CREATE TABLE `sanpham` (
   `iddm` int(11) NOT NULL,
   `soluong` int(11) DEFAULT NULL,
   `sale` int(11) DEFAULT NULL,
-  `star` float DEFAULT NULL
+  `star` float DEFAULT NULL,
+  `luotban` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `sanpham`
 --
 
-INSERT INTO `sanpham` (`id`, `name`, `price`, `img`, `mota`, `luotxem`, `iddm`, `soluong`, `sale`, `star`) VALUES
-(1, 'Nike Bruin', 2000000.00, 'nike (2).jpg', ' Đôi giày bóng rổ đầu tiên của Nike. Nó có đế cao su dày và phần trên bằng da, mang lại sự hỗ trợ và độ bền.', 4419, 1, 302, 40, 4.60667),
-(2, 'Nike Cortez', 1500000.00, 'nike (3).jpg', 'Đôi giày chạy bộ mang tính biểu tượng của Nike. Nó có đế cao su và phần trên bằng da, mang lại sự thoải mái và hỗ trợ.', 1677, 1, 158, 40, 3.99657),
-(3, 'Nike Tailwind', 1000000.00, 'nike (5).jpg', 'Đôi giày chạy bộ đầu tiên của Nike có đế khí. Nó có đế khí lớn ở gót chân, mang lại sự êm ái và thoải mái.', 2911, 1, 508, 40, 4.7491),
-(4, 'Nike Air Force 1', 2000000.00, 'nike (4).jpg', 'Đôi giày bóng rổ mang tính biểu tượng của Nike. Nó có đế khí ở gót chân, mang lại sự êm ái và thoải mái.', 2804, 1, 497, 40, 3.91503),
-(5, 'Nike Air Jordan 1', 1500000.00, 'nike (6).jpg', 'Đôi giày bóng rổ mang tính biểu tượng của Michael Jordan. Nó có thiết kế táo bạo và nổi bật, với phần trên bằng da và logo Jumpman.', 4871, 1, 362, 40, 3.77061),
-(6, 'Nike Air Max 1', 1000000.00, 'nike (7).jpg', 'Đôi giày chạy bộ mang tính cách mạng của Nike. Nó là đôi giày đầu tiên có đế khí visible, cho phép người dùng cảm nhận được độ đàn hồi và thoải mái.', 2467, 1, 381, 40, 3.98465),
-(7, 'Nike Air Max 90', 2000000.00, 'nike (8).jpg', 'Phiên bản nâng cấp của Air Max 1, với phần trên được làm bằng chất liệu nhẹ và thoáng khí hơn.', 2457, 1, 528, 40, 4.79569),
-(8, 'Nike Air Max 95', 1500000.00, 'nike (9).jpg', 'Đôi giày chạy bộ mang tính đột phá của Nike. Nó có thiết kế độc đáo với các lỗ Air visible được đặt ở các vị trí khác nhau trên đế giày.', 4588, 1, 366, 40, 4.65889),
-(9, 'Nike Waffle Racer', 1000000.00, 'nike (10).jpg', 'Đôi giày chạy bộ đầu tiên của Nike, được thiết kế bởi Bill Bowerman. Nó có đế waffle đặc trưng, giúp tăng độ bám', 2091, 1, 376, 40, 4.45525),
-(10, 'Nike Air Max Plus', 2000000.00, 'nike (11).jpg', 'Đôi giày chạy bộ mang tính cách mạng của Nike. Nó có thiết kế táo bạo và nổi bật, với phần trên bằng lưới và logo Swoosh lớn.', 4252, 1, 588, 40, 4.47361),
-(11, 'Nike Air Max 98', 1500000.00, 'nike (12).jpg', 'Đôi giày chạy bộ mang tính biểu tượng của Nike. Nó có thiết kế độc đáo với phần đế giày được bao phủ bởi các lỗ Air visible.', 3404, 1, 509, 40, 4.73746),
-(12, 'Nike Air Max TN', 1000000.00, 'nike (13).jpg', 'Phiên bản giới hạn của Air Max Plus, được phát hành ở Úc. Nó có thiết kế táo bạo và nổi bật, với phần trên bằng lưới và logo Swoosh lớn.', 2090, 1, 410, 40, 4.54577),
-(13, 'Nike Air Max 2000', 2000000.00, 'nike (14).jpg', 'Đôi giày chạy bộ mang tính cách mạng của Nike. Nó có thiết kế độc đáo với phần đế giày được bao phủ bởi các lỗ Air visible', 2431, 1, 447, 40, 4.04536),
-(14, 'Nike Air Max 2002', 2000000.00, 'nike (15).jpg', 'Đôi giày chạy bộ mang tính biểu tượng của Nike. Nó có thiết kế táo bạo và nổi bật, với phần trên bằng lưới và logo Swoosh lớn.', 3932, 1, 529, 40, 4.4035),
-(15, 'Nike Air Max 2003', 2000000.00, 'nike (16).jpg', 'Đôi giày chạy bộ mang tính biểu tượng của Nike. Nó có thiết kế độc đáo với phần đế giày được bao phủ bởi các lỗ Air visible.', 2732, 1, 544, 40, 4.58695),
-(16, 'Nike Air Max 360', 2000000.00, 'nike (17).jpg', 'Đôi giày chạy bộ mang tính cách mạng của Nike. Nó có đế khí bao phủ toàn bộ đế giày, mang lại sự thoải mái và hỗ trợ', 3388, 1, 605, 40, 3.58643),
-(17, 'Nike Air Max 180', 2000000.00, 'nike (18).jpg', 'Đôi giày chạy bộ mang tính biểu tượng của Nike. Nó có đế khí lớn ở gót chân, mang lại sự thoải mái và hỗ trợ', 4434, 1, 486, 40, 3.56793),
-(18, 'Nike Air Max 32', 2000000.00, 'nike (19).jpg', 'Đôi giày bóng rổ mang tính cách mạng của Nike. Nó có đế khí lớn ở gót chân, mang lại sự thoải mái và hỗ trợ', 4576, 1, 411, 40, 3.69038),
-(19, 'Nike Air Max 24/7', 2000000.00, 'nike (20).jpg', 'Đôi giày chạy bộ mang tính biểu tượng của Nike. Nó có thiết kế độc đáo với phần', 1746, 1, 576, 40, 4.376),
-(20, 'Adidas Adizero Afterburner V Cleats', 1500000.00, 'mlb (1).jpg', 'Đôi giày chuyên dụng cho môn bóng chày, có đế nổi tiếng Adizero của Adidas, giảm trọng lượng và tăng độ bám trên sân.', 3317, 3, 424, 40, 4.23872),
-(21, 'New Balance 4040v4 Metal Cleats', 1500000.00, 'mlb (2).jpg', 'Đôi giày có đế chắc chắn và miếng lót thoáng khí để hỗ trợ các vận động viên ở vị trí chạy nhanh trên sân.', 4751, 3, 511, 40, 3.85141),
-(22, 'Under Armour Harper 4 Mid Metal Cleats', 1500000.00, 'mlb (3).jpg', 'Đôi giày được thiết kế đặc biệt cho Bryce Harper, với đế chắc chắn, hỗ trợ và mang lại sự ổn định khi chơi bóng.', 4127, 3, 345, 40, 4.61935),
-(23, 'Nike Air Max MVP Elite 3/4 Metal Cleats', 1500000.00, 'mlb (4).jpg', 'Đôi giày chất lượng cao với đế metal và công nghệ Air Max của Nike, đem lại sự thoải mái và độ bám tốt trên sân', 3474, 3, 590, 40, 4.93017),
-(24, 'Adidas Adizero 8.0 Uncaged Cleats', 1500000.00, 'mlb (5).jpg', 'Được xem là một trong những đôi giày bóng chày nhẹ nhất trên thị trường, với chất liệu nhẹ và kiểu dáng tối giản.', 2094, 3, 545, 40, 4.25655),
-(25, ' Nike Waffle Racer ', 1000000.00, 'nike (1).jpg', ' Đôi giày chạy bộ đầu tiên của Nike, được thiết kế bởi Bill Bowerman. Nó có đế waffle đặc trưng, giúp tăng độ bám ', 3061, 1, 619, 40, 4.82311),
-(26, 'New Balance Fresh Foam LAZR v2 Cleats', 1500000.00, 'mlb (6).jpg', 'Đôi giày cung cấp sự thoải mái và hỗ trợ tốt nhờ công nghệ đệm Fresh Foam đặc biệt của New Balance.', 2403, 3, 586, 40, 3.68793),
-(27, 'Under Armour Yard Low ST Cleats', 1500000.00, 'mlb (7).jpg', 'Đôi giày chuyên dụng cho cỏ tự nhiên, có đế chắc chắn và khả năng bám trên sân cỏ tốt.', 2533, 3, 439, 40, 4.44897),
-(28, 'Nike Force Trout 6 Pro Metal Cleats', 1500000.00, 'mlb (8).jpg', 'Đôi giày thiết kế đặc biệt cho Mike Trout, với đế kim loại và công nghệ Nike Zoom Air để tăng cường hiệu suất chơi bóng.', 1346, 3, 416, 40, 3.68863),
-(29, 'Adidas Icon 4 Cleats', 1500000.00, 'mlb (9).jpg', 'Đôi giày bóng chày với thiết kế đơn giản, tạo cảm giác thoải mái và bền bỉ trên sân.', 3916, 3, 407, 40, 4.77007),
-(30, 'New Balance 574 Baseball Cleats', 1500000.00, 'mlb (10).jpg', 'Đôi giày có kiểu dáng retro và thoải mái, đặc biệt được thiết kế cho các hoạt động bóng chày.', 4533, 3, 548, 40, 3.65225),
-(31, 'Under Armour Yard Trainer Shoes', 1500000.00, 'mlb (11).jpg', 'Đôi giày huấn luyện đa năng với đế êm ái và hỗ trợ tốt cho các hoạt động thể thao.', 4000, 3, 561, 40, 4.66677),
-(32, 'Nike Air Max', 1500000.00, 'joden (1).jpg', 'Đôi giày thể thao từ Nike với thiết kế đặc trưng và công nghệ Air Max để cung cấp đệm êm ái và thoáng khí tốt.', 2890, 2, 510, 40, 4.99388),
-(33, 'Adidas Superstar', 1500000.00, 'joden (2).jpg', ': Đôi giày thành danh của Adidas với mũi giày cao su đen và dải sọc ba sọc đặc trưng, mang lại phong cách cổ điển và cá tính.', 2821, 2, 535, 40, 4.42216),
-(34, 'Converse Chuck Taylor All Star', 1500000.00, 'joden (3).jpg', 'Giày cao cổ từ Converse với thiết kế đơn giản, phong cách retro, và là biểu tượng của người sử dụng giày thể thao hàng ngày.', 4641, 2, 422, 40, 4.47169),
-(35, 'Vans Old Skool', 1500000.00, 'joden (4).jpg', 'Giày skateboard cổ điển của Vans với dải sọc hai bên và đế cao su waffle đặc trưng, tạo nên phong cách đơn giản và thời trang.', 2431, 2, 401, 40, 4.89551),
-(36, 'Puma Suede Classic', 1500000.00, 'joden (5).jpg', 'Đôi giày da từ Puma với thiết kế thấp cổ và mặt ngoài da lì, mang đến sự thoải mái và phong cách độc đáo.', 1229, 2, 536, 40, 3.98152),
-(37, 'Reebok Classic Leather', 1500000.00, 'joden (6).jpg', 'Đôi giày da từ Reebok với thiết kế đơn giản và đế giữa êm ái, tạo nên phong cách thể thao phối cùng với trang phục hàng ngày.', 3383, 2, 516, 40, 3.56992),
-(38, 'New Balance 574', 1500000.00, 'joden (7).jpg', ': Đôi giày chạy bộ từ New Balance với thiết kế retro và công nghệ đệm tốt, tạo cảm giác thoải mái và hỗ trợ cho đôi chân.', 4447, 2, 527, 40, 4.4161),
-(39, 'Asics Gel-Lyte III', 1500000.00, 'joden (8).jpg', 'Đôi giày chạy từ Asics với thiết kế phối màu độc đáo và công nghệ đệm gel, mang lại sự êm ái và kiểu dáng đặc trưng.', 4293, 2, 348, 40, 4.12067),
-(40, 'Saucony Jazz Original', 1500000.00, 'joden (9).jpg', ': Đôi giày chạy từ Saucony với thiết kế retro và đế giữa đệm êm ái, tạo nên sự thoải mái trong hoạt động chạy bộ.', 1380, 2, 457, 40, 4.46795),
-(41, 'Jordan Retro', 1500000.00, 'joden (10).jpg', 'Đôi giày từ dòng sản phẩm Air Jordan của Nike, mang lại phong cách thể thao và hình ảnh của huyền thoại Michael Jordan.', 2872, 2, 338, 40, 4.44955),
-(42, 'Timberland 6-Inch Premium Boots', 1500000.00, 'joden (11).jpg', 'Muối của Timberland, đôi giày cao cổ chất liệu da chống nước, đế lugged cho khả năng bám tốt và sự bền bỉ.', 2502, 2, 377, 40, 4.47334),
-(43, 'Dr. Martens 1460', 1500000.00, 'joden (12).jpg', 'Đôi giày cao cổ từ Dr. Martens với thiết kế bền bỉ và kiểu dáng punk, mang đến sự cá tính và phong cách riêng.', 2225, 2, 488, 40, 4.10038),
-(44, 'Converse Jack Purcell', 1500000.00, 'joden (13).jpg', 'Đôi giày thể thao low-top từ Converse với thiết kế đơn giản, màu sắc trang nhã và một chi tiết kẻ xéo ở mũi giày.', 2670, 2, 522, 40, 4.02404),
-(45, 'Adidas Stan Smith', 1500000.00, 'joden (14).jpg', 'Biểu tượng của Adidas, đôi giày thể thao với thiết kế trắng đơn giản và logo Stan Smith đằng sau.', 2649, 2, 507, 40, 4.93983),
-(46, 'Nike Dunk', 1500000.00, 'joden (15).jpg', 'Đôi giày bóng rổ từ Nike với thiết kế mạnh mẽ và màu sắc đa dạng, được yêu thích trong cả thời trang hàng ngày.', 3765, 2, 417, 40, 4.31078),
-(47, 'Vans Sk8-Hi', 1500000.00, 'joden (16).jpg', 'Đôi giày skateboarding cao cổ từ Vans với dải sọc và đế cao su waffle, mang đến sự thoải mái và hỗ trợ cho người sử dụng.', 3847, 2, 297, 40, 4.76079),
-(48, 'Puma RS-X', 1500000.00, 'joden (17).jpg', 'Đôi giày từ dòng RS-X của Puma, với thiết kế đặc trưng, màu sắc táo bạo và kiểu dáng thể thao hiện đại.', 2338, 2, 579, 40, 4.33308),
-(49, 'Reebok Club C 85', 1500000.00, 'joden (18).jpg', ': Đôi giày thể thao từ Reebok với thiết kế cổ điển, màu trắng trang nhã và tính năng thoáng khí.', 1262, 2, 511, 40, 4.40359),
-(50, 'New Balance 997', 1500000.00, 'joden (19).jpg', ': Đôi giày chạy từ New Balance với thiết kế hiện đại và công nghệ đệm tối ưu, tạo cảm giác thoải mái và ổn định.', 3341, 2, 446, 40, 4.86547),
-(51, 'Asics Gel-Kayano', 1500000.00, 'joden (20).jpg', 'Đôi giày chạy từ Asics với thiết kế hiện đại và công nghệ đệm Gel-Kayano, mang lại sự thoải mái và hỗ trợ cho người sử dụng.', 3670, 2, 491, 40, 4.28582),
-(52, 'Saucony Shadow 5000', 1500000.00, 'joden (21).jpg', 'Đôi giày từ Saucony với thiết kế retro và công nghệ thoáng khí, tạo cảm giác nhẹ và thoải mái cho người sử dụng.', 3319, 2, 524, 40, 4.45959),
-(53, 'Adidas Gazelle', 1500000.00, 'joden (22).jpg', 'Đôi giày từ Adidas với thiết kế thể thao và màu sắc tươi sáng, mang đến phong cách năng động và trẻ trung.', 1239, 2, 396, 40, 3.8051),
-(54, 'Nike Air Force 1', 1500000.00, 'joden (23).jpg', 'Đôi giày thể thao cổ điển của Nike với thiết kế trắng đơn giản và công nghệ đệm tốt, được yêu thích trong cả thời trang streetwear.', 3973, 2, 374, 40, 4.70315),
-(55, 'Vans Authentic', 1500000.00, 'joden (24).jpg', 'Đôi giày thể thao từ Vans với thiết kế nền và logo Vans đặc trưng, mang đến phong cách dễ thương và thoải mái.', 4567, 2, 506, 40, 4.7484),
-(56, 'Puma Clyde', 1500000.00, 'joden (25).jpg', 'Đôi giày từ Puma, lấy cảm hứng từ cựu cầu thủ bóng rổ Clyde Frazier, mang đến phong cách thể thao tinh tế và sang trọng.', 4026, 2, 156, 40, 4.64936),
-(57, 'Reebok Workout Plus', 1500000.00, 'joden (26).jpg', 'Đôi giày thể thao từ Reebok với thiết kế đơn giản và công nghệ thoáng khí, mang đến sự thoải mái và kiểu dáng thể thao đa năng.', 1828, 2, 0, 40, 3.92781),
-(58, 'New Balance 990', 1500000.00, 'joden (27).jpg', 'Đôi giày chạy cao cấp từ New Balance với thiết kế retro và công nghệ đệm tối ưu, tạo cảm giác thoải mái và ổn định trong hoạt động chạy.', 2618, 2, 0, 40, 3.53813),
-(59, 'Asics Gel-Lyte V', 1500000.00, 'joden (28).jpg', 'Đôi giày chạy từ Asics với thiết kế thời trang và công nghệ đệm gel, mang đến sự thoải mái và kiểu dáng đặc trưng.', 4271, 2, 0, 40, 4.02285),
-(60, 'Saucony Grid SD', 1500000.00, 'joden (29).jpg', 'Đôi giày từ dòng Grid của Saucony với thiết kế đa dạng và công nghệ thoáng khí, mang đến sự thoải mái và hỗ trợ cho người sử dụng.', 4182, 2, 0, 40, 4.74013),
-(61, 'Adidas NMD', 1500000.00, 'joden (30).jpg', 'Đôi giày thể thao hiện đại từ Adidas với thiết kế đơn giản và công nghệ đệm tối ưu, tạo cảm giác nhẹ nhàng và bền bỉ.', 1698, 2, 0, 40, 4.75641),
-(62, 'Nike Blazer', 1500000.00, 'joden (31).jpg', 'Đôi giày thể thao từ Nike với thiết kế cổ cao và phong cách hoài cổ, mang đến phong cách thể thao và thời trang cổ điển.', 1933, 2, 0, 40, 4.61138),
-(63, 'Vans Slip-On', 1500000.00, 'joden (32).jpg', 'Đôi giày từ Vans với thiết kế đơn giản không cần dây buộc, đế cao su waffle và dải sọc đặc trưng, mang đến sự tiện lợi và phong cách đặc trưng của thương hiệu.', 1996, 2, 0, 40, 3.56965),
-(64, 'Puma Roma', 1500000.00, 'joden (33).jpg', 'Đôi giày từ Puma với thiết kế thể thao retro và màu sắc tinh tế, tạo nên phong cách độc đáo và trẻ trung.', 4926, 2, 0, 40, 3.75875),
-(65, 'Reebok Classic Nylon', 1500000.00, 'joden (34).jpg', 'Đôi giày từ Reebok với thiết kế đơn giản và chất liệu nylon, mang đến sự nhẹ nhàng và thoáng khí cho đôi chân.', 4836, 2, 0, 40, 3.7532),
-(66, 'New Balance 996', 1500000.00, 'joden (35).jpg', 'Đôi giày chạy từ New Balance với thiết kế đa năng và phối màu hợp thời, mang đến sự thoải mái và phong cách thể thao hiện đại.', 4331, 2, 0, 40, 4.05405),
-(67, 'Asics Gel-Respector', 1500000.00, 'joden (36).jpg', 'Đôi giày chạy từ Asics với thiết kế retro và công nghệ đệm gel, tạo cảm giác êm ái và phong cách đặc trưng.', 1726, 2, 0, 40, 4.1501),
-(68, 'Saucony Grid 9000', 1500000.00, 'joden (37).jpg', 'Đôi giày từ Saucony với thiết kế thể thao và công nghệ thoáng khí, mang lại cảm giác thoải mái và sự hỗ trợ cho người sử dụng.', 3952, 2, 0, 40, 4.53264),
-(69, 'Adidas Ultra Boost', 1500000.00, 'joden (38).jpg', 'Biểu tượng của Adidas, đôi giày chạy với thiết kế hiện đại và công nghệ đệm tối ưu, tạo cảm giác nhẹ nhàng và đàn hồi.', 4903, 2, 0, 40, 3.7034),
-(70, 'Nike Cortez', 1500000.00, 'joden (39).jpg', 'Đôi giày thể thao cổ điển của Nike với thiết kế đơn giản và logo Swoosh phản quang, mang đến phong cách thể thao và retro đặc trưng.', 3346, 2, 0, 40, 4.784),
-(71, 'Puma Basket', 1500000.00, 'joden (40).jpg', 'Đôi giày từ Puma với thiết kế thể thao đơn giản và kiểu dáng thấp cổ, tạo nên phong cách năng động và trẻ trung.', 4054, 2, 0, 40, 4.36777),
-(72, 'New Balance 997H', 1500000.00, 'joden (41).jpg', 'Phiên bản cải tiến từ New Balance 997, với thiết kế hiện đại và công nghệ đệm tối ưu, mang đến sự thoải mái và kiểu dáng độc đáo.', 3034, 2, 0, 40, 4.6561),
-(73, 'Asics Gel-Lyte I', 1500000.00, 'joden (42).jpg', 'Đôi giày chạy điểm danh từ Asics với thiết kế retro và công nghệ đệm gel, tạo cảm giác êm ái và kiểu dáng đặc trưng.', 1469, 2, 0, 40, 4.55084),
-(74, 'Saucony Jazz Low Pro', 1500000.00, 'joden (43).jpg', 'Phiên bản thấp cổ từ Saucony Jazz Original, với thiết kế retro và đế giữa đệm êm ái, tạo cảm giác nhẹ nhàng và thoải mái.', 4265, 2, 0, 40, 4.75705),
-(75, 'Adidas Yeezy', 1500000.00, 'joden (44).jpg', 'Dòng sản phẩm hợp tác giữa Adidas và rapper Kanye West, với thiết kế độc đáo và các phối màu đặc trưng, tạo nên sự cá tính và ấn tượng.', 2455, 2, 0, 40, 3.66015),
-(76, 'Nike Air Max 97', 1500000.00, 'joden (45).jpg', 'Đôi giày thể thao từ Nike với thiết kế độc đáo và công nghệ Air Max, tạo cảm giác êm ái và phong cách hiện đại.', 4934, 2, 0, 40, 4.20936),
-(77, 'Vans Sk8-Mid', 1500000.00, 'joden (46).jpg', 'Đôi giày skate cao cổ từ Vans, độc đáo với thiết kế mặt lưng màu sáng và dải sọc đặc trưng, mang đến phong cách cá nhân và bền bỉ.', 3141, 2, 0, 40, 4.17941),
-(78, 'Puma Future Rider', 1500000.00, 'joden (48).jpg', 'Đôi giày từ Puma với thiết kế hiện đại và phối màu táo bạo, tạo nên sự thoải mái và cá tính trong hoạt động hàng ngày.', 1957, 2, 0, 40, 4.34735),
-(79, 'Reebok Question', 1500000.00, 'joden (49).jpg', 'Đôi giày bóng rổ cổ điển từ Reebok, được thiết kế theo mẫu của cựu cầu thủ NBA Allen Iverson, với sự kết hợp giữa phong cách và hiệu suất thể thao.', 1283, 2, 0, 40, 4.35534),
-(80, 'Saucony Jazz Low Pro', 1500000.00, 'joden (50).jpg', 'Phiên bản thấp cổ từ Saucony Jazz Original, với thiết kế retro và đế giữa đệm êm ái, tạo cảm giác nhẹ nhàng và thoải mái.', 2500, 2, 0, 40, 4.99263),
-(81, 'Nike Air Zoom Pegasus 36 MLB', 1500000.00, 'mlb (11).jpg', 'Đôi giày chạy bộ thiết kế đặc biệt với logo MLB, có đệm hỗ trợ tốt và mang lại sự thoải mái cho người sử dụng.', 1790, 3, 0, 40, 4.51947),
-(82, 'Adidas Adizero Afterburner V Cleats', 1500000.00, 'mlb (12).jpg', 'Đôi giày chuyên dụng cho môn bóng chày, có đế nổi tiếng Adizero của Adidas, giảm trọng lượng và tăng độ bám trên sân.', 2482, 3, 0, 40, 4.95217),
-(83, 'New Balance 4040v4 Metal Cleats', 1500000.00, 'mlb (13).jpg', 'Đôi giày có đế chắc chắn và miếng lót thoáng khí để hỗ trợ các vận động viên ở vị trí chạy nhanh trên sân.', 3314, 3, 0, 40, 4.45198),
-(84, 'Under Armour Harper 4 Mid Metal Cleats', 1500000.00, 'mlb (14).jpg', 'Đôi giày được thiết kế đặc biệt cho Bryce Harper, với đế chắc chắn, hỗ trợ và mang lại sự ổn định khi chơi bóng.', 1192, 3, 0, 40, 4.67473),
-(85, 'Nike Air Max MVP Elite 3/4 Metal Cleats', 1500000.00, 'mlb (15).jpg', 'Đôi giày chất lượng cao với đế metal và công nghệ Air Max của Nike, đem lại sự thoải mái và độ bám tốt trên sân.', 2323, 3, 0, 40, 3.50884),
-(86, 'Adidas Adizero 8.0 Uncaged Cleats', 1500000.00, 'mlb (16).jpg', 'Được xem là một trong những đôi giày bóng chày nhẹ nhất trên thị trường, với chất liệu nhẹ và kiểu dáng tối giản.', 4811, 3, 0, 40, 4.76808),
-(87, 'New Balance Fresh Foam LAZR v2 Cleats', 1500000.00, 'mlb (17).jpg', 'Đôi giày cung cấp sự thoải mái và hỗ trợ tốt nhờ công nghệ đệm Fresh Foam đặc biệt của New Balance.', 4030, 3, 0, 40, 4.73201),
-(88, 'Under Armour Yard Low ST Cleats', 1500000.00, 'mlb (18).jpg', 'Đôi giày chuyên dụng cho cỏ tự nhiên, có đế chắc chắn và khả năng bám trên sân cỏ tốt.', 4996, 3, 0, 40, 4.94742),
-(89, 'Nike Force Trout 6 Pro Metal Cleats', 1500000.00, 'mlb (19).jpg', 'Đôi giày thiết kế đặc biệt cho Mike Trout, với đế kim loại và công nghệ Nike Zoom Air để tăng cường hiệu suất chơi bóng.', 4952, 3, 0, 40, 3.86394),
-(90, 'Adidas Icon 4 Cleats', 1500000.00, 'mlb (20).jpg', 'Đôi giày bóng chày với thiết kế đơn giản, tạo cảm giác thoải mái và bền bỉ trên sân.', 4021, 3, 0, 40, 4.74613),
-(91, 'New Balance 574 Baseball Cleats', 1500000.00, 'mlb (21).jpg', 'Đôi giày có kiểu dáng retro và thoải mái, đặc biệt được thiết kế cho các hoạt động bóng chày.', 4350, 3, 0, 40, 4.19448),
-(92, 'Nike Huarache 2K Filth Pro Mid Metal Cleats', 1500000.00, 'mlb (22).jpg', 'Đôi giày sử dụng công nghệ Huarache của Nike và có đế kim loại, tạo sự bám và ổn định trên sân.', 2824, 3, 0, 40, 4.03113),
-(93, 'Adidas Icon Bounce Cleats', 1500000.00, 'mlb (23).jpg', 'Đôi giày bóng chày với công nghệ phản hồi năng lượng Bounce của Adidas, mang đến sự thoải mái và đàn hồi cho người sử dụng.', 1701, 3, 0, 40, 4.78699),
-(94, 'New Balance Fresh Foam LAZR v2 Turf Shoes', 1500000.00, 'mlb (24).jpg', 'Đôi giày turf với công nghệ đế Fresh Foam của New Balance, cho cảm giác thoải mái và đệm êm ái.', 2802, 3, 0, 40, 3.52949),
-(95, 'Under Armour Leadoff Mid RM Cleats', 1500000.00, 'mlb (25).jpg', 'Đôi giày bóng chày cao cổ với đế cao su và thiết kế hỗ trợ, tạo sự ổn định và độ bám tốt trên sân.', 3943, 3, 0, 40, 4.25468),
-(96, 'Nike Vapor Ultrafly Elite 2 Metal Cleats', 1500000.00, 'mlb (26).jpg', 'Đôi giày kim loại với công nghệ Nike Vapor để tăng hiệu suất chạy nhanh và đế cao su cung cấp độ bám tốt.', 2083, 3, 0, 40, 3.99476),
-(97, 'Adidas Adizero Afterburner 7 Cleats', 1500000.00, 'mlb (34).jpg', 'Đôi giày bóng chày nhẹ và linh hoạt, với thiết kế tối giản và độ bám cao trên sân.', 1024, 3, 0, 40, 4.436),
-(98, 'New Balance Fresh Foam 3000v5 Turf Shoes', 1500000.00, 'mlb (35).jpg', 'Đôi giày turf với công nghệ đệm Fresh Foam và đế nhựa TPU, mang đến sự thoải mái và bền bỉ trên sân cỏ nhân tạo.', 1701, 3, 0, 40, 3.80754),
-(99, 'Under Armour Yard Low Trainer Turf Shoes', 1500000.00, 'mlb (36).jpg', 'Đôi giày turf đa năng với thiết kế thời trang và đế êm ái, phù hợp cho cả các hoạt động thể dục và huấn luyện.', 3636, 3, 0, 40, 3.9857),
-(100, 'Nike Alpha Huarache Elite 3 Turf Shoes', 1500000.00, 'mlb (37).jpg', 'Đôi giày turf với công nghệ phản hồi năng lượng và đế cao su, tạo độ bám và ổn định trên sân cỏ nhân tạo.', 3735, 3, 0, 40, 4.76473),
-(101, 'Adidas Wheelhouse 4 Cleats', 1500000.00, 'mlb (38).jpg', 'Đôi giày bóng chày với thiết kế đơn giản và đế cao su, phù hợp cho các hoạt động bóng chày trong môi trường cỏ tự nhiên.', 2208, 3, 0, 40, 4.59491),
-(102, 'New Balance 4040v5 Metal Cleats', 1500000.00, 'mlb (39).jpg', 'Đôi giày kim loại với công nghệ đế lót Fresh Foam và thiết kế hỗ trợ, giúp gia tăng hiệu suất chơi bóng.', 1543, 3, 0, 40, 4.29104),
-(103, 'Under Armour Harper 5 Turf Shoes', 1500000.00, 'mlb (40).jpg', 'Đôi giày turf thiết kế đặc biệt cho Bryce Harper, với đế êm ái và hỗ trợ dễ chịu khi chơi trên bề mặt cỏ tự nhiên và nhân tạo.', 1079, 3, 0, 40, 3.54045),
-(104, 'Nike Air Zoom Pegasus 37 MLB', 1500000.00, 'mlb (41).jpg', 'Đôi giày chạy bộ với thiết kế đặc biệt và logo MLB, cung cấp độ thoải mái và bùng nổ năng lượng khi chạy.', 2799, 3, 0, 40, 3.95554),
-(105, 'Adidas Adizero Afterburner Low Cleats', 1500000.00, 'mlb (42).jpg', 'Đôi giày bóng chày nhẹ nhất của Adidas, với đế thấp và thiết kế tối giản, nhằm tối ưu hóa tốc độ và độ bám trên sân.', 3527, 3, 0, 40, 4.62976),
-(106, 'New Balance Fresh Foam 3000v5 Metal Cleats', 1500000.00, 'mlb (43).jpg', 'Đôi giày bóng chày kim loại với công nghệ đệm Fresh Foam và đế chắc chắn, thuận tiện cho các hoạt động ở vị trí chạy nhanh.', 1935, 3, 0, 40, 4.97784),
-(107, 'Under Armour Clean Up Culture Batting Gloves', 1500000.00, 'mlb (44).jpg', 'Đôi găng tay bóng chày với hình in thú vị và hỗ trợ cải thiện cảm giác khi nắm vợt', 4542, 3, 0, 40, 3.6685),
-(108, 'Nike Alpha Huarache Elite 3 Low Cleats', 1500000.00, 'mlb (46).jpg', 'Đôi giày bóng chày có đế cao su và công nghệ Nike Alpha, mang lại sự thoải mái và bám tốt trên sân.', 1010, 3, 0, 40, 3.71994),
-(109, 'Adidas Icon 5 Bounce Cleats', 1500000.00, 'mlb (45).jpg', 'Đôi giày bóng chày với công nghệ phản hồi năng lượng Bounce để tăng cường hiệu suất và độ bền.', 3067, 3, 0, 40, 4.43413),
-(110, 'New Balance 3000v5 Cleats', 1500000.00, 'mlb (47).jpg', 'Đôi giày bóng chày với công nghệ đế Fresh Foam và thiết kế chắc chắn, giúp cung cấp sự thoải mái và hỗ trợ tốt.', 1749, 3, 0, 40, 4.14807),
-(111, 'Under Armour Yard Mid ST Cleats', 1500000.00, 'mlb (48).jpg', 'Đôi giày bóng chày cao cổ với đế chắc chắn và khả năng bám trên sân cỏ tự nhiên.', 1065, 3, 0, 40, 3.71358),
-(112, 'Nike Vapor Ultrafly 2 Keystone Cleats', 1500000.00, 'mlb (49).jpg', 'Đôi giày bóng chày với đế cao su và thiết kế linh hoạt, mang lại sự thoải mái và độ bám tốt trên sân.', 3800, 3, 0, 40, 4.88236),
-(113, 'Adidas Speed Trainer 4 Turf Shoes', 1500000.00, 'mlb (50).jpg', 'Đôi giày turf đa năng với đế êm ái và thiết kế hiện đại, phù hợp cho các hoạt động thể dục và huấn luyện trên sân cỏ nhân tạo.', 1666, 3, 0, 40, 3.82132),
-(114, 'Nike Air Max 150', 2000000.00, 'nike (21).jpg', 'Đôi giày chạy bộ mang tính cách mạng của Nike. Nó có đế khí lớn ở gót chân, mang lại sự thoải mái và hỗ trợ', 3651, 1, 0, 40, 4.08622),
-(115, 'Nike Air Max 2010', 2000000.00, 'nike (22).jpg', 'Đôi giày chạy bộ mang tính biểu tượng của Nike. Nó có thiết kế độc đáo với phần đế giày được bao phủ bởi các lỗ Air visible.', 1870, 1, 0, 40, 3.55593),
-(116, 'Nike Air Max 1 Ultra (2011)', 2000000.00, 'nike (23).jpg', 'Phiên bản cập nhật của Air Max 1, với phần trên bằng lưới và đế Air visible.', 4522, 1, 0, 40, 3.79897),
-(117, 'Nike Air Max 90 Ultra (2013)', 2000000.00, 'nike (24).jpg', 'Phiên bản cập nhật của Air Max 90, với phần trên bằng lưới và đế Air visible.', 2551, 1, 0, 40, 4.41095),
-(118, 'Nike Air Max 1 Flyknit (2014)', 2000000.00, 'nike (25).jpg', 'Phiên bản Flyknit của Air Max 1, với phần trên bằng vải Flyknit.', 3969, 1, 0, 40, 3.67711),
-(119, 'Nike Air Max 90 Flyknit (2015)', 2000000.00, 'nike (26).jpg', 'Phiên bản Flyknit của Air Max 90, với phần trên bằng vải Flyknit.', 4980, 1, 0, 40, 3.96746),
-(120, 'Nike Air Max 95 Flyknit (2015)', 2000000.00, 'nike (27).jpg', 'Phiên bản Flyknit của Air Max 95, với phần trên bằng vải Flyknit.', 4926, 1, 0, 40, 4.02679),
-(121, 'Nike Air Max 270 (2018)', 2000000.00, 'nike (28).jpg', 'Đôi giày chạy bộ mang tính cách mạng của Nike. Nó có đế khí lớn ở gót chân, mang lại sự thoải mái và hỗ trợ', 4265, 1, 0, 40, 4.87585),
-(122, 'Nike Air Max 270 React (2019)', 2000000.00, 'nike (29).jpg', 'Phiên bản kết hợp của Air Max 270 và React. Nó có đế Air visible và đế React, mang lại sự thoải mái và hỗ trợ tối ưu.', 4526, 1, 0, 40, 3.73113),
-(123, 'Nike Air Max 720 (2019)', 2000000.00, 'nike (30).jpg', 'Đôi giày chạy bộ mang tính cách mạng của Nike. Nó có đế khí lớn bao phủ toàn bộ đế giày, mang lại sự thoải mái và hỗ trợ.', 4402, 1, 0, 40, 4.81005),
-(124, 'Nike Air Max 270 React 3 (2020)', 2000000.00, 'nike (31).jpg', 'Phiên bản cập nhật của Air Max 270 React, với phần đế được làm bằng chất liệu nhẹ và bền hơn.', 1124, 1, 0, 40, 4.76031),
-(125, 'Nike Air Max 270 React SE (2020)', 2000000.00, 'nike (32).jpg', 'Phiên bản đặc biệt của Air Max 270 React, với phần trên được làm bằng chất liệu cao cấp và thiết kế độc đáo.', 1735, 1, 0, 40, 3.65856),
-(126, 'Nike Air Max 270 React ENG (2020)', 2000000.00, 'nike (33).jpg', 'Phiên bản Engineered Garments của Air Max 270 React, với phần trên được làm bằng chất liệu cao cấp và thiết kế cổ điển.', 1291, 1, 0, 40, 3.75264),
-(127, 'Nike Air Max 270 React 2 (2021)', 2000000.00, 'nike (34).jpg', 'Phiên bản cập nhật của Air Max 270 React, với phần đế được làm bằng chất liệu nhẹ và bền hơn.', 2936, 1, 0, 40, 4.19355),
-(128, 'Nike Air Force 1 Low (1982)', 2000000.00, 'nike (35).jpg', 'Phiên bản thấp cổ của Air Force 1, mang lại sự thoải mái và linh hoạt.', 3471, 1, 0, 40, 4.93032),
-(129, 'Nike Air Force 1 Mid (1983)', 2000000.00, 'nike (36).jpg', 'Phiên bản cổ giữa của Air Force 1, mang lại sự hỗ trợ và bảo vệ.', 4266, 1, 0, 40, 4.17575),
-(130, 'Nike Air Force 1 High (1984)', 2000000.00, 'nike (37).jpg', 'Phiên bản cổ cao của Air Force 1, mang lại sự thoải mái và thời trang.', 1931, 1, 0, 40, 4.49411),
-(131, 'Nike Air Force 1 07 (2007)', 2000000.00, 'nike (38).jpg', 'Phiên bản cập nhật của Air Force 1, với thiết kế cổ điển và chất liệu cao cấp.', 4410, 1, 0, 40, 4.35433),
-(132, 'Nike Air Force 1 07 LV8 (2012)', 2000000.00, 'nike (39).jpg', 'Phiên bản đặc biệt của Air Force 1, với thiết kế độc đáo và chất liệu cao cấp.', 3301, 1, 0, 40, 3.88221),
-(133, 'Nike Air Force 1 07 LV8 Utility (2017)', 2000000.00, 'nike (40).jpg', 'Phiên bản Utility của Air Force 1, với thiết kế ứng dụng và chất liệu cao cấp.', 1171, 1, 0, 40, 4.06589),
-(134, 'Nike Air Force 1 Low Off-White (2017)', 2000000.00, 'nike (41).jpg', 'Phiên bản hợp tác của Air Force 1, được thiết kế bởi Virgil Abloh.', 1397, 1, 0, 40, 4.12957),
-(135, 'Nike Air Force 1 Mid Off-White (2018)', 2000000.00, 'nike (42).jpg', 'Phiên bản hợp tác của Air Force 1, được thiết kế bởi Virgil Abloh.', 4491, 1, 0, 40, 3.92033),
-(136, 'Nike Air Force 1 High Off-White (2018)', 2000000.00, 'nike (43).jpg', 'Phiên bản hợp tác của Air Force 1, được thiết kế bởi Virgil Abloh.', 3325, 1, 0, 40, 4.50791),
-(137, 'Nike Air Force 1 Low Travis Scott (2018)', 2000000.00, 'nike (44).jpg', 'Phiên bản hợp tác của Air Force 1, được thiết kế bởi Travis Scott.', 2159, 1, 0, 40, 3.57303),
-(138, 'Nike Air Force 1 Mid Travis Scott (2019)', 2000000.00, 'nike (45).jpg', 'Phiên bản hợp tác của Air Force 1, được thiết kế bởi Travis Scott.', 2336, 1, 0, 40, 4.1553),
-(139, 'Nike Air Force 1 High Travis Scott (2019)', 2000000.00, 'nike (46).jpg', 'Phiên bản hợp tác của Air Force 1, được thiết kế bởi Travis Scott.', 4402, 1, 0, 40, 4.08774),
-(140, 'Nike Air Force 1 Low Supreme (2018)', 2000000.00, 'nike (48).jpg', 'Phiên bản hợp tác của Air Force 1, được thiết kế bởi Supreme.', 3387, 1, 0, 40, 3.9664),
-(141, 'Nike Air Force 1 Mid Supreme (2018)', 2000000.00, 'nike (49).jpg', 'Phiên bản hợp tác của Air Force 1, được thiết kế bởi Supreme.', 4420, 1, 0, 40, 4.7477),
-(142, ' Nike Air Force 1 High Supreme (2018)', 2000000.00, 'nike (50).jpg', ' Phiên bản hợp tác của Air Force 1, được thiết kế bởi Supreme.', 2261, 1, 0, 40, 4.71968);
+INSERT INTO `sanpham` (`id`, `name`, `price`, `img`, `mota`, `luotxem`, `iddm`, `soluong`, `sale`, `star`, `luotban`) VALUES
+(1, 'Nike Bruin', 2000000.00, 'nike (2).jpg', ' Đôi giày bóng rổ đầu tiên của Nike. Nó có đế cao su dày và phần trên bằng da, mang lại sự hỗ trợ và độ bền. 1', 4419, 1, 302, 401, 4.60667, 0),
+(2, 'Nike Cortez', 1500000.00, 'nike (3).jpg', 'Đôi giày chạy bộ mang tính biểu tượng của Nike. Nó có đế cao su và phần trên bằng da, mang lại sự thoải mái và hỗ trợ.', 1677, 1, 158, 40, 3.99657, 0),
+(3, 'Nike Tailwind', 1000000.00, 'nike (5).jpg', 'Đôi giày chạy bộ đầu tiên của Nike có đế khí. Nó có đế khí lớn ở gót chân, mang lại sự êm ái và thoải mái.', 2911, 1, 508, 40, 4.7491, 0),
+(4, 'Nike Air Force 1', 2000000.00, 'nike (4).jpg', 'Đôi giày bóng rổ mang tính biểu tượng của Nike. Nó có đế khí ở gót chân, mang lại sự êm ái và thoải mái.', 2804, 1, 497, 40, 3.91503, 0),
+(5, 'Nike Air Jordan 1', 1500000.00, 'nike (6).jpg', 'Đôi giày bóng rổ mang tính biểu tượng của Michael Jordan. Nó có thiết kế táo bạo và nổi bật, với phần trên bằng da và logo Jumpman.', 4871, 1, 362, 40, 3.77061, 0),
+(6, 'Nike Air Max 1', 1000000.00, 'nike (7).jpg', 'Đôi giày chạy bộ mang tính cách mạng của Nike. Nó là đôi giày đầu tiên có đế khí visible, cho phép người dùng cảm nhận được độ đàn hồi và thoải mái.', 2467, 1, 381, 40, 3.98465, 0),
+(7, 'Nike Air Max 90', 2000000.00, 'nike (8).jpg', 'Phiên bản nâng cấp của Air Max 1, với phần trên được làm bằng chất liệu nhẹ và thoáng khí hơn.', 2457, 1, 528, 40, 4.79569, 0),
+(8, 'Nike Air Max 95', 1500000.00, 'nike (9).jpg', 'Đôi giày chạy bộ mang tính đột phá của Nike. Nó có thiết kế độc đáo với các lỗ Air visible được đặt ở các vị trí khác nhau trên đế giày.', 4588, 1, 366, 40, 4.65889, 0),
+(9, 'Nike Waffle Racer', 1000000.00, 'nike (10).jpg', 'Đôi giày chạy bộ đầu tiên của Nike, được thiết kế bởi Bill Bowerman. Nó có đế waffle đặc trưng, giúp tăng độ bám', 2091, 1, 376, 40, 4.45525, 0),
+(10, 'Nike Air Max Plus', 2000000.00, 'nike (11).jpg', 'Đôi giày chạy bộ mang tính cách mạng của Nike. Nó có thiết kế táo bạo và nổi bật, với phần trên bằng lưới và logo Swoosh lớn.', 4252, 1, 588, 40, 4.47361, 0),
+(11, 'Nike Air Max 98', 1500000.00, 'nike (12).jpg', 'Đôi giày chạy bộ mang tính biểu tượng của Nike. Nó có thiết kế độc đáo với phần đế giày được bao phủ bởi các lỗ Air visible.', 3404, 1, 509, 40, 4.73746, 0),
+(12, 'Nike Air Max TN', 1000000.00, 'nike (13).jpg', 'Phiên bản giới hạn của Air Max Plus, được phát hành ở Úc. Nó có thiết kế táo bạo và nổi bật, với phần trên bằng lưới và logo Swoosh lớn.', 2090, 1, 410, 40, 4.54577, 0),
+(13, 'Nike Air Max 2000', 2000000.00, 'nike (14).jpg', 'Đôi giày chạy bộ mang tính cách mạng của Nike. Nó có thiết kế độc đáo với phần đế giày được bao phủ bởi các lỗ Air visible', 2431, 1, 447, 40, 4.04536, 0),
+(14, 'Nike Air Max 2002', 2000000.00, 'nike (15).jpg', 'Đôi giày chạy bộ mang tính biểu tượng của Nike. Nó có thiết kế táo bạo và nổi bật, với phần trên bằng lưới và logo Swoosh lớn.', 3932, 1, 529, 40, 4.4035, 0),
+(15, 'Nike Air Max 2003', 2000000.00, 'nike (16).jpg', 'Đôi giày chạy bộ mang tính biểu tượng của Nike. Nó có thiết kế độc đáo với phần đế giày được bao phủ bởi các lỗ Air visible.', 2732, 1, 544, 40, 4.58695, 0),
+(16, 'Nike Air Max 360', 2000000.00, 'nike (17).jpg', 'Đôi giày chạy bộ mang tính cách mạng của Nike. Nó có đế khí bao phủ toàn bộ đế giày, mang lại sự thoải mái và hỗ trợ', 3388, 1, 605, 40, 3.58643, 0),
+(17, 'Nike Air Max 180', 2000000.00, 'nike (18).jpg', 'Đôi giày chạy bộ mang tính biểu tượng của Nike. Nó có đế khí lớn ở gót chân, mang lại sự thoải mái và hỗ trợ', 4434, 1, 486, 40, 3.56793, 0),
+(18, 'Nike Air Max 32', 2000000.00, 'nike (19).jpg', 'Đôi giày bóng rổ mang tính cách mạng của Nike. Nó có đế khí lớn ở gót chân, mang lại sự thoải mái và hỗ trợ', 4576, 1, 411, 40, 3.69038, 0),
+(19, 'Nike Air Max 24/7', 2000000.00, 'nike (20).jpg', 'Đôi giày chạy bộ mang tính biểu tượng của Nike. Nó có thiết kế độc đáo với phần', 1746, 1, 576, 40, 4.376, 0),
+(20, 'Adidas Adizero Afterburner V Cleats', 1500000.00, 'mlb (1).jpg', 'Đôi giày chuyên dụng cho môn bóng chày, có đế nổi tiếng Adizero của Adidas, giảm trọng lượng và tăng độ bám trên sân.', 3317, 3, 424, 40, 4.23872, 0),
+(21, 'New Balance 4040v4 Metal Cleats', 1500000.00, 'mlb (2).jpg', 'Đôi giày có đế chắc chắn và miếng lót thoáng khí để hỗ trợ các vận động viên ở vị trí chạy nhanh trên sân.', 4751, 3, 511, 40, 3.85141, 0),
+(22, 'Under Armour Harper 4 Mid Metal Cleats', 1500000.00, 'mlb (3).jpg', 'Đôi giày được thiết kế đặc biệt cho Bryce Harper, với đế chắc chắn, hỗ trợ và mang lại sự ổn định khi chơi bóng.', 4127, 3, 345, 40, 4.61935, 0),
+(23, 'Nike Air Max MVP Elite 3/4 Metal Cleats', 1500000.00, 'mlb (4).jpg', 'Đôi giày chất lượng cao với đế metal và công nghệ Air Max của Nike, đem lại sự thoải mái và độ bám tốt trên sân', 3474, 3, 590, 40, 4.93017, 0),
+(24, 'Adidas Adizero 8.0 Uncaged Cleats', 1500000.00, 'mlb (5).jpg', 'Được xem là một trong những đôi giày bóng chày nhẹ nhất trên thị trường, với chất liệu nhẹ và kiểu dáng tối giản.', 2094, 3, 545, 40, 4.25655, 0),
+(25, ' Nike Waffle Racer ', 1000000.00, 'nike (1).jpg', ' Đôi giày chạy bộ đầu tiên của Nike, được thiết kế bởi Bill Bowerman. Nó có đế waffle đặc trưng, giúp tăng độ bám ', 3061, 1, 619, 40, 4.82311, 0),
+(26, 'New Balance Fresh Foam LAZR v2 Cleats', 1500000.00, 'mlb (6).jpg', 'Đôi giày cung cấp sự thoải mái và hỗ trợ tốt nhờ công nghệ đệm Fresh Foam đặc biệt của New Balance.', 2403, 3, 586, 40, 3.68793, 0),
+(27, 'Under Armour Yard Low ST Cleats', 1500000.00, 'mlb (7).jpg', 'Đôi giày chuyên dụng cho cỏ tự nhiên, có đế chắc chắn và khả năng bám trên sân cỏ tốt.', 2533, 3, 439, 40, 4.44897, 0),
+(28, 'Nike Force Trout 6 Pro Metal Cleats', 1500000.00, 'mlb (8).jpg', 'Đôi giày thiết kế đặc biệt cho Mike Trout, với đế kim loại và công nghệ Nike Zoom Air để tăng cường hiệu suất chơi bóng.', 1346, 3, 416, 40, 3.68863, 0),
+(29, 'Adidas Icon 4 Cleats', 1500000.00, 'mlb (9).jpg', 'Đôi giày bóng chày với thiết kế đơn giản, tạo cảm giác thoải mái và bền bỉ trên sân.', 3916, 3, 407, 40, 4.77007, 0),
+(30, 'New Balance 574 Baseball Cleats', 1500000.00, 'mlb (10).jpg', 'Đôi giày có kiểu dáng retro và thoải mái, đặc biệt được thiết kế cho các hoạt động bóng chày.', 4533, 3, 548, 40, 3.65225, 0),
+(31, 'Under Armour Yard Trainer Shoes', 1500000.00, 'mlb (11).jpg', 'Đôi giày huấn luyện đa năng với đế êm ái và hỗ trợ tốt cho các hoạt động thể thao.', 4000, 3, 561, 40, 4.66677, 0),
+(32, 'Nike Air Max', 1500000.00, 'joden (1).jpg', 'Đôi giày thể thao từ Nike với thiết kế đặc trưng và công nghệ Air Max để cung cấp đệm êm ái và thoáng khí tốt.', 2890, 2, 510, 40, 4.99388, 0),
+(33, 'Adidas Superstar', 1500000.00, 'joden (2).jpg', ': Đôi giày thành danh của Adidas với mũi giày cao su đen và dải sọc ba sọc đặc trưng, mang lại phong cách cổ điển và cá tính.', 2821, 2, 535, 40, 4.42216, 0),
+(34, 'Converse Chuck Taylor All Star', 1500000.00, 'joden (3).jpg', 'Giày cao cổ từ Converse với thiết kế đơn giản, phong cách retro, và là biểu tượng của người sử dụng giày thể thao hàng ngày.', 4641, 2, 422, 40, 4.47169, 0),
+(35, 'Vans Old Skool', 1500000.00, 'joden (4).jpg', 'Giày skateboard cổ điển của Vans với dải sọc hai bên và đế cao su waffle đặc trưng, tạo nên phong cách đơn giản và thời trang.', 2431, 2, 401, 40, 4.89551, 0),
+(36, 'Puma Suede Classic', 1500000.00, 'joden (5).jpg', 'Đôi giày da từ Puma với thiết kế thấp cổ và mặt ngoài da lì, mang đến sự thoải mái và phong cách độc đáo.', 1229, 2, 536, 40, 3.98152, 0),
+(37, 'Reebok Classic Leather', 1500000.00, 'joden (6).jpg', 'Đôi giày da từ Reebok với thiết kế đơn giản và đế giữa êm ái, tạo nên phong cách thể thao phối cùng với trang phục hàng ngày.', 3383, 2, 516, 40, 3.56992, 0),
+(38, 'New Balance 574', 1500000.00, 'joden (7).jpg', ': Đôi giày chạy bộ từ New Balance với thiết kế retro và công nghệ đệm tốt, tạo cảm giác thoải mái và hỗ trợ cho đôi chân.', 4447, 2, 527, 40, 4.4161, 0),
+(39, 'Asics Gel-Lyte III', 1500000.00, 'joden (8).jpg', 'Đôi giày chạy từ Asics với thiết kế phối màu độc đáo và công nghệ đệm gel, mang lại sự êm ái và kiểu dáng đặc trưng.', 4293, 2, 348, 40, 4.12067, 0),
+(40, 'Saucony Jazz Original', 1500000.00, 'joden (9).jpg', ': Đôi giày chạy từ Saucony với thiết kế retro và đế giữa đệm êm ái, tạo nên sự thoải mái trong hoạt động chạy bộ.', 1380, 2, 457, 40, 4.46795, 0),
+(41, 'Jordan Retro', 1500000.00, 'joden (10).jpg', 'Đôi giày từ dòng sản phẩm Air Jordan của Nike, mang lại phong cách thể thao và hình ảnh của huyền thoại Michael Jordan.', 2872, 2, 338, 40, 4.44955, 0),
+(42, 'Timberland 6-Inch Premium Boots', 1500000.00, 'joden (11).jpg', 'Muối của Timberland, đôi giày cao cổ chất liệu da chống nước, đế lugged cho khả năng bám tốt và sự bền bỉ.', 2502, 2, 377, 40, 4.47334, 0),
+(43, 'Dr. Martens 1460', 1500000.00, 'joden (12).jpg', 'Đôi giày cao cổ từ Dr. Martens với thiết kế bền bỉ và kiểu dáng punk, mang đến sự cá tính và phong cách riêng.', 2225, 2, 488, 40, 4.10038, 0),
+(44, 'Converse Jack Purcell', 1500000.00, 'joden (13).jpg', 'Đôi giày thể thao low-top từ Converse với thiết kế đơn giản, màu sắc trang nhã và một chi tiết kẻ xéo ở mũi giày.', 2670, 2, 522, 40, 4.02404, 0),
+(45, 'Adidas Stan Smith', 1500000.00, 'joden (14).jpg', 'Biểu tượng của Adidas, đôi giày thể thao với thiết kế trắng đơn giản và logo Stan Smith đằng sau.', 2649, 2, 507, 40, 4.93983, 0),
+(46, 'Nike Dunk', 1500000.00, 'joden (15).jpg', 'Đôi giày bóng rổ từ Nike với thiết kế mạnh mẽ và màu sắc đa dạng, được yêu thích trong cả thời trang hàng ngày.', 3765, 2, 417, 40, 4.31078, 0),
+(47, 'Vans Sk8-Hi', 1500000.00, 'joden (16).jpg', 'Đôi giày skateboarding cao cổ từ Vans với dải sọc và đế cao su waffle, mang đến sự thoải mái và hỗ trợ cho người sử dụng.', 3847, 2, 297, 40, 4.76079, 0),
+(48, 'Puma RS-X', 1500000.00, 'joden (17).jpg', 'Đôi giày từ dòng RS-X của Puma, với thiết kế đặc trưng, màu sắc táo bạo và kiểu dáng thể thao hiện đại.', 2338, 2, 579, 40, 4.33308, 0),
+(49, 'Reebok Club C 85', 1500000.00, 'joden (18).jpg', ': Đôi giày thể thao từ Reebok với thiết kế cổ điển, màu trắng trang nhã và tính năng thoáng khí.', 1262, 2, 511, 40, 4.40359, 0),
+(50, 'New Balance 997', 1500000.00, 'joden (19).jpg', ': Đôi giày chạy từ New Balance với thiết kế hiện đại và công nghệ đệm tối ưu, tạo cảm giác thoải mái và ổn định.', 3341, 2, 446, 40, 4.86547, 0),
+(51, 'Asics Gel-Kayano', 1500000.00, 'joden (20).jpg', 'Đôi giày chạy từ Asics với thiết kế hiện đại và công nghệ đệm Gel-Kayano, mang lại sự thoải mái và hỗ trợ cho người sử dụng.', 3670, 2, 491, 40, 4.28582, 0),
+(52, 'Saucony Shadow 5000', 1500000.00, 'joden (21).jpg', 'Đôi giày từ Saucony với thiết kế retro và công nghệ thoáng khí, tạo cảm giác nhẹ và thoải mái cho người sử dụng.', 3319, 2, 524, 40, 4.45959, 0),
+(53, 'Adidas Gazelle', 1500000.00, 'joden (22).jpg', 'Đôi giày từ Adidas với thiết kế thể thao và màu sắc tươi sáng, mang đến phong cách năng động và trẻ trung.', 1239, 2, 396, 40, 3.8051, 0),
+(54, 'Nike Air Force 1', 1500000.00, 'joden (23).jpg', 'Đôi giày thể thao cổ điển của Nike với thiết kế trắng đơn giản và công nghệ đệm tốt, được yêu thích trong cả thời trang streetwear.', 3973, 2, 374, 40, 4.70315, 0),
+(55, 'Vans Authentic', 1500000.00, 'joden (24).jpg', 'Đôi giày thể thao từ Vans với thiết kế nền và logo Vans đặc trưng, mang đến phong cách dễ thương và thoải mái.', 4567, 2, 506, 40, 4.7484, 0),
+(56, 'Puma Clyde', 1500000.00, 'joden (25).jpg', 'Đôi giày từ Puma, lấy cảm hứng từ cựu cầu thủ bóng rổ Clyde Frazier, mang đến phong cách thể thao tinh tế và sang trọng.', 4026, 2, 156, 40, 4.64936, 0),
+(57, 'Reebok Workout Plus', 1500000.00, 'joden (26).jpg', 'Đôi giày thể thao từ Reebok với thiết kế đơn giản và công nghệ thoáng khí, mang đến sự thoải mái và kiểu dáng thể thao đa năng.', 1828, 2, 0, 40, 3.92781, 0),
+(58, 'New Balance 990', 1500000.00, 'joden (27).jpg', 'Đôi giày chạy cao cấp từ New Balance với thiết kế retro và công nghệ đệm tối ưu, tạo cảm giác thoải mái và ổn định trong hoạt động chạy.', 2618, 2, 0, 40, 3.53813, 0),
+(59, 'Asics Gel-Lyte V', 1500000.00, 'joden (28).jpg', 'Đôi giày chạy từ Asics với thiết kế thời trang và công nghệ đệm gel, mang đến sự thoải mái và kiểu dáng đặc trưng.', 4271, 2, 0, 40, 4.02285, 0),
+(60, 'Saucony Grid SD', 1500000.00, 'joden (29).jpg', 'Đôi giày từ dòng Grid của Saucony với thiết kế đa dạng và công nghệ thoáng khí, mang đến sự thoải mái và hỗ trợ cho người sử dụng.', 4182, 2, 0, 40, 4.74013, 0),
+(61, 'Adidas NMD', 1500000.00, 'joden (30).jpg', 'Đôi giày thể thao hiện đại từ Adidas với thiết kế đơn giản và công nghệ đệm tối ưu, tạo cảm giác nhẹ nhàng và bền bỉ.', 1698, 2, 0, 40, 4.75641, 0),
+(62, 'Nike Blazer', 1500000.00, 'joden (31).jpg', 'Đôi giày thể thao từ Nike với thiết kế cổ cao và phong cách hoài cổ, mang đến phong cách thể thao và thời trang cổ điển.', 1933, 2, 0, 40, 4.61138, 0),
+(63, 'Vans Slip-On', 1500000.00, 'joden (32).jpg', 'Đôi giày từ Vans với thiết kế đơn giản không cần dây buộc, đế cao su waffle và dải sọc đặc trưng, mang đến sự tiện lợi và phong cách đặc trưng của thương hiệu.', 1996, 2, 0, 40, 3.56965, 0),
+(64, 'Puma Roma', 1500000.00, 'joden (33).jpg', 'Đôi giày từ Puma với thiết kế thể thao retro và màu sắc tinh tế, tạo nên phong cách độc đáo và trẻ trung.', 4926, 2, 0, 40, 3.75875, 0),
+(65, 'Reebok Classic Nylon', 1500000.00, 'joden (34).jpg', 'Đôi giày từ Reebok với thiết kế đơn giản và chất liệu nylon, mang đến sự nhẹ nhàng và thoáng khí cho đôi chân.', 4836, 2, 0, 40, 3.7532, 0),
+(66, 'New Balance 996', 1500000.00, 'joden (35).jpg', 'Đôi giày chạy từ New Balance với thiết kế đa năng và phối màu hợp thời, mang đến sự thoải mái và phong cách thể thao hiện đại.', 4331, 2, 0, 40, 4.05405, 0),
+(67, 'Asics Gel-Respector', 1500000.00, 'joden (36).jpg', 'Đôi giày chạy từ Asics với thiết kế retro và công nghệ đệm gel, tạo cảm giác êm ái và phong cách đặc trưng.', 1726, 2, 0, 40, 4.1501, 0),
+(68, 'Saucony Grid 9000', 1500000.00, 'joden (37).jpg', 'Đôi giày từ Saucony với thiết kế thể thao và công nghệ thoáng khí, mang lại cảm giác thoải mái và sự hỗ trợ cho người sử dụng.', 3952, 2, 0, 40, 4.53264, 0),
+(69, 'Adidas Ultra Boost', 1500000.00, 'joden (38).jpg', 'Biểu tượng của Adidas, đôi giày chạy với thiết kế hiện đại và công nghệ đệm tối ưu, tạo cảm giác nhẹ nhàng và đàn hồi.', 4903, 2, 0, 40, 3.7034, 0),
+(70, 'Nike Cortez', 1500000.00, 'joden (39).jpg', 'Đôi giày thể thao cổ điển của Nike với thiết kế đơn giản và logo Swoosh phản quang, mang đến phong cách thể thao và retro đặc trưng.', 3346, 2, 0, 40, 4.784, 0),
+(71, 'Puma Basket', 1500000.00, 'joden (40).jpg', 'Đôi giày từ Puma với thiết kế thể thao đơn giản và kiểu dáng thấp cổ, tạo nên phong cách năng động và trẻ trung.', 4054, 2, 0, 40, 4.36777, 0),
+(72, 'New Balance 997H', 1500000.00, 'joden (41).jpg', 'Phiên bản cải tiến từ New Balance 997, với thiết kế hiện đại và công nghệ đệm tối ưu, mang đến sự thoải mái và kiểu dáng độc đáo.', 3034, 2, 0, 40, 4.6561, 0),
+(73, 'Asics Gel-Lyte I', 1500000.00, 'joden (42).jpg', 'Đôi giày chạy điểm danh từ Asics với thiết kế retro và công nghệ đệm gel, tạo cảm giác êm ái và kiểu dáng đặc trưng.', 1469, 2, 0, 40, 4.55084, 0),
+(74, 'Saucony Jazz Low Pro', 1500000.00, 'joden (43).jpg', 'Phiên bản thấp cổ từ Saucony Jazz Original, với thiết kế retro và đế giữa đệm êm ái, tạo cảm giác nhẹ nhàng và thoải mái.', 4265, 2, 0, 40, 4.75705, 0),
+(75, 'Adidas Yeezy', 1500000.00, 'joden (44).jpg', 'Dòng sản phẩm hợp tác giữa Adidas và rapper Kanye West, với thiết kế độc đáo và các phối màu đặc trưng, tạo nên sự cá tính và ấn tượng.', 2455, 2, 0, 40, 3.66015, 0),
+(76, 'Nike Air Max 97', 1500000.00, 'joden (45).jpg', 'Đôi giày thể thao từ Nike với thiết kế độc đáo và công nghệ Air Max, tạo cảm giác êm ái và phong cách hiện đại.', 4934, 2, 0, 40, 4.20936, 0),
+(77, 'Vans Sk8-Mid', 1500000.00, 'joden (46).jpg', 'Đôi giày skate cao cổ từ Vans, độc đáo với thiết kế mặt lưng màu sáng và dải sọc đặc trưng, mang đến phong cách cá nhân và bền bỉ.', 3141, 2, 0, 40, 4.17941, 0),
+(78, 'Puma Future Rider', 1500000.00, 'joden (48).jpg', 'Đôi giày từ Puma với thiết kế hiện đại và phối màu táo bạo, tạo nên sự thoải mái và cá tính trong hoạt động hàng ngày.', 1957, 2, 0, 40, 4.34735, 0),
+(79, 'Reebok Question', 1500000.00, 'joden (49).jpg', 'Đôi giày bóng rổ cổ điển từ Reebok, được thiết kế theo mẫu của cựu cầu thủ NBA Allen Iverson, với sự kết hợp giữa phong cách và hiệu suất thể thao.', 1283, 2, 0, 40, 4.35534, 0),
+(80, 'Saucony Jazz Low Pro', 1500000.00, 'joden (50).jpg', 'Phiên bản thấp cổ từ Saucony Jazz Original, với thiết kế retro và đế giữa đệm êm ái, tạo cảm giác nhẹ nhàng và thoải mái.', 2500, 2, 0, 40, 4.99263, 0),
+(81, 'Nike Air Zoom Pegasus 36 MLB', 1500000.00, 'mlb (11).jpg', 'Đôi giày chạy bộ thiết kế đặc biệt với logo MLB, có đệm hỗ trợ tốt và mang lại sự thoải mái cho người sử dụng.', 1790, 3, 0, 40, 4.51947, 0),
+(82, 'Adidas Adizero Afterburner V Cleats', 1500000.00, 'mlb (12).jpg', 'Đôi giày chuyên dụng cho môn bóng chày, có đế nổi tiếng Adizero của Adidas, giảm trọng lượng và tăng độ bám trên sân.', 2482, 3, 0, 40, 4.95217, 0),
+(83, 'New Balance 4040v4 Metal Cleats', 1500000.00, 'mlb (13).jpg', 'Đôi giày có đế chắc chắn và miếng lót thoáng khí để hỗ trợ các vận động viên ở vị trí chạy nhanh trên sân.', 3314, 3, 0, 40, 4.45198, 0),
+(84, 'Under Armour Harper 4 Mid Metal Cleats', 1500000.00, 'mlb (14).jpg', 'Đôi giày được thiết kế đặc biệt cho Bryce Harper, với đế chắc chắn, hỗ trợ và mang lại sự ổn định khi chơi bóng.', 1192, 3, 0, 40, 4.67473, 0),
+(85, 'Nike Air Max MVP Elite 3/4 Metal Cleats', 1500000.00, 'mlb (15).jpg', 'Đôi giày chất lượng cao với đế metal và công nghệ Air Max của Nike, đem lại sự thoải mái và độ bám tốt trên sân.', 2323, 3, 0, 40, 3.50884, 0),
+(86, 'Adidas Adizero 8.0 Uncaged Cleats', 1500000.00, 'mlb (16).jpg', 'Được xem là một trong những đôi giày bóng chày nhẹ nhất trên thị trường, với chất liệu nhẹ và kiểu dáng tối giản.', 4811, 3, 0, 40, 4.76808, 0),
+(87, 'New Balance Fresh Foam LAZR v2 Cleats', 1500000.00, 'mlb (17).jpg', 'Đôi giày cung cấp sự thoải mái và hỗ trợ tốt nhờ công nghệ đệm Fresh Foam đặc biệt của New Balance.', 4030, 3, 0, 40, 4.73201, 0),
+(88, 'Under Armour Yard Low ST Cleats', 1500000.00, 'mlb (18).jpg', 'Đôi giày chuyên dụng cho cỏ tự nhiên, có đế chắc chắn và khả năng bám trên sân cỏ tốt.', 4996, 3, 0, 40, 4.94742, 0),
+(89, 'Nike Force Trout 6 Pro Metal Cleats', 1500000.00, 'mlb (19).jpg', 'Đôi giày thiết kế đặc biệt cho Mike Trout, với đế kim loại và công nghệ Nike Zoom Air để tăng cường hiệu suất chơi bóng.', 4952, 3, 0, 40, 3.86394, 0),
+(90, 'Adidas Icon 4 Cleats', 1500000.00, 'mlb (20).jpg', 'Đôi giày bóng chày với thiết kế đơn giản, tạo cảm giác thoải mái và bền bỉ trên sân.', 4021, 3, 0, 40, 4.74613, 0),
+(91, 'New Balance 574 Baseball Cleats', 1500000.00, 'mlb (21).jpg', 'Đôi giày có kiểu dáng retro và thoải mái, đặc biệt được thiết kế cho các hoạt động bóng chày.', 4350, 3, 0, 40, 4.19448, 0),
+(92, 'Nike Huarache 2K Filth Pro Mid Metal Cleats', 1500000.00, 'mlb (22).jpg', 'Đôi giày sử dụng công nghệ Huarache của Nike và có đế kim loại, tạo sự bám và ổn định trên sân.', 2824, 3, 0, 40, 4.03113, 0),
+(93, 'Adidas Icon Bounce Cleats', 1500000.00, 'mlb (23).jpg', 'Đôi giày bóng chày với công nghệ phản hồi năng lượng Bounce của Adidas, mang đến sự thoải mái và đàn hồi cho người sử dụng.', 1701, 3, 0, 40, 4.78699, 0),
+(94, 'New Balance Fresh Foam LAZR v2 Turf Shoes', 1500000.00, 'mlb (24).jpg', 'Đôi giày turf với công nghệ đế Fresh Foam của New Balance, cho cảm giác thoải mái và đệm êm ái.', 2802, 3, 0, 40, 3.52949, 0),
+(95, 'Under Armour Leadoff Mid RM Cleats', 1500000.00, 'mlb (25).jpg', 'Đôi giày bóng chày cao cổ với đế cao su và thiết kế hỗ trợ, tạo sự ổn định và độ bám tốt trên sân.', 3943, 3, 0, 40, 4.25468, 0),
+(96, 'Nike Vapor Ultrafly Elite 2 Metal Cleats', 1500000.00, 'mlb (26).jpg', 'Đôi giày kim loại với công nghệ Nike Vapor để tăng hiệu suất chạy nhanh và đế cao su cung cấp độ bám tốt.', 2083, 3, 0, 40, 3.99476, 0),
+(97, 'Adidas Adizero Afterburner 7 Cleats', 1500000.00, 'mlb (34).jpg', 'Đôi giày bóng chày nhẹ và linh hoạt, với thiết kế tối giản và độ bám cao trên sân.', 1024, 3, 0, 40, 4.436, 0),
+(98, 'New Balance Fresh Foam 3000v5 Turf Shoes', 1500000.00, 'mlb (35).jpg', 'Đôi giày turf với công nghệ đệm Fresh Foam và đế nhựa TPU, mang đến sự thoải mái và bền bỉ trên sân cỏ nhân tạo.', 1701, 3, 0, 40, 3.80754, 0),
+(99, 'Under Armour Yard Low Trainer Turf Shoes', 1500000.00, 'mlb (36).jpg', 'Đôi giày turf đa năng với thiết kế thời trang và đế êm ái, phù hợp cho cả các hoạt động thể dục và huấn luyện.', 3636, 3, 0, 40, 3.9857, 0),
+(100, 'Nike Alpha Huarache Elite 3 Turf Shoes', 1500000.00, 'mlb (37).jpg', 'Đôi giày turf với công nghệ phản hồi năng lượng và đế cao su, tạo độ bám và ổn định trên sân cỏ nhân tạo.', 3735, 3, 0, 40, 4.76473, 0),
+(101, 'Adidas Wheelhouse 4 Cleats', 1500000.00, 'mlb (38).jpg', 'Đôi giày bóng chày với thiết kế đơn giản và đế cao su, phù hợp cho các hoạt động bóng chày trong môi trường cỏ tự nhiên.', 2208, 3, 0, 40, 4.59491, 0),
+(102, 'New Balance 4040v5 Metal Cleats', 1500000.00, 'mlb (39).jpg', 'Đôi giày kim loại với công nghệ đế lót Fresh Foam và thiết kế hỗ trợ, giúp gia tăng hiệu suất chơi bóng.', 1543, 3, 0, 40, 4.29104, 0),
+(103, 'Under Armour Harper 5 Turf Shoes', 1500000.00, 'mlb (40).jpg', 'Đôi giày turf thiết kế đặc biệt cho Bryce Harper, với đế êm ái và hỗ trợ dễ chịu khi chơi trên bề mặt cỏ tự nhiên và nhân tạo.', 1079, 3, 0, 40, 3.54045, 0),
+(104, 'Nike Air Zoom Pegasus 37 MLB', 1500000.00, 'mlb (41).jpg', 'Đôi giày chạy bộ với thiết kế đặc biệt và logo MLB, cung cấp độ thoải mái và bùng nổ năng lượng khi chạy.', 2799, 3, 0, 40, 3.95554, 0),
+(105, 'Adidas Adizero Afterburner Low Cleats', 1500000.00, 'mlb (42).jpg', 'Đôi giày bóng chày nhẹ nhất của Adidas, với đế thấp và thiết kế tối giản, nhằm tối ưu hóa tốc độ và độ bám trên sân.', 3527, 3, 0, 40, 4.62976, 0),
+(106, 'New Balance Fresh Foam 3000v5 Metal Cleats', 1500000.00, 'mlb (43).jpg', 'Đôi giày bóng chày kim loại với công nghệ đệm Fresh Foam và đế chắc chắn, thuận tiện cho các hoạt động ở vị trí chạy nhanh.', 1935, 3, 0, 40, 4.97784, 0),
+(107, 'Under Armour Clean Up Culture Batting Gloves', 1500000.00, 'mlb (44).jpg', 'Đôi găng tay bóng chày với hình in thú vị và hỗ trợ cải thiện cảm giác khi nắm vợt', 4542, 3, 0, 40, 3.6685, 0),
+(108, 'Nike Alpha Huarache Elite 3 Low Cleats', 1500000.00, 'mlb (46).jpg', 'Đôi giày bóng chày có đế cao su và công nghệ Nike Alpha, mang lại sự thoải mái và bám tốt trên sân.', 1010, 3, 0, 40, 3.71994, 0),
+(109, 'Adidas Icon 5 Bounce Cleats', 1500000.00, 'mlb (45).jpg', 'Đôi giày bóng chày với công nghệ phản hồi năng lượng Bounce để tăng cường hiệu suất và độ bền.', 3067, 3, 0, 40, 4.43413, 0),
+(110, 'New Balance 3000v5 Cleats', 1500000.00, 'mlb (47).jpg', 'Đôi giày bóng chày với công nghệ đế Fresh Foam và thiết kế chắc chắn, giúp cung cấp sự thoải mái và hỗ trợ tốt.', 1749, 3, 0, 40, 4.14807, 0),
+(111, 'Under Armour Yard Mid ST Cleats', 1500000.00, 'mlb (48).jpg', 'Đôi giày bóng chày cao cổ với đế chắc chắn và khả năng bám trên sân cỏ tự nhiên.', 1065, 3, 0, 40, 3.71358, 0),
+(112, 'Nike Vapor Ultrafly 2 Keystone Cleats', 1500000.00, 'mlb (49).jpg', 'Đôi giày bóng chày với đế cao su và thiết kế linh hoạt, mang lại sự thoải mái và độ bám tốt trên sân.', 3800, 3, 0, 40, 4.88236, 0),
+(113, 'Adidas Speed Trainer 4 Turf Shoes', 1500000.00, 'mlb (50).jpg', 'Đôi giày turf đa năng với đế êm ái và thiết kế hiện đại, phù hợp cho các hoạt động thể dục và huấn luyện trên sân cỏ nhân tạo.', 1666, 3, 0, 40, 3.82132, 0),
+(114, 'Nike Air Max 150', 2000000.00, 'nike (21).jpg', 'Đôi giày chạy bộ mang tính cách mạng của Nike. Nó có đế khí lớn ở gót chân, mang lại sự thoải mái và hỗ trợ', 3651, 1, 0, 40, 4.08622, 0),
+(115, 'Nike Air Max 2010', 2000000.00, 'nike (22).jpg', 'Đôi giày chạy bộ mang tính biểu tượng của Nike. Nó có thiết kế độc đáo với phần đế giày được bao phủ bởi các lỗ Air visible.', 1870, 1, 0, 40, 3.55593, 0),
+(116, 'Nike Air Max 1 Ultra (2011)', 2000000.00, 'nike (23).jpg', 'Phiên bản cập nhật của Air Max 1, với phần trên bằng lưới và đế Air visible.', 4522, 1, 0, 40, 3.79897, 0),
+(117, 'Nike Air Max 90 Ultra (2013)', 2000000.00, 'nike (24).jpg', 'Phiên bản cập nhật của Air Max 90, với phần trên bằng lưới và đế Air visible.', 2551, 1, 0, 40, 4.41095, 0),
+(118, 'Nike Air Max 1 Flyknit (2014)', 2000000.00, 'nike (25).jpg', 'Phiên bản Flyknit của Air Max 1, với phần trên bằng vải Flyknit.', 3969, 1, 0, 40, 3.67711, 0),
+(119, 'Nike Air Max 90 Flyknit (2015)', 2000000.00, 'nike (26).jpg', 'Phiên bản Flyknit của Air Max 90, với phần trên bằng vải Flyknit.', 4980, 1, 0, 40, 3.96746, 0),
+(120, 'Nike Air Max 95 Flyknit (2015)', 2000000.00, 'nike (27).jpg', 'Phiên bản Flyknit của Air Max 95, với phần trên bằng vải Flyknit.', 4926, 1, 0, 40, 4.02679, 0),
+(121, 'Nike Air Max 270 (2018)', 2000000.00, 'nike (28).jpg', 'Đôi giày chạy bộ mang tính cách mạng của Nike. Nó có đế khí lớn ở gót chân, mang lại sự thoải mái và hỗ trợ', 4265, 1, 0, 40, 4.87585, 0),
+(122, 'Nike Air Max 270 React (2019)', 2000000.00, 'nike (29).jpg', 'Phiên bản kết hợp của Air Max 270 và React. Nó có đế Air visible và đế React, mang lại sự thoải mái và hỗ trợ tối ưu.', 4526, 1, 0, 40, 3.73113, 0),
+(123, 'Nike Air Max 720 (2019)', 2000000.00, 'nike (30).jpg', 'Đôi giày chạy bộ mang tính cách mạng của Nike. Nó có đế khí lớn bao phủ toàn bộ đế giày, mang lại sự thoải mái và hỗ trợ.', 4402, 1, 0, 40, 4.81005, 0),
+(124, 'Nike Air Max 270 React 3 (2020)', 2000000.00, 'nike (31).jpg', 'Phiên bản cập nhật của Air Max 270 React, với phần đế được làm bằng chất liệu nhẹ và bền hơn.', 1124, 1, 0, 40, 4.76031, 0),
+(125, 'Nike Air Max 270 React SE (2020)', 2000000.00, 'nike (32).jpg', 'Phiên bản đặc biệt của Air Max 270 React, với phần trên được làm bằng chất liệu cao cấp và thiết kế độc đáo.', 1735, 1, 0, 40, 3.65856, 0),
+(126, 'Nike Air Max 270 React ENG (2020)', 2000000.00, 'nike (33).jpg', 'Phiên bản Engineered Garments của Air Max 270 React, với phần trên được làm bằng chất liệu cao cấp và thiết kế cổ điển.', 1291, 1, 0, 40, 3.75264, 0),
+(127, 'Nike Air Max 270 React 2 (2021)', 2000000.00, 'nike (34).jpg', 'Phiên bản cập nhật của Air Max 270 React, với phần đế được làm bằng chất liệu nhẹ và bền hơn.', 2936, 1, 0, 40, 4.19355, 0),
+(128, 'Nike Air Force 1 Low (1982)', 2000000.00, 'nike (35).jpg', 'Phiên bản thấp cổ của Air Force 1, mang lại sự thoải mái và linh hoạt.', 3471, 1, 0, 40, 4.93032, 0),
+(129, 'Nike Air Force 1 Mid (1983)', 2000000.00, 'nike (36).jpg', 'Phiên bản cổ giữa của Air Force 1, mang lại sự hỗ trợ và bảo vệ.', 4266, 1, 0, 40, 4.17575, 0),
+(130, 'Nike Air Force 1 High (1984)', 2000000.00, 'nike (37).jpg', 'Phiên bản cổ cao của Air Force 1, mang lại sự thoải mái và thời trang.', 1931, 1, 0, 40, 4.49411, 0),
+(131, 'Nike Air Force 1 07 (2007)', 2000000.00, 'nike (38).jpg', 'Phiên bản cập nhật của Air Force 1, với thiết kế cổ điển và chất liệu cao cấp.', 4410, 1, 0, 40, 4.35433, 0),
+(132, 'Nike Air Force 1 07 LV8 (2012)', 2000000.00, 'nike (39).jpg', 'Phiên bản đặc biệt của Air Force 1, với thiết kế độc đáo và chất liệu cao cấp.', 3301, 1, 0, 40, 3.88221, 0),
+(133, 'Nike Air Force 1 07 LV8 Utility (2017)', 2000000.00, 'nike (40).jpg', 'Phiên bản Utility của Air Force 1, với thiết kế ứng dụng và chất liệu cao cấp.', 1171, 1, 0, 40, 4.06589, 0),
+(134, 'Nike Air Force 1 Low Off-White (2017)', 2000000.00, 'nike (41).jpg', 'Phiên bản hợp tác của Air Force 1, được thiết kế bởi Virgil Abloh.', 1397, 1, 0, 40, 4.12957, 0),
+(135, 'Nike Air Force 1 Mid Off-White (2018)', 2000000.00, 'nike (42).jpg', 'Phiên bản hợp tác của Air Force 1, được thiết kế bởi Virgil Abloh.', 4491, 1, 0, 40, 3.92033, 0),
+(136, 'Nike Air Force 1 High Off-White (2018)', 2000000.00, 'nike (43).jpg', 'Phiên bản hợp tác của Air Force 1, được thiết kế bởi Virgil Abloh.', 3325, 1, 0, 40, 4.50791, 0),
+(137, 'Nike Air Force 1 Low Travis Scott (2018)', 2000000.00, 'nike (44).jpg', 'Phiên bản hợp tác của Air Force 1, được thiết kế bởi Travis Scott.', 2159, 1, 0, 40, 3.57303, 0),
+(138, 'Nike Air Force 1 Mid Travis Scott (2019)', 2000000.00, 'nike (45).jpg', 'Phiên bản hợp tác của Air Force 1, được thiết kế bởi Travis Scott.', 2336, 1, 0, 40, 4.1553, 0),
+(139, 'Nike Air Force 1 High Travis Scott (2019)', 2000000.00, 'nike (46).jpg', 'Phiên bản hợp tác của Air Force 1, được thiết kế bởi Travis Scott.', 4402, 1, 0, 40, 4.08774, 0),
+(140, 'Nike Air Force 1 Low Supreme (2018)', 2000000.00, 'nike (48).jpg', 'Phiên bản hợp tác của Air Force 1, được thiết kế bởi Supreme.', 3387, 1, 0, 40, 3.9664, 0),
+(141, 'Nike Air Force 1 Mid Supreme (2018)', 2000000.00, 'nike (49).jpg', 'Phiên bản hợp tác của Air Force 1, được thiết kế bởi Supreme.', 4420, 1, 0, 40, 4.7477, 0),
+(142, ' Nike Air Force 1 High Supreme (2018)', 2000000.00, 'nike (50).jpg', ' Phiên bản hợp tác của Air Force 1, được thiết kế bởi Supreme.', 2261, 1, 0, 40, 4.71968, 0);
 
 -- --------------------------------------------------------
 
@@ -1677,17 +1741,18 @@ CREATE TABLE `taikhoan` (
   `tel` varchar(20) DEFAULT NULL,
   `role` int(11) NOT NULL DEFAULT 0,
   `img` varchar(255) DEFAULT NULL,
-  `trangthai` int(11) DEFAULT NULL
+  `trangthai` int(11) DEFAULT NULL,
+  `marketing` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `taikhoan`
 --
 
-INSERT INTO `taikhoan` (`id`, `name`, `pass`, `email`, `address`, `tel`, `role`, `img`, `trangthai`) VALUES
-(17, 'Nguyễn tình', '20102004', 'nguyentinh140321@gmail.com', 'Tỉnh Sóc Trăng-Huyện Mỹ Xuyên-Xã Thạnh Quới', '0366904133', 1, 'avatar.png', 1),
-(18, 'Nguyễn Quốc Tình', '123456789', 'phamthiuyen11042004@gmail.com', 'Tỉnh Sóc Trăng-Huyện Mỹ Xuyên-Xã Thạnh Quới', '0862201005', 1, '335944176_225297446646549_6667645462122669625_n.jpg', 1),
-(19, 'Admin', '123', 'admin@gmail.com', NULL, NULL, 2, 'avatar.png', 1);
+INSERT INTO `taikhoan` (`id`, `name`, `pass`, `email`, `address`, `tel`, `role`, `img`, `trangthai`, `marketing`) VALUES
+(17, 'Nguyễn tình', '20102004', 'nguyentinh140321@gmail.com', 'Tỉnh Sóc Trăng-Huyện Mỹ Xuyên-Xã Thạnh Quới', '0366904133', 1, 'avatar.png', 1, 1),
+(18, 'Nguyễn Quốc Tình', '123456789', 'phamthiuyen11042004@gmail.com', 'Tỉnh Sóc Trăng-Huyện Mỹ Xuyên-Xã Thạnh Quới', '0862201005', 1, '335944176_225297446646549_6667645462122669625_n.jpg', 1, NULL),
+(19, 'Admin', '123', 'admin@gmail.com', NULL, NULL, 2, 'avatar.png', 1, NULL);
 
 -- --------------------------------------------------------
 
@@ -1750,7 +1815,8 @@ CREATE TABLE `vocher` (
 --
 
 INSERT INTO `vocher` (`id`, `sale`, `iduser`, `date`) VALUES
-(4, 50, 18, '2023-11-18');
+(30, 50000, 17, '2023-12-16'),
+(31, 100000, 18, '2023-12-16');
 
 --
 -- Indexes for dumped tables
@@ -1883,13 +1949,13 @@ ALTER TABLE `danhmuc`
 -- AUTO_INCREMENT for table `phanloaidh`
 --
 ALTER TABLE `phanloaidh`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=239;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=264;
 
 --
 -- AUTO_INCREMENT for table `sanpham`
 --
 ALTER TABLE `sanpham`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=237;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=250;
 
 --
 -- AUTO_INCREMENT for table `size`
@@ -1919,7 +1985,7 @@ ALTER TABLE `trangthai`
 -- AUTO_INCREMENT for table `vocher`
 --
 ALTER TABLE `vocher`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- Constraints for dumped tables
@@ -1964,6 +2030,558 @@ ALTER TABLE `sanpham`
 --
 ALTER TABLE `vocher`
   ADD CONSTRAINT `vocher_ibfk_1` FOREIGN KEY (`iduser`) REFERENCES `taikhoan` (`id`);
+--
+-- Database: `phpmyadmin`
+--
+CREATE DATABASE IF NOT EXISTS `phpmyadmin` DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
+USE `phpmyadmin`;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `pma__bookmark`
+--
+
+CREATE TABLE `pma__bookmark` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `dbase` varchar(255) NOT NULL DEFAULT '',
+  `user` varchar(255) NOT NULL DEFAULT '',
+  `label` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '',
+  `query` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='Bookmarks';
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `pma__central_columns`
+--
+
+CREATE TABLE `pma__central_columns` (
+  `db_name` varchar(64) NOT NULL,
+  `col_name` varchar(64) NOT NULL,
+  `col_type` varchar(64) NOT NULL,
+  `col_length` text DEFAULT NULL,
+  `col_collation` varchar(64) NOT NULL,
+  `col_isNull` tinyint(1) NOT NULL,
+  `col_extra` varchar(255) DEFAULT '',
+  `col_default` text DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='Central list of columns';
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `pma__column_info`
+--
+
+CREATE TABLE `pma__column_info` (
+  `id` int(5) UNSIGNED NOT NULL,
+  `db_name` varchar(64) NOT NULL DEFAULT '',
+  `table_name` varchar(64) NOT NULL DEFAULT '',
+  `column_name` varchar(64) NOT NULL DEFAULT '',
+  `comment` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '',
+  `mimetype` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '',
+  `transformation` varchar(255) NOT NULL DEFAULT '',
+  `transformation_options` varchar(255) NOT NULL DEFAULT '',
+  `input_transformation` varchar(255) NOT NULL DEFAULT '',
+  `input_transformation_options` varchar(255) NOT NULL DEFAULT ''
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='Column information for phpMyAdmin';
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `pma__designer_settings`
+--
+
+CREATE TABLE `pma__designer_settings` (
+  `username` varchar(64) NOT NULL,
+  `settings_data` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='Settings related to Designer';
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `pma__export_templates`
+--
+
+CREATE TABLE `pma__export_templates` (
+  `id` int(5) UNSIGNED NOT NULL,
+  `username` varchar(64) NOT NULL,
+  `export_type` varchar(10) NOT NULL,
+  `template_name` varchar(64) NOT NULL,
+  `template_data` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='Saved export templates';
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `pma__favorite`
+--
+
+CREATE TABLE `pma__favorite` (
+  `username` varchar(64) NOT NULL,
+  `tables` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='Favorite tables';
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `pma__history`
+--
+
+CREATE TABLE `pma__history` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `username` varchar(64) NOT NULL DEFAULT '',
+  `db` varchar(64) NOT NULL DEFAULT '',
+  `table` varchar(64) NOT NULL DEFAULT '',
+  `timevalue` timestamp NOT NULL DEFAULT current_timestamp(),
+  `sqlquery` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='SQL history for phpMyAdmin';
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `pma__navigationhiding`
+--
+
+CREATE TABLE `pma__navigationhiding` (
+  `username` varchar(64) NOT NULL,
+  `item_name` varchar(64) NOT NULL,
+  `item_type` varchar(64) NOT NULL,
+  `db_name` varchar(64) NOT NULL,
+  `table_name` varchar(64) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='Hidden items of navigation tree';
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `pma__pdf_pages`
+--
+
+CREATE TABLE `pma__pdf_pages` (
+  `db_name` varchar(64) NOT NULL DEFAULT '',
+  `page_nr` int(10) UNSIGNED NOT NULL,
+  `page_descr` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT ''
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='PDF relation pages for phpMyAdmin';
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `pma__recent`
+--
+
+CREATE TABLE `pma__recent` (
+  `username` varchar(64) NOT NULL,
+  `tables` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='Recently accessed tables';
+
+--
+-- Dumping data for table `pma__recent`
+--
+
+INSERT INTO `pma__recent` (`username`, `tables`) VALUES
+('root', '[{\"db\":\"du_an_2\",\"table\":\"sanpham\"},{\"db\":\"du_an_2\",\"table\":\"danhmuc\"},{\"db\":\"du_an_2\",\"table\":\"vocher\"},{\"db\":\"du_an_2\",\"table\":\"phanloaidh\"},{\"db\":\"du_an_2\",\"table\":\"taikhoan\"},{\"db\":\"du_an_2\",\"table\":\"trangthai\"},{\"db\":\"du_an_2\",\"table\":\"bienthe\"},{\"db\":\"du_an_2\",\"table\":\"binhluan\"},{\"db\":\"du_an_2\",\"table\":\"chat\"},{\"db\":\"du_an_2\",\"table\":\"chitietdh\"}]');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `pma__relation`
+--
+
+CREATE TABLE `pma__relation` (
+  `master_db` varchar(64) NOT NULL DEFAULT '',
+  `master_table` varchar(64) NOT NULL DEFAULT '',
+  `master_field` varchar(64) NOT NULL DEFAULT '',
+  `foreign_db` varchar(64) NOT NULL DEFAULT '',
+  `foreign_table` varchar(64) NOT NULL DEFAULT '',
+  `foreign_field` varchar(64) NOT NULL DEFAULT ''
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='Relation table';
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `pma__savedsearches`
+--
+
+CREATE TABLE `pma__savedsearches` (
+  `id` int(5) UNSIGNED NOT NULL,
+  `username` varchar(64) NOT NULL DEFAULT '',
+  `db_name` varchar(64) NOT NULL DEFAULT '',
+  `search_name` varchar(64) NOT NULL DEFAULT '',
+  `search_data` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='Saved searches';
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `pma__table_coords`
+--
+
+CREATE TABLE `pma__table_coords` (
+  `db_name` varchar(64) NOT NULL DEFAULT '',
+  `table_name` varchar(64) NOT NULL DEFAULT '',
+  `pdf_page_number` int(11) NOT NULL DEFAULT 0,
+  `x` float UNSIGNED NOT NULL DEFAULT 0,
+  `y` float UNSIGNED NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='Table coordinates for phpMyAdmin PDF output';
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `pma__table_info`
+--
+
+CREATE TABLE `pma__table_info` (
+  `db_name` varchar(64) NOT NULL DEFAULT '',
+  `table_name` varchar(64) NOT NULL DEFAULT '',
+  `display_field` varchar(64) NOT NULL DEFAULT ''
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='Table information for phpMyAdmin';
+
+--
+-- Dumping data for table `pma__table_info`
+--
+
+INSERT INTO `pma__table_info` (`db_name`, `table_name`, `display_field`) VALUES
+('db_plane', 'flights', 'image');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `pma__table_uiprefs`
+--
+
+CREATE TABLE `pma__table_uiprefs` (
+  `username` varchar(64) NOT NULL,
+  `db_name` varchar(64) NOT NULL,
+  `table_name` varchar(64) NOT NULL,
+  `prefs` text NOT NULL,
+  `last_update` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='Tables'' UI preferences';
+
+--
+-- Dumping data for table `pma__table_uiprefs`
+--
+
+INSERT INTO `pma__table_uiprefs` (`username`, `db_name`, `table_name`, `prefs`, `last_update`) VALUES
+('root', 'du_an_2', 'sanpham', '{\"CREATE_TIME\":\"2023-11-30 19:51:57\",\"col_order\":[0,1,3,2,4,5,6,7,8,9,10],\"col_visib\":[1,1,1,1,1,1,1,1,1,1,1],\"sorted_col\":\"`sanpham`.`id` DESC\"}', '2023-12-01 02:53:11');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `pma__tracking`
+--
+
+CREATE TABLE `pma__tracking` (
+  `db_name` varchar(64) NOT NULL,
+  `table_name` varchar(64) NOT NULL,
+  `version` int(10) UNSIGNED NOT NULL,
+  `date_created` datetime NOT NULL,
+  `date_updated` datetime NOT NULL,
+  `schema_snapshot` text NOT NULL,
+  `schema_sql` text DEFAULT NULL,
+  `data_sql` longtext DEFAULT NULL,
+  `tracking` set('UPDATE','REPLACE','INSERT','DELETE','TRUNCATE','CREATE DATABASE','ALTER DATABASE','DROP DATABASE','CREATE TABLE','ALTER TABLE','RENAME TABLE','DROP TABLE','CREATE INDEX','DROP INDEX','CREATE VIEW','ALTER VIEW','DROP VIEW') DEFAULT NULL,
+  `tracking_active` int(1) UNSIGNED NOT NULL DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='Database changes tracking for phpMyAdmin';
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `pma__userconfig`
+--
+
+CREATE TABLE `pma__userconfig` (
+  `username` varchar(64) NOT NULL,
+  `timevalue` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `config_data` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='User preferences storage for phpMyAdmin';
+
+--
+-- Dumping data for table `pma__userconfig`
+--
+
+INSERT INTO `pma__userconfig` (`username`, `timevalue`, `config_data`) VALUES
+('root', '2023-12-01 03:27:36', '{\"Console\\/Mode\":\"collapse\"}');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `pma__usergroups`
+--
+
+CREATE TABLE `pma__usergroups` (
+  `usergroup` varchar(64) NOT NULL,
+  `tab` varchar(64) NOT NULL,
+  `allowed` enum('Y','N') NOT NULL DEFAULT 'N'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='User groups with configured menu items';
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `pma__users`
+--
+
+CREATE TABLE `pma__users` (
+  `username` varchar(64) NOT NULL,
+  `usergroup` varchar(64) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='Users and their assignments to user groups';
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `pma__bookmark`
+--
+ALTER TABLE `pma__bookmark`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `pma__central_columns`
+--
+ALTER TABLE `pma__central_columns`
+  ADD PRIMARY KEY (`db_name`,`col_name`);
+
+--
+-- Indexes for table `pma__column_info`
+--
+ALTER TABLE `pma__column_info`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `db_name` (`db_name`,`table_name`,`column_name`);
+
+--
+-- Indexes for table `pma__designer_settings`
+--
+ALTER TABLE `pma__designer_settings`
+  ADD PRIMARY KEY (`username`);
+
+--
+-- Indexes for table `pma__export_templates`
+--
+ALTER TABLE `pma__export_templates`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `u_user_type_template` (`username`,`export_type`,`template_name`);
+
+--
+-- Indexes for table `pma__favorite`
+--
+ALTER TABLE `pma__favorite`
+  ADD PRIMARY KEY (`username`);
+
+--
+-- Indexes for table `pma__history`
+--
+ALTER TABLE `pma__history`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `username` (`username`,`db`,`table`,`timevalue`);
+
+--
+-- Indexes for table `pma__navigationhiding`
+--
+ALTER TABLE `pma__navigationhiding`
+  ADD PRIMARY KEY (`username`,`item_name`,`item_type`,`db_name`,`table_name`);
+
+--
+-- Indexes for table `pma__pdf_pages`
+--
+ALTER TABLE `pma__pdf_pages`
+  ADD PRIMARY KEY (`page_nr`),
+  ADD KEY `db_name` (`db_name`);
+
+--
+-- Indexes for table `pma__recent`
+--
+ALTER TABLE `pma__recent`
+  ADD PRIMARY KEY (`username`);
+
+--
+-- Indexes for table `pma__relation`
+--
+ALTER TABLE `pma__relation`
+  ADD PRIMARY KEY (`master_db`,`master_table`,`master_field`),
+  ADD KEY `foreign_field` (`foreign_db`,`foreign_table`);
+
+--
+-- Indexes for table `pma__savedsearches`
+--
+ALTER TABLE `pma__savedsearches`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `u_savedsearches_username_dbname` (`username`,`db_name`,`search_name`);
+
+--
+-- Indexes for table `pma__table_coords`
+--
+ALTER TABLE `pma__table_coords`
+  ADD PRIMARY KEY (`db_name`,`table_name`,`pdf_page_number`);
+
+--
+-- Indexes for table `pma__table_info`
+--
+ALTER TABLE `pma__table_info`
+  ADD PRIMARY KEY (`db_name`,`table_name`);
+
+--
+-- Indexes for table `pma__table_uiprefs`
+--
+ALTER TABLE `pma__table_uiprefs`
+  ADD PRIMARY KEY (`username`,`db_name`,`table_name`);
+
+--
+-- Indexes for table `pma__tracking`
+--
+ALTER TABLE `pma__tracking`
+  ADD PRIMARY KEY (`db_name`,`table_name`,`version`);
+
+--
+-- Indexes for table `pma__userconfig`
+--
+ALTER TABLE `pma__userconfig`
+  ADD PRIMARY KEY (`username`);
+
+--
+-- Indexes for table `pma__usergroups`
+--
+ALTER TABLE `pma__usergroups`
+  ADD PRIMARY KEY (`usergroup`,`tab`,`allowed`);
+
+--
+-- Indexes for table `pma__users`
+--
+ALTER TABLE `pma__users`
+  ADD PRIMARY KEY (`username`,`usergroup`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `pma__bookmark`
+--
+ALTER TABLE `pma__bookmark`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `pma__column_info`
+--
+ALTER TABLE `pma__column_info`
+  MODIFY `id` int(5) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `pma__export_templates`
+--
+ALTER TABLE `pma__export_templates`
+  MODIFY `id` int(5) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `pma__history`
+--
+ALTER TABLE `pma__history`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `pma__pdf_pages`
+--
+ALTER TABLE `pma__pdf_pages`
+  MODIFY `page_nr` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `pma__savedsearches`
+--
+ALTER TABLE `pma__savedsearches`
+  MODIFY `id` int(5) UNSIGNED NOT NULL AUTO_INCREMENT;
+--
+-- Database: `test`
+--
+CREATE DATABASE IF NOT EXISTS `test` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+USE `test`;
+--
+-- Database: `wd18410_quanlyoto`
+--
+CREATE DATABASE IF NOT EXISTS `wd18410_quanlyoto` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+USE `wd18410_quanlyoto`;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `danhmuc`
+--
+
+CREATE TABLE `danhmuc` (
+  `id` int(11) NOT NULL,
+  `tenHangXe` varchar(225) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `danhmuc`
+--
+
+INSERT INTO `danhmuc` (`id`, `tenHangXe`) VALUES
+(1, 'mec'),
+(2, 'vin');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `xe`
+--
+
+CREATE TABLE `xe` (
+  `id` int(11) NOT NULL,
+  `tenLoaiXe` varchar(225) NOT NULL,
+  `xuatXu` varchar(22) NOT NULL,
+  `idDanhMuc` int(11) NOT NULL,
+  `mauSac` varchar(225) NOT NULL,
+  `hinhAnh` varchar(225) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `xe`
+--
+
+INSERT INTO `xe` (`id`, `tenLoaiXe`, `xuatXu`, `idDanhMuc`, `mauSac`, `hinhAnh`) VALUES
+(21, 'dsadas', 's', 2, '#ea8f8f', '1701336688c9d40afe4a22d94bcb539b60dcf0b2f5.jpg');
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `danhmuc`
+--
+ALTER TABLE `danhmuc`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `xe`
+--
+ALTER TABLE `xe`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `xe_ibfk_1` (`idDanhMuc`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `danhmuc`
+--
+ALTER TABLE `danhmuc`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `xe`
+--
+ALTER TABLE `xe`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `xe`
+--
+ALTER TABLE `xe`
+  ADD CONSTRAINT `xe_ibfk_1` FOREIGN KEY (`idDanhMuc`) REFERENCES `danhmuc` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

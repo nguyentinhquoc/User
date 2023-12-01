@@ -172,7 +172,6 @@
                                                     <img src="<?= $img_path . "avarta_user/" . $taikhoan_email['img'] ?>" alt="" width="40px" height="40px" style="border-radius: 50%;">
                                                 </button>
                                                 <ul class="dropdown-menu right-side" aria-labelledby="settingButton">
-                                                    <li><a class="dropdown-item" href="index.php?act=donhang">Đơn hàng của tôi</a></li>
                                                     <li><a class="dropdown-item" href="index.php?act=myaccout&profile=1">Tài khoản của tôi</a></li>
                                                     <li><a class="dropdown-item" href="index.php?act=dangxuat">Đang xuất</a></li>
                                                 </ul>

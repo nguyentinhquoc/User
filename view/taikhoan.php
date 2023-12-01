@@ -16,7 +16,7 @@
                 </a>
                 <a href="index.php?act=myaccout&profile=3">
                     <li><i class="fa fa-bell-o" aria-hidden="true"></i>
-                        Thông báo</li>
+                        Đơn hàng</li>
                 </a>
                 <a href="index.php?act=myaccout&profile=4">
                     <li><i class="fa fa-ticket" aria-hidden="true"></i>Vocher</li>
@@ -123,7 +123,24 @@
                     $tongtiehoadon = 0;
                     $madonhang = $value1['madh']; ?>
             <div class="donhangct">
-                Mã đơn hàng:<?= $madonhang ?>
+                <div class="top">
+                    <p style="color:red;">Mã đơn hàng: <?= $madonhang ?> </p>
+                    <p style="color:green;">Trạng thái: <?php
+                                    switch ($idtrangthai) {
+                                        case 3:
+                                            echo "Chờ xác nhận";
+                                            break;
+
+                                        case 4:
+                                            echo "Đang giao hàng";
+                                            break;
+
+                                        case 5:
+                                            echo "Chờ xác nhận";
+                                            break;
+                                    }
+                                    ?></p>
+                </div>
                 <?php $load_chitietdh_sp = load_chitietdh_sp($madonhang);
                     foreach ($load_chitietdh_sp as $key1 => $value2) { ?>
 
@@ -134,32 +151,48 @@
                             <p>Biến thể sản phẩm : <?= 'Size' . $value2['size'] . ',' . $value2['color'] ?></p>
                             <p>Số lượng: <?= $value2['soluong'] ?></p>
                         </div>
-                        <div class="gia"><?= $value2['price']*$value2['soluong'] ?></div>
+                        <div class="gia"><?= number_format($value2['price'] * $value2['soluong'], 0, ',', '.').'đ' ?></div>
                     </div>
-                <?php $tongtiehoadon += $value2['price']*$value2['soluong'];
+                <?php $tongtiehoadon += $value2['price'] * $value2['soluong'];
                     }
                 ?>
                 <hr>
                 <table>
-                    <tr>
-                        <td>Tổng tiền hàng :</td>
-                        <td style="width: 10%;"><?= $tongtiehoadon ?>đ</td>
+                     <tr >
+                        <td >Tổng tiền hàng :</td>
+                        <td style="width: 10%;"><?=number_format($tongtiehoadon  , 0, ',', '.');?>đ</td>
+                        
                     </tr>
-                    <tr>
+                     <tr>
                         <td>Vocher :</td>
-                        <td><?= -$value2['sale'] ?>đ</td>
-
+                        <td><?= number_format(-$value2['sale']   , 0, ',', '.');?>đ</td>
                     </tr>
-                    <tr>
+                     <tr>
                         <td>Thành tiền :</td>
-                        <td style="color:red; font-size: larger; font-weight: bolder;"><?= $value2['thanhtien'] ?>đ</td>
+                        <td style="color:red; font-size: larger; font-weight: bolder;"><?=  number_format($value2['thanhtien'], 0, ',', '.');?>đ</td>
 
                     </tr>
                 </table>
             </div>
-        <?php     }
-        ?>
+            <?php
+                    if ($idtrangthai == 3) {
+            ?>
+                <a style="border-radius: 10px; color: white; padding: 10px 20px; background-color: blueviolet;" onclick="return confirm('Bạn có chắc chắn muốn hủy đơn hàng này ?')" href="index.php?act=myaccout&profile=3&trangthai=3&huydonhang=<?= $madonhang ?>">Hủy đơn hàng</a>
+        <?php
 
+                    }
+                }
+        ?>
+        <?php
+                if (isset($_GET['huydonhang'])) {
+                    $huydonhang = $_GET['huydonhang'];
+                    $sql1 = "DELETE FROM phanloaidh WHERE `phanloaidh`.`madh` = $huydonhang";
+                    $sql2 = "DELETE FROM chitietdh WHERE `chitietdh`.`madh` = $huydonhang";
+                    pdo_execute($sql1);
+                    pdo_execute($sql2);
+                    header('Location: index.php?act=myaccout&profile=3&trangthai=3&huydonhangtc');
+                }
+        ?>
     </div>
 <?php
                 break;

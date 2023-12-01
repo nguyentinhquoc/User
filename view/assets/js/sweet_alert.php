@@ -130,3 +130,19 @@ Swal.fire({
       
     <?php 
   } ?>
+<?php
+if (isset($_GET['huydonhangtc'])) {
+  
+  ?>
+ <script>
+Swal.fire({
+  position: 'center',
+  icon: 'success',
+  title: 'Đơn hàng đã được hủy thành công !!!',
+  showConfirmButton: false,
+  timer: 1500
+})
+      </script>
+      
+    <?php 
+  } ?>

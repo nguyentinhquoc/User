@@ -30,14 +30,7 @@ if (isset($_GET['congpl'])) {
                     <th scope="col"> Phân loại</th>
                     <th scope="col"> Số lượng</th>
                     <th scope="col">Giá sản phẩm</th>
-                    <th scope="col">Thao tác     <?php
-                        if (isset($_POST['idhihi'])) {
-                            echo $_POST['idhihi'];
-                        }
-                        ?>
-
-                       
-                    </th>
+                    <th scope="col">Thao tác</th>
                 </tr>
             </thead>
             <tbody>
@@ -52,7 +45,7 @@ if (isset($_GET['congpl'])) {
                         <td><img src="<?= $img_path . "sanpham/" . $value['img'] ?>" alt="" width="100px"></td>
                         <td><?= $value['name'] ?></td>
                         <td><?= "Màu:" . $value['color'] . "<br>" . "Size:" . $value['size'] ?></td>
-                        <td><input type="number" value="<?= $value['soluong'] ?>" min="1" style="width: 50px;" id="soluong_<?= $value['id'] ?>" oninput="setsoluong(<?= $value['id'] ?>)"></td>
+                        <td><input type="number" value="<?= $value['soluong'] ?>" min="1" max="<?= $value['slmax'] ?>" style="width: 50px;" id="soluong_<?= $value['id'] ?>" oninput="setsoluong(<?= $value['id'] ?>,<?= $slmax ?>)"></td>
                         <td><?= number_format($value['soluong'] * $value['price'], 0, ',', '.');  ?></td>
                         <td><a onclick="return(confirm('Bạn có chắc chắn muốn xóa ?'))" href="index.php?act=giohang&cart_remove=<?= $value['id'] ?>"><i class="fa fa-trash-o" aria-hidden="true"></a></i></td>
                         </td>
@@ -62,25 +55,31 @@ if (isset($_GET['congpl'])) {
             ?>
             </tbody>
         </table>
-                
-            <script>
-                function setsoluong(id) {
-                     let soluong_new = $('#soluong_' + id).val();
-                    if (soluong_new <= 0) {
-                        soluong_new = 1;
-                    }
-                   $.post("ajax/sl_giohang.php",{id:id, soluong_new: soluong_new},function(data) {
-                    $(".table").html(data);
-                   });
+
+        <script>
+            function setsoluong(id, slmax) {
+                let soluong_new = $('#soluong_' + id).val();
+                if (soluong_new > slmax) {
+                    $('#soluong_' + id).val(slmax)
                 }
-                var checkBoxAll = document.getElementById('checkboxAll');
-                var checkBox = document.getElementsByClassName('checkbox');
-                checkBoxAll.addEventListener('click', function() {
-                    for (var i = 0; i < checkBox.length; i++) {
-                        checkBox[i].checked = checkBoxAll.checked;
-                    }
+                if (soluong_new <= 0) {
+                    soluong_new = 1;
+                }
+                $.post("ajax/sl_giohang.php", {
+                    id: id,
+                    soluong_new: soluong_new
+                }, function(data) {
+                    $(".table").html(data);
                 });
-            </script>
+            }
+            var checkBoxAll = document.getElementById('checkboxAll');
+            var checkBox = document.getElementsByClassName('checkbox');
+            checkBoxAll.addEventListener('click', function() {
+                for (var i = 0; i < checkBox.length; i++) {
+                    checkBox[i].checked = checkBoxAll.checked;
+                }
+            });
+        </script>
         <div class="vocher">
             <i class="fa fa-ticket" aria-hidden="true" style="font-size: 40px; color: orange;"></i>
             <p>PANDA SHOP Vocher </p>

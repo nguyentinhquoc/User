@@ -8,6 +8,8 @@ if (isset($_SESSION['email_dn'])) {
     if (isset($_GET['add_love'])) {
         $idsp = $_GET['add_love'];
         yeuthich_add($idsp, $iduser);
+        header("Location: index.php?act=sanpham_chitiet&id=$idsp");
+
     }
 
 };
@@ -55,10 +57,9 @@ if (isset($_SESSION['email_dn'])) {
             </div>
             <form action="index.php?act=sanpham_chitiet" method="get">
                 <?php
-                $soluong = $_GET['soluong'];
+                // $soluong = $_GET['soluong'];
                 ?>
                 <input type="hidden" name="id" value="<?= $idsp ?>">
-                <input type="hidden" name="soluong" value="<?= $soluong ?> ">
                 <input type="hidden" name="act" value="sanpham_chitiet">
          
                 <div class="mau">Màu:
@@ -69,7 +70,7 @@ if (isset($_SESSION['email_dn'])) {
                         <div class="custom-radio">
                             <input type="radio" id="<?= $value['color'] ?>" name="color" value="<?= $value['id'] ?>" onclick="updateUrl(<?= $value['id'] ?>)" <?php if (isset($_GET['color']) && $_GET['color'] == $value['id']) {
                                                                                                                                                                     echo 'checked';
-                                                                                                                                                                } ?>>
+                                                                                                                       } ?>>
                             <label for="<?= $value['color'] ?>"><?= $value['color'] ?></label>
                         </div>
                     <?php } ?>
@@ -101,7 +102,6 @@ if (isset($_SESSION['email_dn'])) {
                 } else {
                     $all_size = all_size();
                 }
-
                 ?>
 
                 <div class="size">Size:
@@ -116,7 +116,8 @@ if (isset($_SESSION['email_dn'])) {
                 </div>
                 <div class="soluongmua">
                     <p style="margin-right: 20px;">Số lượng: </p>
-                    <input type="number" name="soluong" value="1" min="1" max="<?= $sanpham_chitiet['soluong'] ?>" style="width: 50px; border-radius: 10px; border-color: #3498db;">
+
+                    <input type="number" name="soluong" value="1" min="1"  style="width: 50px; border-radius: 10px; border-color: #3498db;">
 
                 </div>
                 <a href="<?= $_SERVER['REQUEST_URI']; ?>&add_love=<?= $sanpham_chitiet['id'] ?>"><i class="fa fa-heart-o" aria-hidden="true"></i></a>
@@ -162,15 +163,23 @@ if (isset($_SESSION['email_dn'])) {
         if ($sanpham_chitiet['soluong'] > 0) {
             $taikhoan_email = taikhoan_email($email);
             $iduser = $taikhoan_email['id'];
-            $soluong = $_GET['soluong'];
+
             $gia_sp = $sanpham_chitiet['price'];
             $idsp = $_GET["id"];
             $color = $_GET['color'];
             $size = $_GET['size'];
+            $sql="SELECT soluong FROM bienthe where idcolor=$color AND idsize =$size AND idsp=$idsp";
+            $soluongmax=pdo_query_one($sql);
+            $soluong = $_GET['soluong'];
+            if ($soluongmax['soluong']<$soluong) {
+                $soluong=$soluongmax['soluong'];
+            }
             $bienthe_check = timbienthe($idsp, $color, $size);
             $bienthe = $bienthe_check['id'];
             echo $bienthe;
             add_gio($iduser, $soluong, $bienthe);
+            header("Location: index.php?act=sanpham_chitiet&id=$idsp");
+
         }
     }
     ?>
