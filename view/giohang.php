@@ -45,7 +45,10 @@ if (isset($_GET['congpl'])) {
                         <td><img src="<?= $img_path . "sanpham/" . $value['img'] ?>" alt="" width="100px"></td>
                         <td><?= $value['name'] ?></td>
                         <td><?= "Màu:" . $value['color'] . "<br>" . "Size:" . $value['size'] ?></td>
-                        <td><input type="number" value="<?= $value['soluong'] ?>" min="1" max="<?= $value['slmax'] ?>" style="width: 50px;" id="soluong_<?= $value['id'] ?>" oninput="setsoluong(<?= $value['id'] ?>,<?= $slmax ?>)"></td>
+                        <td><input type="number" value="<?= $value['soluong'] ?>" min="1" max="<?= $value['slmax'] ?>" style="width: 50px;" id="soluong_<?= $value['id'] ?>" oninput="setsoluong(<?=$value['id'] ?>,<?=$value['slmax']?>)"></td>
+
+                        <a href="" onclick="setsoluong(<?=$value['id'] ?>,<?=$value['slmax']?>)">aaaa</a>
+
                         <td><?= number_format($value['soluong'] * $value['price'], 0, ',', '.');  ?></td>
                         <td><a onclick="return(confirm('Bạn có chắc chắn muốn xóa ?'))" href="index.php?act=giohang&cart_remove=<?= $value['id'] ?>"><i class="fa fa-trash-o" aria-hidden="true"></a></i></td>
                         </td>
@@ -57,7 +60,7 @@ if (isset($_GET['congpl'])) {
         </table>
 
         <script>
-            function setsoluong(id, slmax) {
+            function setsoluong(id,slmax) {
                 let soluong_new = $('#soluong_' + id).val();
                 if (soluong_new > slmax) {
                     $('#soluong_' + id).val(slmax)
@@ -67,6 +70,7 @@ if (isset($_GET['congpl'])) {
                 }
                 $.post("ajax/sl_giohang.php", {
                     id: id,
+                    slmax: slmax,
                     soluong_new: soluong_new
                 }, function(data) {
                     $(".table").html(data);

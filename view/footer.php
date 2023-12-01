@@ -372,6 +372,7 @@
     <i class="fa fa-chevron-up"></i>
 </a>
 </div>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script src="assets/js/vendor/bootstrap.bundle.min.js"></script>
 <script src="assets/js/vendor/jquery-migrate-3.3.2.min.js"></script>
 <script src="assets/js/vendor/modernizr-3.11.2.min.js"></script>

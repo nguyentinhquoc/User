@@ -28,8 +28,6 @@
     <link rel="stylesheet" href="assets/css/plugins/magnific-popup.min.css" />
     <link rel="stylesheet" href="assets/css/plugins/ion.rangeSlider.min.css" />
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-
-
     <!-- Style CSS -->
     <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="/resources/demos/style.css">

@@ -5,6 +5,7 @@ include("../global.php");
 include("../../model/sanpham.php");
 ?>
 <thead>
+  
     <tr>
         <th scope="col">#</th>
         <th scope="col"><input type="checkbox" id="checkboxAll"> Tất cả</th>
@@ -13,11 +14,8 @@ include("../../model/sanpham.php");
         <th scope="col"> Phân loại</th>
         <th scope="col"> Số lượng</th>
         <th scope="col">Giá sản phẩm</th>
-        <th scope="col">Thao tác <?php
-                                    if (isset($_POST['idhihi'])) {
-                                        echo $_POST['idhihi'];
-                                    }
-                                    ?>
+        <th scope="col">Thao tác 
+<?php echo $slmax = $_POST['slmax']; ?>
         </th>
     </tr>
 </thead>
@@ -36,13 +34,15 @@ include("../../model/sanpham.php");
             <?php
             if (isset($_POST['soluong_new']) && $value['id'] == $_POST['id']) {
                 $value['soluong'] = $_POST['soluong_new'];
-                $sl=$_POST['soluong_new'];
-                $id=$_POST['id'];
-                $sql="UPDATE `phanloaidh` SET `soluong` = '$sl' WHERE `phanloaidh`.`id` = $id;";
+                $sl = $_POST['soluong_new'];
+                $id = $_POST['id'];
+                $sql = "UPDATE `phanloaidh` SET `soluong` = '$sl' WHERE `phanloaidh`.`id` = $id;";
                 pdo_execute($sql);
             }
+        
             ?>
-            <td><input type="number" value="<?= $value['soluong'] ?>" min="1" style="width: 50px;" id="soluong_<?= $value['id'] ?>" oninput="setsoluong(<?= $value['id'] ?>)"></td>
+            
+            <td><input type="number" value="<?= $value['soluong'] ?>" min="1" max="<?=$slmax?>" style="width: 50px;" id="soluong_<?= $value['id'] ?>" oninput="setsoluong(<?=$value['id'] ?>,<?=$slmax?>)"></td>
             <td><?= number_format($value['soluong'] * $value['price'], 0, ',', '.');  ?></td>
 
             <td><a onclick="return(confirm('Bạn có chắc chắn muốn xóa ?'))" href="index.php?act=giohang&cart_remove=<?= $value['id'] ?>"><i class="fa fa-trash-o" aria-hidden="true"></a></i></td>
