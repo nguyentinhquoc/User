@@ -9,9 +9,7 @@ if (isset($_SESSION['email_dn'])) {
         $idsp = $_GET['add_love'];
         yeuthich_add($idsp, $iduser);
         header("Location: index.php?act=sanpham_chitiet&id=$idsp");
-
     }
-
 };
 ?>
 <main class="sanpham_chitiet">
@@ -61,63 +59,52 @@ if (isset($_SESSION['email_dn'])) {
                 ?>
                 <input type="hidden" name="id" value="<?= $idsp ?>">
                 <input type="hidden" name="act" value="sanpham_chitiet">
-         
+
                 <div class="mau">Màu:
                     <?php
                     $all_color = all_color();
                     foreach ($all_color as $key => $value) {
                     ?>
-                        <div class="custom-radio">
-                            <input type="radio" id="<?= $value['color'] ?>" name="color" value="<?= $value['id'] ?>" onclick="updateUrl(<?= $value['id'] ?>)" <?php if (isset($_GET['color']) && $_GET['color'] == $value['id']) {
-                                                                                                                                                                    echo 'checked';
-                                                                                                                       } ?>>
-                            <label for="<?= $value['color'] ?>"><?= $value['color'] ?></label>
+                        <div class="custom-radio" id="color">
+                            <input type="radio" id="<?= $value['color'] ?>" name="color" value="<?= $value['id'] ?>" onclick="chon_bt_color(<?= $value['id'] ?>,<?= $idsp ?>)">
+                            <label for="<?= $value['color'] ?>" onclick="chon_bt_color(<?= $value['id'] ?>,,<?= $idsp ?>)"><?= $value['color'] ?></label>
                         </div>
                     <?php } ?>
                 </div>
-
-
-                <script>
-                    function updateUrl(value) {
-                        // Lấy URL hiện tại
-                        var currentUrl = window.location.href;
-
-                        // Kiểm tra nếu URL đã chứa tham số 'gender'
-                        if (currentUrl.includes('color')) {
-                            // Thay thế giá trị của tham số 'color' trong URL
-                            var updatedUrl = currentUrl.replace(/color=[^&]+/, 'color=' + value);
-                        } else {
-                            // Thêm tham số 'color' vào URL
-                            var updatedUrl = currentUrl + (currentUrl.includes('?') ? '&' : '?') + 'color=' + value;
-                        }
-                        // Chuyển hướng đến URL mới và reload lại trang
-                        window.location.href = updatedUrl;
-                    }
-                </script>
-                <?php
-                if (isset($_GET['color'])) {
-                    $idcolor = $_GET['color'];
-                    $idsp = $_GET['id'];
-                    $all_size = size_color($idcolor, $idsp);
-                } else {
-                    $all_size = all_size();
-                }
-                ?>
-
                 <div class="size">Size:
                     <?php
+                    $all_size = all_size();
+                        if(empty($all_size)){
+                            echo '
+                    <p style="border: 1px solid; text-align: center; width: 200px; height: 45px; padding-top: 10px; margin-left: 20px; color: red;">HẾT SIZE</p>
+                    ';
+                        }
+                        
                     foreach ($all_size as $key => $value) {
+
                     ?>
-                        <div class="custom-radio">
-                            <input type="radio" id="<?= $value['size'] ?>" name="size" value="<?= $value['id'] ?>">
-                            <label for="<?= $value['size'] ?>"><?= $value['size'] ?></label>
+                    
+                        <div class="custom-radio" id="size">
+                            <input type="radio" id="<?= $value['size'] ?>" name="size" value="<?= $value['id'] ?>"">
+        <label for=" <?= $value['size'] ?>"><?= $value['size'] ?></label>
                         </div>
                     <?php } ?>
                 </div>
+                <script>
+                    function chon_bt_color(color, idsp) {
+
+                        $.post("ajax/sanpham_ct_chon_mau.php", {
+                            idsp: idsp,
+                            color: color,
+                        }, function(data) {
+                            $(".size").html(data);
+                        });
+                    }
+                </script>
                 <div class="soluongmua">
                     <p style="margin-right: 20px;">Số lượng: </p>
 
-                    <input type="number" name="soluong" value="1" min="1"  style="width: 50px; border-radius: 10px; border-color: #3498db;">
+                    <input type="number" name="soluong" value="1" min="1" style="width: 50px; border-radius: 10px; border-color: #3498db;">
 
                 </div>
                 <a href="<?= $_SERVER['REQUEST_URI']; ?>&add_love=<?= $sanpham_chitiet['id'] ?>"><i class="fa fa-heart-o" aria-hidden="true"></i></a>
@@ -127,16 +114,7 @@ if (isset($_SESSION['email_dn'])) {
                     <button class="dat" name="dat_chitiet">Đặt ngay</button>
                 </div>
             </form>
-            <?php
-            if (isset($_GET['dat_chitiet'])) {
-                $_SESSION['dathang'] = [];
-                $_SESSION['dathang'][0] = $_GET['id'];
-                $_SESSION['dathang'][1] = $_GET['soluong'];
-                $_SESSION['dathang'][2] = $_GET['color'];
-                $_SESSION['dathang'][3] = $_GET['size'];
-                header('Location: index.php?act=dathang');
-            }
-            ?>
+
         </div>
         <div class="box box_right">
             <h6>Sản phẩm liên quan</h6>
@@ -159,27 +137,25 @@ if (isset($_SESSION['email_dn'])) {
     </div>
     <?php
     $sanpham_chitiet['price'];
-    if (isset($_GET['add_cart_chitiet'])) {
+    if (isset($_GET['add_cart_chitiet']) and isset($_SESSION['email_dn'])) {
         if ($sanpham_chitiet['soluong'] > 0) {
             $taikhoan_email = taikhoan_email($email);
             $iduser = $taikhoan_email['id'];
-
             $gia_sp = $sanpham_chitiet['price'];
             $idsp = $_GET["id"];
             $color = $_GET['color'];
             $size = $_GET['size'];
-            $sql="SELECT soluong FROM bienthe where idcolor=$color AND idsize =$size AND idsp=$idsp";
-            $soluongmax=pdo_query_one($sql);
+            $sql = "SELECT soluong FROM bienthe where idcolor=$color AND idsize =$size AND idsp=$idsp";
+            $soluongmax = pdo_query_one($sql);
             $soluong = $_GET['soluong'];
-            if ($soluongmax['soluong']<$soluong) {
-                $soluong=$soluongmax['soluong'];
+            if ($soluongmax['soluong'] < $soluong) {
+                $soluong = $soluongmax['soluong'];
             }
             $bienthe_check = timbienthe($idsp, $color, $size);
             $bienthe = $bienthe_check['id'];
             echo $bienthe;
             add_gio($iduser, $soluong, $bienthe);
             header("Location: index.php?act=sanpham_chitiet&id=$idsp");
-
         }
     }
     ?>

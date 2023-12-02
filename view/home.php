@@ -5,13 +5,17 @@
     <!-- Main Slider -->
     <div class="swiper-container main-slider swiper-arrow with-bg_white">
         <div class="swiper-wrapper">
+                <?php
+$sql="SELECT * FROM banner";
+$banner=pdo_query($sql);
+                foreach ($banner as $value) { ?>
             <div class="swiper-slide animation-style-01">
-                <div class="slide-inner bg-height" data-bg-image="<?= $img_path ?>slider/bg/1-1.jpg">
+                <div class="slide-inner bg-height" data-bg-image="<?= $img_path ?>slider/<?=$value['img']?>">
                     <div class="container">
                         <div class="slide-content text-white">
-                            <h3 class="sub-title">Chào mừng quý khách !!!</h3>
-                            <h2 class="title mb-3">PANDA SHOP</h2>
-                            <p class="short-desc different-width mb-10">Điểm đến hàng đầu cho những đôi giày phong cách và chất lượng</p>
+                            <h3 class="sub-title"><?=$value['h1']?></h3>
+                            <h2 class="title mb-3"><?=$value['h2']?></h2>
+                            <p class="short-desc different-width mb-10"><?=$value['h3']?></p>
                             <div class="button-wrap">
                                 <a class="btn btn-custom-size lg-size btn-primary" href="index.php?act=sanpham_list&page=1">Shop Now</a>
                             </div>
@@ -19,8 +23,10 @@
                     </div>
                 </div>
             </div>
+     <?php   } ?>
+
             <div class="swiper-slide animation-style-01">
-                <div class="slide-inner bg-height" data-bg-image="<?= $img_path ?>slider/bg/1-2.jpg">
+                <div class="slide-inner bg-height" data-bg-image="<?= $img_path ?>slider/1-2.jpg">
                     <div class="container">
                         <div class="slide-content text-white">
                             <h3 class="sub-title">Chào mừng quý khách !!!</h3>
@@ -159,9 +165,9 @@
                     <div class="swiper-wrapper">
                         <?php $sanphammoi = sanpham_moi();
                         foreach ($sanphammoi as $key) { ?>
-                            <a href="index.php?act=sanpham_chitiet&id=<?= $key['id'] ?>&soluong=1"></a>
+                            <a href="index.php?act=sanpham_chitiet&id=<?= $key['id'] ?>"></a>
                             <div class="swiper-slide">
-                                <a class="brand-item" href="index.php?act=sanpham_chitiet&id=<?= $key['id'] ?>&soluong=1">
+                                <a class="brand-item" href="index.php?act=sanpham_chitiet&id=<?= $key['id'] ?>">
                                     <img src="<?= $img_path . "sanpham/" . $key['img'] ?>" alt="Brand Image" height="300px" width="200px" style="border-radius: 10px;">
                                 </a>
                                 <p class="price_sp"><?= number_format($key['price'], 0, ',', '.');  ?>
@@ -230,9 +236,9 @@
                     <div class="swiper-wrapper">
                         <?php $sanphambanchay = sanpham_banchay();
                         foreach ($sanphambanchay as $key) { ?>
-                            <a href="index.php?act=sanpham_chitiet&id=<?= $key['id'] ?>&soluong=1"></a>
+                            <a href="index.php?act=sanpham_chitiet&id=<?= $key['id'] ?>"></a>
                             <div class="swiper-slide">
-                                <a class="brand-item" href="index.php?act=sanpham_chitiet&id=<?= $key['id'] ?>&soluong=1">
+                                <a class="brand-item" href="index.php?act=sanpham_chitiet&id=<?= $key['id'] ?>">
                                     <img src="<?= $img_path . "sanpham/" . $key['img'] ?>" alt="Brand Image" height="300px" width="200px" style="border-radius: 10px;">
                                 </a>
                                 <p class="price_sp"><?= number_format($key['price'], 0, ',', '.');  ?>

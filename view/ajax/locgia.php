@@ -20,7 +20,7 @@ $search = $_POST['search'];
         ?><?php
             foreach ($sanpham_list as $key) { ?>
         <div class="swiper-slide swiper-slide_list" style="height: 230px;">
-            <a class="brand-item brand-item-list" href="index.php?act=sanpham_chitiet&id=<?= $key['id'] ?>&soluong=1">
+            <a class="brand-item brand-item-list" href="index.php?act=sanpham_chitiet&id=<?= $key['id'] ?>">
                 <img src="<?= $img_path . "sanpham/" . $key['img'] ?>" alt="Brand Image" style="border-radius: 10px;">
             </a>
             <p class="price_sp price_sp_list"><?= number_format($key['price'], 0, ',', '.');  ?>
