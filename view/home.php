@@ -168,6 +168,7 @@
                                     <del style="color: #ccc9c2;"><?= number_format($key['price'] + ($key['price'] * ($key['sale'] / 100)), 0, ',', '.');  ?></del>
                                 </p>
                                 <p class="name_sp"><?= $key['name'] ?></p>
+                                
                                 <p class="dabansp">Đã bán :1222</p>
                                 <div class="congcu">
                                     <i class="fa fa-cart-plus" aria-hidden="true"></i>

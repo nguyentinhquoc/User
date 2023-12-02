@@ -15,7 +15,6 @@ include("../../model/sanpham.php");
         <th scope="col"> Số lượng</th>
         <th scope="col">Giá sản phẩm</th>
         <th scope="col">Thao tác 
-<?php echo $slmax = $_POST['slmax']; ?>
         </th>
     </tr>
 </thead>

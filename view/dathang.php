@@ -62,9 +62,9 @@
       <div class="top">
         <p>PHƯƠNG THỨC THANH TOÁN:</p>
         <div class="radio_thanhtoan">
-          <input type="radio" class="btn-check" name="thanhtoan" value="offline" id="option5" autocomplete="off" onclick="thanhtoan_text(2)">
+          <input type="radio" class="btn-check" name="thanhtoan" value="Offline" id="option5" autocomplete="off" onclick="thanhtoan_text(2)">
           <label class="btn" for="option5">Thanh toán khi nhận hàng</label>
-          <input type="radio" class="btn-check" name="thanhtoan" value="offline" id="option6" autocomplete="off" onclick="thanhtoan_text(1)">
+          <input type="radio" class="btn-check" name="thanhtoan" value="Online" id="option6" autocomplete="off" onclick="thanhtoan_text(1)">
           <label class="btn" for="option6">Thanh toán online</label>
         </div>
       </div>
