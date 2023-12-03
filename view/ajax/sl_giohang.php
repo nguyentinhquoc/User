@@ -5,7 +5,7 @@ include("../global.php");
 include("../../model/sanpham.php");
 ?>
 <thead>
-  
+
     <tr>
         <th scope="col">#</th>
         <th scope="col"><input type="checkbox" id="checkboxAll"> Tất cả</th>
@@ -14,7 +14,7 @@ include("../../model/sanpham.php");
         <th scope="col"> Phân loại</th>
         <th scope="col"> Số lượng</th>
         <th scope="col">Giá sản phẩm</th>
-        <th scope="col">Thao tác 
+        <th scope="col">Thao tác
         </th>
     </tr>
 </thead>
@@ -38,10 +38,11 @@ include("../../model/sanpham.php");
                 $sql = "UPDATE `phanloaidh` SET `soluong` = '$sl' WHERE `phanloaidh`.`id` = $id;";
                 pdo_execute($sql);
             }
-        
+
             ?>
-            
-            <td><input type="number" value="<?= $value['soluong'] ?>" min="1" max="<?=$slmax?>" style="width: 50px;" id="soluong_<?= $value['id'] ?>" oninput="setsoluong(<?=$value['id'] ?>,<?=$slmax?>)"></td>
+
+<td><input type="number" value="<?= $value['soluong'] ?>" min="1" max="<?= $value['slmax'] ?>" style="width: 50px;" id="soluong_<?= $value['id'] ?>" oninput="setsoluong(<?=$value['id'] ?>,<?=$value['slmax']?>)"></td>
+
             <td><?= number_format($value['soluong'] * $value['price'], 0, ',', '.');  ?></td>
 
             <td><a onclick="return(confirm('Bạn có chắc chắn muốn xóa ?'))" href="index.php?act=giohang&cart_remove=<?= $value['id'] ?>"><i class="fa fa-trash-o" aria-hidden="true"></a></i></td>

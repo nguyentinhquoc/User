@@ -53,7 +53,7 @@ if (isset($_SESSION['email_dn'])) {
                     <li style="color:#0B5717;">DMiễn phí vận chuyển</li>
                 </ul>
             </div>
-            <form action="index.php?act=sanpham_chitiet" method="get">
+            <form action="index.php?act=sanpham_chitiet&id=<?= $idsp ?>" method="post">
                 <?php
                 // $soluong = $_GET['soluong'];
                 ?>
@@ -137,17 +137,17 @@ if (isset($_SESSION['email_dn'])) {
     </div>
     <?php
     $sanpham_chitiet['price'];
-    if (isset($_GET['add_cart_chitiet']) and isset($_SESSION['email_dn'])) {
+    if (isset($_POST['add_cart_chitiet']) and isset($_SESSION['email_dn'])) {
         if ($sanpham_chitiet['soluong'] > 0) {
             $taikhoan_email = taikhoan_email($email);
             $iduser = $taikhoan_email['id'];
             $gia_sp = $sanpham_chitiet['price'];
-            $idsp = $_GET["id"];
-            $color = $_GET['color'];
-            $size = $_GET['size'];
+            $idsp = $_POST["id"];
+            $color = $_POST['color'];
+            $size = $_POST['size'];
             $sql = "SELECT soluong FROM bienthe where idcolor=$color AND idsize =$size AND idsp=$idsp";
             $soluongmax = pdo_query_one($sql);
-            $soluong = $_GET['soluong'];
+            $soluong = $_POST['soluong'];
             if ($soluongmax['soluong'] < $soluong) {
                 $soluong = $soluongmax['soluong'];
             }

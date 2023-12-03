@@ -12,7 +12,6 @@ if (isset($_GET['congpl'])) {
 ?>
 <div class="giohang">
     <h3> Giỏ hàng </h3>
-
     <?php
     if (isset($_GET['cart_remove'])) {
         $id = $_GET['cart_remove'];
@@ -46,9 +45,6 @@ if (isset($_GET['congpl'])) {
                         <td><?= $value['name'] ?></td>
                         <td><?= "Màu:" . $value['color'] . "<br>" . "Size:" . $value['size'] ?></td>
                         <td><input type="number" value="<?= $value['soluong'] ?>" min="1" max="<?= $value['slmax'] ?>" style="width: 50px;" id="soluong_<?= $value['id'] ?>" oninput="setsoluong(<?=$value['id'] ?>,<?=$value['slmax']?>)"></td>
-
-                        <a href="" onclick="setsoluong(<?=$value['id'] ?>,<?=$value['slmax']?>)">aaaa</a>
-
                         <td><?= number_format($value['soluong'] * $value['price'], 0, ',', '.');  ?></td>
                         <td><a onclick="return(confirm('Bạn có chắc chắn muốn xóa ?'))" href="index.php?act=giohang&cart_remove=<?= $value['id'] ?>"><i class="fa fa-trash-o" aria-hidden="true"></a></i></td>
                         </td>
