@@ -24,21 +24,6 @@ $banner=pdo_query($sql);
                 </div>
             </div>
      <?php   } ?>
-
-            <div class="swiper-slide animation-style-01">
-                <div class="slide-inner bg-height" data-bg-image="<?= $img_path ?>slider/1-2.jpg">
-                    <div class="container">
-                        <div class="slide-content text-white">
-                            <h3 class="sub-title">Chào mừng quý khách !!!</h3>
-                            <h2 class="title mb-3">PANDA SHOP</h2>
-                            <p class="short-desc different-width mb-10">Điểm đến hàng đầu cho những đôi giày phong cách và chất lượng</p>
-                            <div class="button-wrap">
-                                <a class="btn btn-custom-size lg-size btn-primary" href="index.php?act=sanpham_list&page=1">Shop Now</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
         <!-- Add Pagination -->
         <div class="swiper-pagination with-bg d-md-none"></div>

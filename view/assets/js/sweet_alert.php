@@ -146,3 +146,19 @@ Swal.fire({
       
     <?php 
   } ?>
+<?php
+if (isset($_GET['bltc'])) {
+  
+  ?>
+ <script>
+Swal.fire({
+  position: 'center',
+  icon: 'success',
+  title: 'Bình luận thành công !!!',
+  showConfirmButton: false,
+  timer: 1500
+})
+      </script>
+      
+    <?php 
+  } ?>

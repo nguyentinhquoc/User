@@ -126,20 +126,20 @@
                 <div class="top">
                     <p style="color:red;">Mã đơn hàng: <?= $madonhang ?> </p>
                     <p style="color:green;">Trạng thái: <?php
-                                    switch ($idtrangthai) {
-                                        case 3:
-                                            echo "Chờ xác nhận";
-                                            break;
+                                                        switch ($idtrangthai) {
+                                                            case 3:
+                                                                echo "Chờ xác nhận";
+                                                                break;
 
-                                        case 4:
-                                            echo "Đang giao hàng";
-                                            break;
+                                                            case 4:
+                                                                echo "Đang giao hàng";
+                                                                break;
 
-                                        case 5:
-                                            echo "Chờ xác nhận";
-                                            break;
-                                    }
-                                    ?></p>
+                                                            case 5:
+                                                                echo "Chờ xác nhận";
+                                                                break;
+                                                        }
+                                                        ?></p>
                 </div>
                 <?php $load_chitietdh_sp = load_chitietdh_sp($madonhang);
                     foreach ($load_chitietdh_sp as $key1 => $value2) { ?>
@@ -151,25 +151,33 @@
                             <p>Biến thể sản phẩm : <?= 'Size' . $value2['size'] . ',' . $value2['color'] ?></p>
                             <p>Số lượng: <?= $value2['soluong'] ?></p>
                         </div>
-                        <div class="gia"><?= number_format($value2['price'] * $value2['soluong'], 0, ',', '.').'đ' ?></div>
+                        <div class="gia"><?= number_format($value2['price'] * $value2['soluong'], 0, ',', '.') . 'đ' ?></div>
                     </div>
+                        <?php
+                            if ($idtrangthai == 5 && $value2['danhgia'] == 0) {
+                        ?>
+                            <a style="border-radius: 10px; color: white; padding: 10px 20px; background-color: red; margin-left: 550px;" href="index.php?act=danhgia&idbt=<?=$value2['idbt']?>&idpl=<?=$value2['idpl']?>">Đánh giá</a>
+    
+                        <?php } ?>
+
+
                 <?php $tongtiehoadon += $value2['price'] * $value2['soluong'];
                     }
                 ?>
                 <hr>
                 <table>
-                     <tr >
-                        <td >Tổng tiền hàng :</td>
-                        <td style="width: 10%;"><?=number_format($tongtiehoadon  , 0, ',', '.');?>đ</td>
-                        
+                    <tr>
+                        <td>Tổng tiền hàng :</td>
+                        <td style="width: 10%;"><?= number_format($tongtiehoadon, 0, ',', '.'); ?>đ</td>
+
                     </tr>
-                     <tr>
+                    <tr>
                         <td>Vocher :</td>
-                        <td><?= number_format(-$value2['sale']   , 0, ',', '.');?>đ</td>
+                        <td><?= number_format(-$value2['sale'], 0, ',', '.'); ?>đ</td>
                     </tr>
-                     <tr>
+                    <tr>
                         <td>Thành tiền :</td>
-                        <td style="color:red; font-size: larger; font-weight: bolder;"><?=  number_format($value2['thanhtien'], 0, ',', '.');?>đ</td>
+                        <td style="color:red; font-size: larger; font-weight: bolder;"><?= number_format($value2['thanhtien'], 0, ',', '.'); ?>đ</td>
 
                     </tr>
                 </table>

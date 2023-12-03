@@ -22,6 +22,9 @@ if (!isset($_GET["act"])) {
         case "dangky":
             include("dangky.php");
             break;
+        case "danhgia":
+            include("danhgia.php");
+            break;
         case "dangnhap":
             include("dangnhap.php");
             break;

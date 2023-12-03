@@ -74,16 +74,16 @@ if (isset($_SESSION['email_dn'])) {
                 <div class="size">Size:
                     <?php
                     $all_size = all_size();
-                        if(empty($all_size)){
-                            echo '
+                    if (empty($all_size)) {
+                        echo '
                     <p style="border: 1px solid; text-align: center; width: 200px; height: 45px; padding-top: 10px; margin-left: 20px; color: red;">HẾT SIZE</p>
                     ';
-                        }
-                        
+                    }
+
                     foreach ($all_size as $key => $value) {
 
                     ?>
-                    
+
                         <div class="custom-radio" id="size">
                             <input type="radio" id="<?= $value['size'] ?>" name="size" value="<?= $value['id'] ?>"">
         <label for=" <?= $value['size'] ?>"><?= $value['size'] ?></label>
@@ -162,24 +162,9 @@ if (isset($_SESSION['email_dn'])) {
 
     <div class="btom">
         <h3>Bình Luận</h3>
-        <?php
-        $hienthi_binhluan = hienthi_binhluan($idsp);
-        foreach ($hienthi_binhluan as $key) { ?>
-            <div class="item">
-                <div class="img"><img class="img" src="<?= $img_path . "avarta_user/" . $key['img'] ?>" alt="" width="100px" height="100px" style="margin: 10px;">
-                </div>
-
-                <div class="content">
-                    <h5><?= $key['name'] ?></h5>
-                    <p><?= $key['comment'] ?></p>
-                    <p class="date"><?= $key['date'] ?></p>
-
-                </div>
-            </div>
-        <?php
-        }
-        ?>
-        <?php
+        <div style="  height: 400px; 
+            overflow-y: scroll; ">
+             <?php
         if (isset($_SESSION['email_dn'])) {
             $email = $_SESSION['email_dn'];
             $taikhoan_email = taikhoan_email($email);
@@ -199,14 +184,52 @@ if (isset($_SESSION['email_dn'])) {
                     if (isset($_POST['submit_comment'])) {
                         $comment = $_POST['comment'];
                         upload_binhluan($idsp, $iduser, $comment);
-                        header("Location: index.php?act=sanpham_chitiet&id=$idsp");
+                        header("Location: index.php?act=sanpham_chitiet&id=$idsp&bltc");
                     }
                     ?>
                 </div>
             </div>
         <?php  }
         ?>
+        <?php
+        $hienthi_binhluan = hienthi_binhluan($idsp);
+        foreach ($hienthi_binhluan as $key) { ?>
+            <div class="item">
+                <div class="img"><img class="img" src="<?= $img_path . "avarta_user/" . $key['img'] ?>" alt="" width="100px" height="100px" style="margin: 10px;">
+                </div>
 
+                <div class="content">
+                    <h5><?= $key['name'] ?></h5>
+                    <p><?= $key['comment'] ?></p>
+                    <p class="date"><?= $key['date'] ?></p>
 
+                </div>
+            </div>
+        <?php
+        }
+        ?>
+       
+        </div>
+
+    </div>
+    <div class="btom" >
+            <h3>Đánh giá</h3>
+            <div style="  height: 400px; 
+            overflow-y: scroll; ">
+        <?php
+        $hienthi_danhgia = pdo_query("SELECT taikhoan.name,taikhoan.img,danhgia.binhluan,danhgia.danhgia FROM `danhgia` JOIN taikhoan ON danhgia.iduser=taikhoan.id JOIN bienthe ON bienthe.id=danhgia.idbienthe JOIN sanpham ON bienthe.idsp=sanpham.id where sanpham.id=$idsp; ");
+        foreach ($hienthi_danhgia as $key) { ?>
+            <div class="item">
+                <div class="img"><img class="img" src="<?= $img_path . "avarta_user/" . $key['img'] ?>" alt="" width="100px" height="100px" style="margin: 10px;">
+                </div>
+                <div class="content">
+                    <h5><?= $key['name'] ?> <?php echo_star($key['danhgia']) ?> </h5>
+                    <p><?= $key['binhluan'] ?></p>
+                </div>
+            </div>
+        <?php
+        }
+        ?>
+    </div>
     </div>
 </main>
