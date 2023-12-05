@@ -8,9 +8,7 @@ $idcolor = $_POST["color"];
 $all_size = size_color($idcolor, $idsp);
 echo "Size:";
 if(empty($all_size)){
-    echo '
-<p style="border: 1px solid; text-align: center; width: 200px; height: 45px; padding-top: 10px; margin-left: 20px; color: red;">HẾT SIZE</p>
-';
+    echo '<p style="border: 1px solid; text-align: center; width: 200px; height: 45px; padding-top: 10px; margin-left: 20px; color: red;">HẾT SIZE</p>';
 }
 foreach ($all_size as $key => $value) {
 ?>
