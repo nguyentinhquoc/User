@@ -1,4 +1,6 @@
 <?php
+
+
 if (isset($_SESSION['email_dn'])) {
     $email = $_SESSION['email_dn'];
     $sql = "SELECT id FROM taikhoan WHERE email='$email'";
@@ -136,7 +138,6 @@ if (isset($_SESSION['email_dn'])) {
         </div>
     </div>
     <?php
-    $sanpham_chitiet['price'];
     if (isset($_POST['add_cart_chitiet']) and isset($_SESSION['email_dn'])) {
         if ($sanpham_chitiet['soluong'] > 0) {
             $taikhoan_email = taikhoan_email($email);
@@ -153,83 +154,123 @@ if (isset($_SESSION['email_dn'])) {
             }
             $bienthe_check = timbienthe($idsp, $color, $size);
             $bienthe = $bienthe_check['id'];
-            echo $bienthe;
             add_gio($iduser, $soluong, $bienthe);
             header("Location: index.php?act=sanpham_chitiet&id=$idsp");
         }
     }
     ?>
+    <?php
+    if (isset($_POST['dat_chitiet']) and isset($_SESSION['email_dn'])) {
+        if ($sanpham_chitiet['soluong'] > 0) {
+            $idsp = $_POST["id"];
+            $color = $_POST['color'];
+            $size = $_POST['size'];
+            $sql = "SELECT soluong FROM bienthe where idcolor=$color AND idsize =$size AND idsp=$idsp";
+            $soluongmax = pdo_query_one($sql);
+            $soluong = $_POST['soluong'];
+            if ($soluongmax['soluong'] < $soluong) {
+                $soluong = $soluongmax['soluong'];
+            }
+            $_SESSION['dathang'][] = [
+                'idsp' => $idsp,
+                'color' => $color,
+                'size' => $size,
+                'soluong' => $soluong
+            ];
 
-    <div class="btom">
-        <h3>Bình Luận</h3>
-        <div style="  height: 400px; 
-            overflow-y: scroll; ">
-             <?php
-        if (isset($_SESSION['email_dn'])) {
-            $email = $_SESSION['email_dn'];
-            $taikhoan_email = taikhoan_email($email);
-            $iduser = $taikhoan_email['id'];
-
-        ?>
-            <div class="item">
-                <div class="img"><img class="img" src="<?= $img_path . "avarta_user/" . $taikhoan_email['img'] ?>" alt="" height="100px" width="100px" style="margin: 10px;">
-                </div>
-                <div class="content">
-                    <h5><?= $taikhoan_email['name'] ?></h5><br>
-                    <form action="index.php?act=sanpham_chitiet&id=<?= $idsp ?>" method="post">
-                        <input style="width: 90%;" type="text" name="comment" id="" placeholder="Nhập binh luận">
-                        <button name="submit_comment">Bình luận</button>
-                    </form>
-                    <?php
-                    if (isset($_POST['submit_comment'])) {
-                        $comment = $_POST['comment'];
-                        upload_binhluan($idsp, $iduser, $comment);
-                        header("Location: index.php?act=sanpham_chitiet&id=$idsp&bltc");
-                    }
-                    ?>
-                </div>
-            </div>
-        <?php  }
-        ?>
-        <?php
-        $hienthi_binhluan = hienthi_binhluan($idsp);
-        foreach ($hienthi_binhluan as $key) { ?>
-            <div class="item">
-                <div class="img"><img class="img" src="<?= $img_path . "avarta_user/" . $key['img'] ?>" alt="" width="100px" height="100px" style="margin: 10px;">
-                </div>
-
-                <div class="content">
-                    <h5><?= $key['name'] ?></h5>
-                    <p><?= $key['comment'] ?></p>
-                    <p class="date"><?= $key['date'] ?></p>
-
-                </div>
-            </div>
-        <?php
+            header("Location: index.php?act=dathang");
         }
-        ?>
-       
-        </div>
+    }
+    ?>
 
+    <button id="button1" onclick="showText('binhluan')">Bình luận</button>
+    <button id="button2" onclick="showText('danhgia')">Đánh giá</button>
+
+    <div id="binhluan">
+        <div class="btom">
+            <h3>Bình Luận</h3>
+            <div style="  height: 400px; 
+            overflow-y: scroll; ">
+                <?php
+                if (isset($_SESSION['email_dn'])) {
+                    $email = $_SESSION['email_dn'];
+                    $taikhoan_email = taikhoan_email($email);
+                    $iduser = $taikhoan_email['id'];
+
+                ?>
+                    <div class="item">
+                        <div class="img"><img class="img" src="<?= $img_path . "avarta_user/" . $taikhoan_email['img'] ?>" alt="" height="100px" width="100px" style="margin: 10px;">
+                        </div>
+                        <div class="content">
+                            <h5><?= $taikhoan_email['name'] ?></h5><br>
+                            <form action="index.php?act=sanpham_chitiet&id=<?= $idsp ?>" method="post">
+                                <input style="width: 90%;" type="text" name="comment" id="" placeholder="Nhập binh luận">
+                                <button name="submit_comment">Bình luận</button>
+                            </form>
+                            <?php
+                            if (isset($_POST['submit_comment'])) {
+                                $comment = $_POST['comment'];
+                                upload_binhluan($idsp, $iduser, $comment);
+                                header("Location: index.php?act=sanpham_chitiet&id=$idsp&bltc");
+                            }
+                            ?>
+                        </div>
+                    </div>
+                <?php  }
+                ?>
+                <?php
+                $hienthi_binhluan = hienthi_binhluan($idsp);
+                foreach ($hienthi_binhluan as $key) { ?>
+                    <div class="item">
+                        <div class="img"><img class="img" src="<?= $img_path . "avarta_user/" . $key['img'] ?>" alt="" width="100px" height="100px" style="margin: 10px;">
+                        </div>
+
+                        <div class="content">
+                            <h5><?= $key['name'] ?></h5>
+                            <p><?= $key['comment'] ?></p>
+                            <p class="date"><?= $key['date'] ?></p>
+
+                        </div>
+                    </div>
+                <?php
+                }
+                ?>
+            </div>
+        </div>
     </div>
-    <div class="btom" >
+    <div id="danhgia" style="display: none;">
+        <div class="btom">
             <h3>Đánh giá</h3>
             <div style="  height: 400px; 
             overflow-y: scroll; ">
-        <?php
-        $hienthi_danhgia = pdo_query("SELECT taikhoan.name,taikhoan.img,danhgia.binhluan,danhgia.danhgia FROM `danhgia` JOIN taikhoan ON danhgia.iduser=taikhoan.id JOIN bienthe ON bienthe.id=danhgia.idbienthe JOIN sanpham ON bienthe.idsp=sanpham.id where sanpham.id=$idsp; ");
-        foreach ($hienthi_danhgia as $key) { ?>
-            <div class="item">
-                <div class="img"><img class="img" src="<?= $img_path . "avarta_user/" . $key['img'] ?>" alt="" width="100px" height="100px" style="margin: 10px;">
-                </div>
-                <div class="content">
-                    <h5><?= $key['name'] ?> <?php echo_star($key['danhgia']) ?> </h5>
-                    <p><?= $key['binhluan'] ?></p>
-                </div>
+                <?php
+                $hienthi_danhgia = pdo_query("SELECT taikhoan.name,taikhoan.img,danhgia.binhluan,danhgia.danhgia FROM `danhgia` JOIN taikhoan ON danhgia.iduser=taikhoan.id JOIN bienthe ON bienthe.id=danhgia.idbienthe JOIN sanpham ON bienthe.idsp=sanpham.id where sanpham.id=$idsp; ");
+                foreach ($hienthi_danhgia as $key) { ?>
+                    <div class="item">
+                        <div class="img"><img class="img" src="<?= $img_path . "avarta_user/" . $key['img'] ?>" alt="" width="100px" height="100px" style="margin: 10px;">
+                        </div>
+                        <div class="content">
+                            <h5><?= $key['name'] ?> <?php echo_star($key['danhgia']) ?> </h5>
+                            <p><?= $key['binhluan'] ?></p>
+                        </div>
+                    </div>
+                <?php
+                }
+                ?>
             </div>
-        <?php
+        </div>
+    </div>
+
+    <script>
+        function showText(elementId) {
+            // Ẩn tất cả các văn bản
+            document.getElementById('binhluan').style.display = 'none';
+            document.getElementById('danhgia').style.display = 'none';
+
+            // Hiển thị văn bản tương ứng với nút được click
+            document.getElementById(elementId).style.display = 'block';
         }
-        ?>
-    </div>
-    </div>
+    </script>
+
+
 </main>

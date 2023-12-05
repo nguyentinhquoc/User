@@ -1,29 +1,33 @@
 <!-- Begin Slider Area -->
-
+<?php
+if (isset($_SESSION['dathang'])) {
+    unset($_SESSION['dathang']);
+}
+?>
 <div class="slider-area">
 
     <!-- Main Slider -->
     <div class="swiper-container main-slider swiper-arrow with-bg_white">
         <div class="swiper-wrapper">
-                <?php
-$sql="SELECT * FROM banner";
-$banner=pdo_query($sql);
-                foreach ($banner as $value) { ?>
-            <div class="swiper-slide animation-style-01">
-                <div class="slide-inner bg-height" data-bg-image="<?= $img_path ?>slider/<?=$value['img']?>">
-                    <div class="container">
-                        <div class="slide-content text-white">
-                            <h3 class="sub-title"><?=$value['h1']?></h3>
-                            <h2 class="title mb-3"><?=$value['h2']?></h2>
-                            <p class="short-desc different-width mb-10"><?=$value['h3']?></p>
-                            <div class="button-wrap">
-                                <a class="btn btn-custom-size lg-size btn-primary" href="index.php?act=sanpham_list&page=1">Shop Now</a>
+            <?php
+            $sql = "SELECT * FROM banner";
+            $banner = pdo_query($sql);
+            foreach ($banner as $value) { ?>
+                <div class="swiper-slide animation-style-01">
+                    <div class="slide-inner bg-height" data-bg-image="<?= $img_path ?>slider/<?= $value['img'] ?>">
+                        <div class="container">
+                            <div class="slide-content text-white">
+                                <h3 class="sub-title"><?= $value['h1'] ?></h3>
+                                <h2 class="title mb-3"><?= $value['h2'] ?></h2>
+                                <p class="short-desc different-width mb-10"><?= $value['h3'] ?></p>
+                                <div class="button-wrap">
+                                    <a class="btn btn-custom-size lg-size btn-primary" href="index.php?act=sanpham_list&page=1">Shop Now</a>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-     <?php   } ?>
+            <?php   } ?>
         </div>
         <!-- Add Pagination -->
         <div class="swiper-pagination with-bg d-md-none"></div>
@@ -45,14 +49,18 @@ $banner=pdo_query($sql);
     <div class="banner-area section-space-top-100">
         <div class="container">
             <div class="row">
-
+<?php 
+$sql="SELECT * FROM danhmuc";
+$danhmuc=pdo_query($sql);
+foreach ($danhmuc as $key => $value) {
+?>
                 <div class="col-lg-4 col-md-6 pt-6 pt-md-0">
                     <div class="banner-item img-hover-effect">
                         <div class="banner-img img-zoom-effect">
-                            <img class="img-full" src="<?= $img_path ?>banner/1-1-400x250.jpg" alt="Banner Image" height="609px">
+                            <img class="img-full" src="<?= $img_path ?>banner/<?=$value['img']?>" alt="Banner Image" height="609px">
                             <div class="inner-content text-white">
-                                <h2 class="title mb-5" style="background-color: #949191; width: 70px;">Nike</h2>
-                                <h3 class="offer" style="background-color: rgba(115, 111, 111, 0.8);">Nơi nâng tầm phong cách và hiệu suất, mỗi đôi giày là hành trình của sự đổi mới và đẳng cấp.</h3>
+                                <h2 class="title mb-5" ><?=$value['name']?></h2>
+                                <h3 class="offer" style="background-color: rgba(115, 111, 111, 0.8);"><?=$value['mota']?></h3>
                                 <div class="button-wrap">
                                     <a class="btn btn-custom-size btn-primary" href="index.php?act=sanpham_list&page=1&danhmuc=1">Shop Now</a>
                                 </div>
@@ -60,36 +68,8 @@ $banner=pdo_query($sql);
                         </div>
                     </div>
                 </div>
-
-                <div class="col-lg-4 col-md-6 pt-6 pt-md-0">
-                    <div class="banner-item img-hover-effect">
-                        <div class="banner-img img-zoom-effect">
-                            <img class="img-full" src="<?= $img_path ?>banner/1-2-400x250.jpg" alt="Banner Image" height="609px">
-                            <div class="inner-content text-white">
-                                <h2 class="title mb-5" style="background-color: #949191; width: 70px;">MLB</h2>
-                                <h3 class="offer" style="background-color: rgba(115, 111, 111, 0.8);"> Phong cách hòa quyện trong từng đường nét, biến mỗi đôi giày thành biểu tượng của đam mê.</h3>
-
-                                <div class="button-wrap">
-                                    <a class="btn btn-custom-size btn-primary" href="index.php?act=sanpham_list&page=1&danhmuc=3">Shop Now</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 pt-6 pt-lg-0">
-                    <div class="banner-item img-hover-effect">
-                        <div class="banner-img img-zoom-effect">
-                            <img class="img-full" src="<?= $img_path ?>banner/1-3-400x250.jpg" alt="Banner Image" height="609px">
-                            <div class="inner-content text-white">
-                                <h2 class="title mb-5" style="background-color: #949191; width: 130px;">Jordan</h2>
-                                <h3 class="offer" style="background-color: rgba(115, 111, 111, 0.8);">Nơi tinh hoa thể thao và phong cách kết hợp, mỗi đôi giày là biểu tượng của sự độc đáo, sức mạnh</h3>
-                                <div class="button-wrap">
-                                    <a class="btn btn-custom-size btn-primary" href="index.php?act=sanpham_list&page=1&danhmuc=2">Shop Now</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+<?php } ?>
+           
             </div>
         </div>
     </div>
@@ -159,7 +139,7 @@ $banner=pdo_query($sql);
                                     <del style="color: #ccc9c2;"><?= number_format($key['price'] + ($key['price'] * ($key['sale'] / 100)), 0, ',', '.');  ?></del>
                                 </p>
                                 <p class="name_sp"><?= $key['name'] ?></p>
-                                
+
                                 <p class="dabansp">Đã bán :1222</p>
                                 <div class="congcu">
                                     <i class="fa fa-cart-plus" aria-hidden="true"></i>
@@ -261,38 +241,36 @@ $banner=pdo_query($sql);
                 <div class="newsletter-content">
                     <h2 class="newsletter-title mb-4">Cùng nhau mua sắm.</h2>
                     <h3 class="newsletter-sub-title text-primary mb-8">Giúp nhau săn sale !!!</h3>
-                    <form action="index.php" method="post"  style="display: flex;"> 
-                        <input style="width: 400px; border:0; background-color: #dfdfdf;" type="email"name="marketing_email" placeholder="Nhập email người giới thiệu">
+                    <form action="index.php" method="post" style="display: flex;">
+                        <input style="width: 400px; border:0; background-color: #dfdfdf;" type="email" name="marketing_email" placeholder="Nhập email người giới thiệu">
                         <div class="button-wrap">
-                            <button class="btn btn-custom-size btn-primary" " name="marketing_submit">Subscribe</button>
+                            <button class="btn btn-custom-size btn-primary" " name=" marketing_submit">Subscribe</button>
                         </div>
                     </form>
                     <?php
                     if (isset($_POST['marketing_submit']) && isset($_SESSION['email_dn'])) {
                         $mail_marketing = $_POST['marketing_email'];
-                        $email_dn=($_SESSION['email_dn']);                
+                        $email_dn = ($_SESSION['email_dn']);
 
                         $sql = "SELECT * FROM taikhoan where email='$mail_marketing'";
                         $check = pdo_query_one($sql);
                         $sql2 = "SELECT * FROM taikhoan where email='$email_dn'";
                         $check_mr = pdo_query_one($sql2);
-                        if (!$check) {?>
-                        <p style="color: red;"><?="Email giới thiệu không hợp lệ."?></p>
+                        if (!$check) { ?>
+                            <p style="color: red;"><?= "Email giới thiệu không hợp lệ." ?></p>
 
-                        <?php }
-                        
-                        elseif($check==true and $check_mr['marketing'] != 1) {
-                            $email_dn=($_SESSION['email_dn']);                
-                            $sql="SELECT DATE(DATE_ADD(NOW(), INTERVAL 15 DAY)) AS 'date' ;";
+                    <?php } elseif ($check == true and $check_mr['marketing'] != 1) {
+                            $email_dn = ($_SESSION['email_dn']);
+                            $sql = "SELECT DATE(DATE_ADD(NOW(), INTERVAL 15 DAY)) AS 'date' ;";
                             $day_15 = pdo_query_one($sql);
-                            $date_15=$day_15['date'];
-                            $id_dn=taikhoan_email($email_dn);
-                            $iddn=$id_dn['id'];
-                            $id_marketing=taikhoan_email($mail_marketing);
-                            $idmarketing=$id_marketing['id'];
-                            $sql1="UPDATE `taikhoan` SET `marketing` = '1' WHERE `taikhoan`.`email` = '$email_dn';";
-                            $sql2="INSERT INTO `vocher` (`sale`, `iduser`, `date`) VALUES ('50000', '$iddn', '$date_15');";
-                            $sql3="INSERT INTO `vocher` (`sale`, `iduser`, `date`) VALUES ('100000', ' $idmarketing', '$date_15');";
+                            $date_15 = $day_15['date'];
+                            $id_dn = taikhoan_email($email_dn);
+                            $iddn = $id_dn['id'];
+                            $id_marketing = taikhoan_email($mail_marketing);
+                            $idmarketing = $id_marketing['id'];
+                            $sql1 = "UPDATE `taikhoan` SET `marketing` = '1' WHERE `taikhoan`.`email` = '$email_dn';";
+                            $sql2 = "INSERT INTO `vocher` (`sale`, `iduser`, `date`) VALUES ('50000', '$iddn', '$date_15');";
+                            $sql3 = "INSERT INTO `vocher` (`sale`, `iduser`, `date`) VALUES ('100000', ' $idmarketing', '$date_15');";
                             pdo_execute($sql1);
                             pdo_execute($sql2);
                             pdo_execute($sql3);

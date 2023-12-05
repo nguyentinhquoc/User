@@ -39,7 +39,7 @@ if (isset($_GET['congpl'])) {
                     $sanpham_giohang = sanpham_giohang($email);
                     foreach ($sanpham_giohang as $key => $value) {
                     ?>
-                        <th scope="row"><?= $key + 1; ?></th>
+                        <th scope="row"><?= $key + 1; $value['id']  ?></th>
                         <td><input type="checkbox" class="checkbox" name="idphanloaidh[]" value="<?= $value['id'] ?>"></td>
                         <td><img src="<?= $img_path . "sanpham/" . $value['img'] ?>" alt="" width="100px"></td>
                         <td><?= $value['name'] ?></td>

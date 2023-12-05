@@ -1,4 +1,9 @@
 <?php
+if (isset($_SESSION['dathang'])) {
+    unset($_SESSION['dathang']);
+}
+
+
 $sql = "SELECT MIN(price) AS gia_min, MAX(price) AS gia_max
 FROM sanpham;";
 $mimax = pdo_query_one($sql);

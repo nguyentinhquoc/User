@@ -124,7 +124,15 @@
                     $madonhang = $value1['madh']; ?>
             <div class="donhangct">
                 <div class="top">
+
                     <p style="color:red;">Mã đơn hàng: <?= $madonhang ?> </p>
+                    <?php
+                if ($idtrangthai == 3) {
+            ?>
+                <a style="border-radius: 10px; color: white; padding: 10px 20px; background-color: blueviolet;" onclick="return confirm('Bạn có chắc chắn muốn hủy đơn hàng này ?')" href="index.php?act=myaccout&profile=3&trangthai=3&huydonhang=<?= $madonhang ?>">Hủy đơn hàng</a>
+        <?php
+                }
+        ?>
                     <p style="color:green;">Trạng thái: <?php
                                                         switch ($idtrangthai) {
                                                             case 3:
@@ -159,8 +167,6 @@
                             <a style="border-radius: 10px; color: white; padding: 10px 20px; background-color: red; margin-left: 550px;" href="index.php?act=danhgia&idbt=<?=$value2['idbt']?>&idpl=<?=$value2['idpl']?>">Đánh giá</a>
     
                         <?php } ?>
-
-
                 <?php $tongtiehoadon += $value2['price'] * $value2['soluong'];
                     }
                 ?>
@@ -183,12 +189,7 @@
                 </table>
             </div>
             <?php
-                    if ($idtrangthai == 3) {
-            ?>
-                <a style="border-radius: 10px; color: white; padding: 10px 20px; background-color: blueviolet;" onclick="return confirm('Bạn có chắc chắn muốn hủy đơn hàng này ?')" href="index.php?act=myaccout&profile=3&trangthai=3&huydonhang=<?= $madonhang ?>">Hủy đơn hàng</a>
-        <?php
-
-                    }
+                   
                 }
         ?>
         <?php
