@@ -5,10 +5,13 @@
     </h4>
     <?php
     $email = $_SESSION['email_dn'];
-    $taikhoan_email = taikhoan_email($email); ?>
-    Họ và tên: <?= $taikhoan_email['name'] ?><br>
-    Số điện thoại: <?= $taikhoan_email['tel'] ?><br>
-    Địa chỉ nhận hàng: <?= $taikhoan_email['address'] ?><br>
+    $taikhoan_email = taikhoan_email($email);
+    $address = $_POST['tinh'] . "-" . $_POST['huyen'] . "-" . $_POST['xa'];
+    ?>
+
+    Họ và tên: <?= $_POST['name'] ?><br>
+    Số điện thoại: <?= $_POST['tel'] ?><br>
+    Địa chỉ nhận hàng: <?= $address  ?><br>
   </div>
 
   <div class="center">
@@ -27,8 +30,7 @@
 
 
         if (isset($_SESSION['dathang'])) {
-   
-          print_r($_SESSION['dathang']);
+
           $taikhoan_email['id'];
           $idsp_dh = $_SESSION['dathang'][0]['idsp'];
           $soluong = $_SESSION['dathang'][0]['soluong'];
@@ -77,6 +79,11 @@
     </table>
   </div>
   <form action="" method="POST">
+
+    <input type="hidden" name="name" value="<?= $_POST['name'] ?>">
+    <input type="hidden" name="tel" value="<?= $_POST['tel'] ?>">
+    <input type="hidden" name="address" value="<?= $address ?>">
+
     <?php $vocher = 0;
 
     if (isset($_POST['vocher']) && $_POST['vocher'] != "") {
@@ -87,9 +94,9 @@
       <div class="top">
         <p>PHƯƠNG THỨC THANH TOÁN:</p>
         <div class="radio_thanhtoan">
-          <input type="radio" class="btn-check" name="thanhtoan" value="Offline" id="option5" autocomplete="off" onclick="thanhtoan_text(2)">
+          <input type="radio" class="btn-check" name="thanhtoan" value="0" id="option5" autocomplete="off" onclick="thanhtoan_text(2)">
           <label class="btn" for="option5">Thanh toán khi nhận hàng</label>
-          <input type="radio" class="btn-check" name="thanhtoan" value="Online" id="option6" autocomplete="off" onclick="thanhtoan_text(1)">
+          <input type="radio" class="btn-check" name="thanhtoan" value="1" id="option6" autocomplete="off" onclick="thanhtoan_text(1)">
           <label class="btn" for="option6">Thanh toán online</label>
         </div>
       </div>
@@ -111,40 +118,14 @@
     <p id="selectedValue">Giảm giá : <?php
                                       echo -$vocher;
                                       ?></p>
-
 <input type="hidden" name="order_id" value="<?= $madh_ht ?>">
               <input type="hidden" name="order_desc" value="<?= 'Thanh toán hóa đơn: ' . $madh_ht ?>"> 
    <input type="hidden" name="amount" value="<?= $tongthanhtoan ?>">
    <input type="hidden" name="vocher" value="<?= $vocher ?>">
+
    <input type="hidden" name="date" value="<?= $date_ht ?>">
    <input type="hidden" name="order_type" value="<?= 'Giày Panda shop' ?>">
     <div class="tongtienhang"><p>Tổng thanh toán : <?= $tongthanhtoan ?></p></div>
-                        <select name="bank_code">
-                            <option value="">Chọn ngân hàng</option>
-                            <option value="NCB"> Ngan hang NCB</option>
-                            <option value="AGRIBANK"> Ngan hang Agribank</option>
-                            <option value="SCB"> Ngan hang SCB</option>
-                            <option value="SACOMBANK">Ngan hang SacomBank</option>
-                            <option value="EXIMBANK"> Ngan hang EximBank</option>
-                            <option value="MSBANK"> Ngan hang MSBANK</option>
-                            <option value="NAMABANK"> Ngan hang NamABank</option>
-                            <option value="VNMART"> Vi dien tu VnMart</option>
-                            <option value="VIETINBANK">Ngan hang Vietinbank</option>
-                            <option value="VIETCOMBANK"> Ngan hang VCB</option>
-                            <option value="HDBANK">Ngan hang HDBank</option>
-                            <option value="DONGABANK"> Ngan hang Dong A</option>
-                            <option value="TPBANK"> Ngân hàng TPBank</option>
-                            <option value="OJB"> Ngân hàng OceanBank</option>
-                            <option value="BIDV"> Ngân hàng BIDV</option>
-                            <option value="TECHCOMBANK"> Ngân hàng Techcombank</option>
-                            <option value="VPBANK"> Ngan hang VPBank</option>
-                            <option value="MBBANK"> Ngan hang MBBank</option>
-                            <option value="ACB"> Ngan hang ACB</option>
-                            <option value="OCB"> Ngan hang OCB</option>
-                            <option value="IVB"> Ngan hang IVB</option>
-                            <option value="VISA"> Thanh toan qua VISA/MASTER</option>
-                        </select>
-
               <input type="submit" name="dathang" value="Thanh toán">
             `;
 
@@ -174,7 +155,10 @@
   error_reporting(E_ALL & ~E_NOTICE & ~E_DEPRECATED);
   date_default_timezone_set('Asia/Ho_Chi_Minh');
   $vnp_Url = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
-  $vnp_Returnurl = "http://localhost:3000/DU_AN_1/user/view/index.php?act=dathang&thanhtoan=Online&amount=$tongthanhtoan&vocher=$vocher&date=$date_ht&order_id=$madh_ht";
+  $name = $_POST['name'];
+  $tel = $_POST['tel'];
+  $address = $_POST['address'];
+  $vnp_Returnurl = "http://localhost:3000/DU_AN_1/user/view/index.php?act=dathang&thanhtoan=Online&amount=$tongthanhtoan&vocher=$vocher&date=$date_ht&order_id=$madh_ht&name=$name&tel=$tel&address=$address";
   $vnp_TmnCode = "UWG6PCZA";
   $vnp_HashSecret = "LUNHEZKVDQOHGREXBRTBHVXQTATQKQOO";
   if (isset($_POST['dathang'])) {
@@ -239,7 +223,11 @@
   ?>
   <?php
   if (isset($_POST['thanhtoan']) || isset($_GET['thanhtoan'])) {
+
     if (isset($_POST["thanhtoan"])) {
+      $hoten = $_POST['name'];
+      $sdt = $_POST['tel'];
+      $diachi = $_POST['address'];
       $hinhthuc = $_POST['thanhtoan'];
       $tongtien = $_POST['amount'];
       $sale = $_POST['vocher'];
@@ -247,6 +235,9 @@
       $madh = $_POST['order_id'];
     }    // &thanhtoan=Online&amount=3000000&vocher=0&date=2023-12-04%2013:22:34&order_id=20231204132234&vnp_Amount=300000000&vnp_BankCode=NCB&vnp_BankTranNo=VNP14216163&vnp_CardType=ATM&vnp_OrderInfo=Thanh+toán+hóa+đơn%3A+20231204132228&vnp_PayDate=20231204132253&vnp_ResponseCode=00&vnp_TmnCode=UWG6PCZA&vnp_TransactionNo=14216163&vnp_TransactionStatus=00&vnp_TxnRef=20231204132228&vnp_SecureHash=65f01839892501a24693cf4e8a1a154f8f40e98c3f328025af830a6e21026f45145ed9d1f8420d1751518d2e443b87ec727eb7fc2ea4bb87b27b8a3c887ceb04
     if (isset($_GET["thanhtoan"])) {
+      $hoten = $_GET['name'];
+      $sdt = $_GET['tel'];
+      $diachi = $_GET['address'];
       $hinhthuc = $_GET['thanhtoan'];
       $tongtien = $_GET['amount'];
       $sale = $_GET['vocher'];
@@ -256,10 +247,10 @@
 
     if (isset($_SESSION['dathang'])) {
       $id_user = $taikhoan_email['id'];
-      echo $idsp_dh = $_SESSION['dathang'][0]['idsp'];
-      echo $soluong = $_SESSION['dathang'][0]['soluong'];
-      echo $color = $_SESSION['dathang'][0]['color'];
-      echo $size = $_SESSION['dathang'][0]['size'];
+      $idsp_dh = $_SESSION['dathang'][0]['idsp'];
+      $soluong = $_SESSION['dathang'][0]['soluong'];
+      $color = $_SESSION['dathang'][0]['color'];
+      $size = $_SESSION['dathang'][0]['size'];
       $sql = "SELECT id FROM `bienthe` WHERE bienthe.idcolor =$color and bienthe.idsize=$size AND bienthe.idsp=$idsp_dh";
       $lay_bienthe = pdo_query_one($sql);
       $bienthe = $lay_bienthe['id'];
@@ -270,8 +261,10 @@
         update_trangthai($madh, $value);
       }
     }
-    insert_chitietdh($hinhthuc, $sale, $date, $madh, $tongtien);
-    // header("Location: index.php?dathangtc");
+    echo $hinhthuc . '<br>' . $sale . '<br>' . $date . '<br>' . $madh . '<br>' . $tongtien . '<br>' . $hoten . '<br>' . $sdt . '<br>' . $diachi;
+    insert_chitietdh($hinhthuc, $sale, $date, $madh, $tongtien, $hoten, $sdt, $diachi);
+    header("Location: index.php?dathangtc");
+
     unset($_SESSION['dathang']);
   }
   ?>

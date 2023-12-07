@@ -3,13 +3,20 @@
 // home----------------------------------------------------------------
 function sanpham_moi()
 {
-    $sql = "SELECT * FROM sanpham ORDER BY id ASC LIMIT 0,10;";
+    $sql = "SELECT sanpham.id,sanpham.name,sanpham.price,sanpham.img,sanpham.luotxem,bienthe.luotban,sanpham.sale FROM sanpham JOIN bienthe ON bienthe.idsp = sanpham.id  GROUP BY sanpham.id ORDER BY sanpham.id DESC LIMIT 10";
     $sanphammoi = pdo_query($sql);
     return $sanphammoi;
 }
 function sanpham_banchay()
 {
-    $sql = "SELECT * FROM sanpham ORDER BY luotxem DESC LIMIT 10;";
+    $sql = "SELECT sanpham.id,sanpham.name,sanpham.price,sanpham.img,sanpham.luotxem,bienthe.luotban,sanpham.sale
+    FROM sanpham 
+    JOIN bienthe ON bienthe.idsp = sanpham.id 
+    GROUP BY sanpham.id 
+    ORDER BY bienthe.luotban DESC 
+    LIMIT 10;
+    
+    ";
     $sanphambanchay = pdo_query($sql);
     return $sanphambanchay;
 }

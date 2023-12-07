@@ -162,3 +162,35 @@ Swal.fire({
       
     <?php 
   } ?>
+<?php
+if (isset($_GET['addgiotc'])) {
+  
+  ?>
+ <script>
+Swal.fire({
+  position: 'center',
+  icon: 'success',
+  title: 'Sản phẩm đã được thêm vào giỏ hàng !!!',
+  showConfirmButton: false,
+  timer: 1500
+})
+      </script>
+      
+    <?php 
+  } ?>
+<?php
+if (isset($_GET['addgiotb'])) {
+  
+  ?>
+ <script>
+Swal.fire({
+  position: 'center',
+  icon: 'error',
+  title: 'Thêm vào giỏ hàng thất bại vui lòng kiểm tra lại màu và size !!!',
+  showConfirmButton: false,
+  timer: 1500
+})
+      </script>
+      
+    <?php 
+  } ?>

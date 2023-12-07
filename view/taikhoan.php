@@ -19,7 +19,7 @@
                         Đơn hàng</li>
                 </a>
                 <a href="index.php?act=myaccout&profile=4">
-                    <li><i class="fa fa-ticket" aria-hidden="true"></i>Vocher</li>
+                    <li><i class="fa fa-ticket" aria-hidden="true"></i>Voucher</li>
                 </a>
             </ul>
         </div>
@@ -127,12 +127,12 @@
 
                     <p style="color:red;">Mã đơn hàng: <?= $madonhang ?> </p>
                     <?php
-                if ($idtrangthai == 3) {
-            ?>
-                <a style="border-radius: 10px; color: white; padding: 10px 20px; background-color: blueviolet;" onclick="return confirm('Bạn có chắc chắn muốn hủy đơn hàng này ?')" href="index.php?act=myaccout&profile=3&trangthai=3&huydonhang=<?= $madonhang ?>">Hủy đơn hàng</a>
-        <?php
-                }
-        ?>
+                    if ($idtrangthai == 3) {
+                    ?>
+                        <a style="border-radius: 10px; color: white; padding: 10px 20px; background-color: blueviolet;" onclick="return confirm('Bạn có chắc chắn muốn hủy đơn hàng này ?')" href="index.php?act=myaccout&profile=3&trangthai=3&huydonhang=<?= $madonhang ?>">Hủy đơn hàng</a>
+                    <?php
+                    }
+                    ?>
                     <p style="color:green;">Trạng thái: <?php
                                                         switch ($idtrangthai) {
                                                             case 3:
@@ -161,12 +161,12 @@
                         </div>
                         <div class="gia"><?= number_format($value2['price'] * $value2['soluong'], 0, ',', '.') . 'đ' ?></div>
                     </div>
-                        <?php
-                            if ($idtrangthai == 5 && $value2['danhgia'] == 0) {
-                        ?>
-                            <a style="border-radius: 10px; color: white; padding: 10px 20px; background-color: red; margin-left: 550px;" href="index.php?act=danhgia&idbt=<?=$value2['idbt']?>&idpl=<?=$value2['idpl']?>">Đánh giá</a>
-    
-                        <?php } ?>
+                    <?php
+                        if ($idtrangthai == 5 && $value2['danhgia'] == 0) {
+                    ?>
+                        <a style="border-radius: 10px; color: white; padding: 10px 20px; background-color: red; margin-left: 550px;" href="index.php?act=danhgia&idbt=<?= $value2['idbt'] ?>&idpl=<?= $value2['idpl'] ?>">Đánh giá</a>
+
+                    <?php } ?>
                 <?php $tongtiehoadon += $value2['price'] * $value2['soluong'];
                     }
                 ?>
@@ -178,7 +178,7 @@
 
                     </tr>
                     <tr>
-                        <td>Vocher :</td>
+                        <td>Voucher :</td>
                         <td><?= number_format(-$value2['sale'], 0, ',', '.'); ?>đ</td>
                     </tr>
                     <tr>
@@ -188,8 +188,8 @@
                     </tr>
                 </table>
             </div>
-            <?php
-                   
+        <?php
+
                 }
         ?>
         <?php
@@ -207,14 +207,24 @@
                 break;
             case '4': ?>
     <h4>Vocher</h4>
+    <?php
+                $id_user = taikhoan_email($email);
+                $iduser = $id_user['id'];
+                $sql = "SELECT * FROM vocher where vocher.iduser=  $iduser";
+                $vocher = pdo_query($sql);
+
+    ?>
     <div class="thongbao">
-        <div class="item">
-            <img src="<?= $img_path . "avarta_user/" . $taikhoan_email['img'] ?>" alt="" width="100px" height="100px">
-            <div class="content">
-                <h5>heder</h5>
-                <p>Nội dung</p>
+        <?php foreach ($vocher as $key => $value) { ?>
+            <div class="item" style=" width: 300px; margin: 0 atuo; display: flex; height: 70px;">
+                <div style="background-color: orangered; width: 20%; border-radius: 0px 20px 20px 0px;"></div>
+                <div style="background-color: #588fe8; width: 80%; color: White; border-radius: 0px 20px 20px 0px;">
+                    <p style="font-weight: bolder; margin-left:15px;">VOCHER GIẢM GIÁ</p>
+                    <p><?= '  Trị giá :'.number_format($value['sale'], 0, ',', '.') . 'đ'?></p>
+                </div>
             </div>
-        </div>
+        <?php  } ?>
+
     </div>
 <?php
                 break;

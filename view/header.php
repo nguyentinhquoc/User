@@ -156,9 +156,14 @@
                                             <li class="minicart-wrap me-3 me-lg-0">
                                                 <a href="index.php?act=thongbao" class="minicart-btn">
                                                     <i class="fa fa-bell-o" aria-hidden="true"></i>
-                                                    <span class="quantity">6</span>
+                                                    <?php
+$sql="SELECT COUNT(id) 'dem' from thongbao";
+$demtb=pdo_query_one($sql);
+                                                    ?>
+                                                    <span class="quantity"><?=$demtb['dem']?></span>
                                                 </a>
                                             </li>
+                                            
                                             <li class="minicart-wrap me-3 me-lg-0">
                                                 <a href="index.php?act=giohang" class="minicart-btn">
                                                     <i class="pe-7s-shopbag"></i>

@@ -1,6 +1,5 @@
 <?php
 
-
 if (isset($_SESSION['email_dn'])) {
     $email = $_SESSION['email_dn'];
     $sql = "SELECT id FROM taikhoan WHERE email='$email'";
@@ -12,21 +11,45 @@ if (isset($_SESSION['email_dn'])) {
         header("Location: index.php?act=sanpham_chitiet&id=$idsp");
     }
 };
+if (isset($_GET['delete_love'])) {
+    echo $delete_love = $_GET['delete_love'];
+    echo $iduser;
+  echo  $sql12 = "DELETE phanloaidh FROM phanloaidh JOIN bienthe ON bienthe.id = phanloaidh.bienthe WHERE phanloaidh.iduser = $iduser AND bienthe.idsp = $delete_love AND phanloaidh.idtrangthai = 1;";
+    pdo_execute($sql12);
+    header("Location: index.php?act=sanpham_chitiet&id=$delete_love ");
+}
 ?>
 <main class="sanpham_chitiet">
     <?php
     $idsp = $_GET["id"];
+    $update_luotxem = "UPDATE `sanpham` SET `luotxem` = `luotxem`+1 WHERE `sanpham`.`id` = $idsp;";
+    pdo_execute($update_luotxem);
+
+
     $sanpham_chitiet = sanpham_chitiet($idsp);
     ?>
     <div class="top">
         <div class="box box_left"><img src="<?= $img_path . "sanpham/" . $sanpham_chitiet['img'] ?>" alt=""></div>
         <div class="box box_center">
             <div class="name">
-                <h3><?= $sanpham_chitiet['name'] ?></h3>
+                <h3><?= $sanpham_chitiet['name'] ?>
+                    <?php $sql = "SELECT phanloaidh.id FROM phanloaidh JOIN bienthe ON bienthe.id=phanloaidh.bienthe JOIN sanpham ON sanpham.id=bienthe.idsp WHERE sanpham.id= $idsp and phanloaidh.iduser=$iduser and phanloaidh.idtrangthai=1";
+                    $check_love = pdo_query_one($sql);
+                    if (empty($check_love)) { ?>
+                        <a href="<?= $_SERVER['REQUEST_URI']; ?>&add_love=<?= $sanpham_chitiet['id'] ?>"><i class="fa fa-heart-o" aria-hidden="true"></i></a>
+                    <?php  } else { ?>
+                        <a href="<?= $_SERVER['REQUEST_URI']; ?>&delete_love=<?= $sanpham_chitiet['id'] ?>"><i style="color: red;" class="fa fa-heart" aria-hidden="true"></i>
+                            </i></a>
+
+                    <?php
+                    }
+                    ?>
+
+                </h3>
                 <?php
-                $sql_danhgia="SELECT AVG(danhgia.danhgia) 'chatluong' FROM `danhgia` JOIN bienthe ON danhgia.idbienthe=bienthe.id JOIN sanpham ON sanpham.id=bienthe.idsp where sanpham.id =  $idsp ";
-                $sql_danhgia=pdo_query_one($sql_danhgia);
-                $star=$sql_danhgia['chatluong'];
+                $sql_danhgia = "SELECT AVG(danhgia.danhgia) 'chatluong' FROM `danhgia` JOIN bienthe ON danhgia.idbienthe=bienthe.id JOIN sanpham ON sanpham.id=bienthe.idsp where sanpham.id =  $idsp ";
+                $sql_danhgia = pdo_query_one($sql_danhgia);
+                $star = $sql_danhgia['chatluong'];
                 ?>
             </div>
             <div class="danhgia">Đánh giá: <?php if (!empty($sql_danhgia['chatluong'])) {
@@ -37,12 +60,12 @@ if (isset($_SESSION['email_dn'])) {
             <div class="ma">Mã mặt hàng:<?= $sanpham_chitiet['masp'] ?></div>
             <div class="soluong">
                 <?php
-                $sqlsoluong="SELECT SUM(bienthe.soluong) AS 'soluong' FROM `bienthe` WHERE idsp=$idsp";
-                $loadsl=pdo_query_one($sqlsoluong);
+                $sqlsoluong = "SELECT SUM(bienthe.soluong) AS 'soluong' FROM `bienthe` WHERE idsp=$idsp";
+                $loadsl = pdo_query_one($sqlsoluong);
                 ?>
                 <p class="sl">Số lượng: <?= $loadsl['soluong'] ?> </p>
                 <?php
-                if ( $loadsl['soluong'] > 0) {
+                if ($loadsl['soluong'] > 0) {
                     echo '   <p class="tinhtrang" style="color:green;">Còn hàng</p> ';
                 } else {
                     echo '   <p class="tinhtrang" style="color:red;">Hết hàng</p> ';
@@ -59,12 +82,11 @@ if (isset($_SESSION['email_dn'])) {
                     <li style="color:#0B5717;">Tặng thêm một đôi tất nike</li>
                     <li style="color:#0B5717;">Tặng thêm một dây giày</li>
                     <li style="color:#0B5717;">Tặng thêm một lọ vệ sinh giày</li>
-                    <li style="color:#0B5717;">DMiễn phí vận chuyển</li>
+                    <li style="color:#0B5717;">Miễn phí vận chuyển</li>
                 </ul>
             </div>
             <form action="index.php?act=sanpham_chitiet&id=<?= $idsp ?>" method="post">
                 <?php
-                // $soluong = $_GET['soluong'];
                 ?>
                 <input type="hidden" name="id" value="<?= $idsp ?>">
                 <input type="hidden" name="act" value="sanpham_chitiet">
@@ -116,7 +138,6 @@ if (isset($_SESSION['email_dn'])) {
                     <input type="number" name="soluong" value="1" min="1" style="width: 50px; border-radius: 10px; border-color: #3498db;">
 
                 </div>
-                <a href="<?= $_SERVER['REQUEST_URI']; ?>&add_love=<?= $sanpham_chitiet['id'] ?>"><i class="fa fa-heart-o" aria-hidden="true"></i></a>
                 <div class="buttom">
                     <button class="add_gio" name="add_cart_chitiet">Thêm vào giỏ hàng <i style="font-size: larger; color: #0B5717;" class="fa fa-cart-plus" aria-hidden="true"></i>
                     </button>
@@ -145,12 +166,12 @@ if (isset($_SESSION['email_dn'])) {
         </div>
     </div>
     <?php
-    if (isset($_POST['add_cart_chitiet']) and isset($_SESSION['email_dn'])) {
-        if ( $loadsl['soluong'] > 0) {
+    if (isset($_POST['add_cart_chitiet']) && isset($_POST['color']) && isset($_POST['size']) && isset($_SESSION['email_dn'])) {
+        if ($loadsl['soluong'] > 0) {
+            $idsp = $_POST["id"];
             $taikhoan_email = taikhoan_email($email);
             $iduser = $taikhoan_email['id'];
             $gia_sp = $sanpham_chitiet['price'];
-            $idsp = $_POST["id"];
             $color = $_POST['color'];
             $size = $_POST['size'];
             $sql = "SELECT soluong FROM bienthe where idcolor=$color AND idsize =$size AND idsp=$idsp";
@@ -162,13 +183,16 @@ if (isset($_SESSION['email_dn'])) {
             $bienthe_check = timbienthe($idsp, $color, $size);
             $bienthe = $bienthe_check['id'];
             add_gio($iduser, $soluong, $bienthe);
-            header("Location: index.php?act=sanpham_chitiet&id=$idsp");
+            header("Location: index.php?act=sanpham_chitiet&id=$idsp&addgiotc");
         }
+    } elseif (isset($_POST['add_cart_chitiet']) && isset($_SESSION['email_dn']) && (!isset($_POST['color']) || !isset($_POST['size']))) {
+        $idsp = $_POST["id"];
+        header("Location: index.php?act=sanpham_chitiet&id=$idsp&addgiotb");
     }
     ?>
     <?php
     if (isset($_POST['dat_chitiet']) and isset($_SESSION['email_dn'])) {
-        if ( $loadsl['soluong'] > 0) {
+        if ($loadsl['soluong'] > 0) {
             $idsp = $_POST["id"];
             $color = $_POST['color'];
             $size = $_POST['size'];
@@ -189,12 +213,12 @@ if (isset($_SESSION['email_dn'])) {
         }
     }
     ?>
-
-    <button id="button1" onclick="showText('binhluan')">Bình luận</button>
-    <button id="button2" onclick="showText('danhgia')">Đánh giá</button>
-
+    <div style="margin: 50px 0px 10px 100px;">
+        <button style="boder: 0px; background-color: #72cbf7; color: white ; padding:10px 50px;" id="button1" onclick="showText('binhluan')">Bình luận</button>
+        <button style="boder: 0px; background-color: #f0b071; color: white ; padding:10px 50px;" id="button2" onclick="showText('danhgia')">Đánh giá</button>
+    </div>
     <div id="binhluan">
-        <div class="btom">
+        <div class="btom" style="margin-top: 0px;">
             <h3>Bình Luận</h3>
             <div style="  height: 400px; 
             overflow-y: scroll; ">
@@ -227,6 +251,11 @@ if (isset($_SESSION['email_dn'])) {
                 ?>
                 <?php
                 $hienthi_binhluan = hienthi_binhluan($idsp);
+                if (empty($hienthi_binhluan)) {
+                    echo '
+                <u style="color: #3498db; font-size: 40px; font-weight: bolder;" href="">Không có bình luận</u>
+                   ';
+                }
                 foreach ($hienthi_binhluan as $key) { ?>
                     <div class="item">
                         <div class="img"><img class="img" src="<?= $img_path . "avarta_user/" . $key['img'] ?>" alt="" width="100px" height="100px" style="margin: 10px;">
@@ -246,12 +275,17 @@ if (isset($_SESSION['email_dn'])) {
         </div>
     </div>
     <div id="danhgia" style="display: none;">
-        <div class="btom">
+        <div class="btom" style="margin-top: 0px;">
             <h3>Đánh giá</h3>
             <div style="  height: 400px; 
             overflow-y: scroll; ">
                 <?php
                 $hienthi_danhgia = pdo_query("SELECT taikhoan.name,taikhoan.img,danhgia.binhluan,danhgia.danhgia FROM `danhgia` JOIN taikhoan ON danhgia.iduser=taikhoan.id JOIN bienthe ON bienthe.id=danhgia.idbienthe JOIN sanpham ON bienthe.idsp=sanpham.id where sanpham.id=$idsp; ");
+                if (empty($hienthi_danhgia)) {
+                    echo '
+                <u style="color: #3498db; font-size: 40px; font-weight: bolder;" href="">Không có đánh giá cho sản phẩm này</u>
+                   ';
+                }
                 foreach ($hienthi_danhgia as $key) { ?>
                     <div class="item">
                         <div class="img"><img class="img" src="<?= $img_path . "avarta_user/" . $key['img'] ?>" alt="" width="100px" height="100px" style="margin: 10px;">

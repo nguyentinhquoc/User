@@ -1,4 +1,3 @@
-<!-- Begin Slider Area -->
 <?php
 if (isset($_SESSION['dathang'])) {
     unset($_SESSION['dathang']);
@@ -6,7 +5,6 @@ if (isset($_SESSION['dathang'])) {
 ?>
 <div class="slider-area">
 
-    <!-- Main Slider -->
     <div class="swiper-container main-slider swiper-arrow with-bg_white">
         <div class="swiper-wrapper">
             <?php
@@ -49,27 +47,27 @@ if (isset($_SESSION['dathang'])) {
     <div class="banner-area section-space-top-100">
         <div class="container">
             <div class="row">
-<?php 
-$sql="SELECT * FROM danhmuc";
-$danhmuc=pdo_query($sql);
-foreach ($danhmuc as $key => $value) {
-?>
-                <div class="col-lg-4 col-md-6 pt-6 pt-md-0">
-                    <div class="banner-item img-hover-effect">
-                        <div class="banner-img img-zoom-effect">
-                            <img class="img-full" src="<?= $img_path ?>banner/<?=$value['img']?>" alt="Banner Image" height="609px">
-                            <div class="inner-content text-white">
-                                <h2 class="title mb-5" ><?=$value['name']?></h2>
-                                <h3 class="offer" style="background-color: rgba(115, 111, 111, 0.8);"><?=$value['mota']?></h3>
-                                <div class="button-wrap">
-                                    <a class="btn btn-custom-size btn-primary" href="index.php?act=sanpham_list&page=1&danhmuc=1">Shop Now</a>
+                <?php
+                $sql = "SELECT * FROM danhmuc";
+                $danhmuc = pdo_query($sql);
+                foreach ($danhmuc as $key => $value) {
+                ?>
+                    <div class="col-lg-4 col-md-6 pt-6 pt-md-0">
+                        <div class="banner-item img-hover-effect">
+                            <div class="banner-img img-zoom-effect">
+                                <img class="img-full" src="<?= $img_path ?>banner/<?= $value['img'] ?>" alt="Banner Image" height="609px">
+                                <div class="inner-content text-white">
+                                    <h2 class="title mb-5"><?= $value['name'] ?></h2>
+                                    <h3 class="offer" style="background-color: rgba(115, 111, 111, 0.8);"><?= $value['mota'] ?></h3>
+                                    <div class="button-wrap">
+                                        <a class="btn btn-custom-size btn-primary" href="index.php?act=sanpham_list&page=1&danhmuc=1">Shop Now</a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-<?php } ?>
-           
+                <?php } ?>
+
             </div>
         </div>
     </div>
@@ -127,7 +125,7 @@ foreach ($danhmuc as $key => $value) {
         <div class="row">
             <div class="col-lg-12">
                 <div class="swiper-container brand-slider">
-                    <div class="swiper-wrapper">
+                    <div class="swiper-wrapper" style="height:500px;">
                         <?php $sanphammoi = sanpham_moi();
                         foreach ($sanphammoi as $key) { ?>
                             <a href="index.php?act=sanpham_chitiet&id=<?= $key['id'] ?>"></a>
@@ -140,12 +138,7 @@ foreach ($danhmuc as $key => $value) {
                                 </p>
                                 <p class="name_sp"><?= $key['name'] ?></p>
 
-                                <p class="dabansp">Đã bán :1222</p>
-                                <div class="congcu">
-                                    <i class="fa fa-cart-plus" aria-hidden="true"></i>
-                                    <i class="fa fa-heart-o" aria-hidden="true"></i>
-                                    <i class="fa fa-eye" aria-hidden="true"></i>
-                                </div>
+                                <p class="dabansp">Đã bán :<?= $key['luotban'] ?></p>
                             </div>
                             </a>
                         <?php }
@@ -211,7 +204,7 @@ foreach ($danhmuc as $key => $value) {
 
                                 </p>
                                 <p class="name_sp"><?= $key['name'] ?></p>
-                                <p class="dabansp">Đã bán :1222</p>
+                                <p class="dabansp">Đã bán :<?= $key['luotban'] ?></p>
                                 <div class="congcu">
                                     <i class="fa fa-cart-plus" aria-hidden="true"></i>
                                     <i class="fa fa-heart-o" aria-hidden="true"></i>
@@ -258,21 +251,24 @@ foreach ($danhmuc as $key => $value) {
                         $check_mr = pdo_query_one($sql2);
                         if (!$check) { ?>
                             <p style="color: red;"><?= "Email giới thiệu không hợp lệ." ?></p>
-
                     <?php } elseif ($check == true and $check_mr['marketing'] != 1) {
                             $email_dn = ($_SESSION['email_dn']);
-                            $sql = "SELECT DATE(DATE_ADD(NOW(), INTERVAL 15 DAY)) AS 'date' ;";
-                            $day_15 = pdo_query_one($sql);
-                            $date_15 = $day_15['date'];
+                            
                             $id_dn = taikhoan_email($email_dn);
                             $iddn = $id_dn['id'];
                             $id_marketing = taikhoan_email($mail_marketing);
                             $idmarketing = $id_marketing['id'];
                             $sql1 = "UPDATE `taikhoan` SET `marketing` = '1' WHERE `taikhoan`.`email` = '$email_dn';";
-                            $sql2 = "INSERT INTO `vocher` (`sale`, `iduser`, `date`) VALUES ('50000', '$iddn', '$date_15');";
-                            $sql3 = "INSERT INTO `vocher` (`sale`, `iduser`, `date`) VALUES ('100000', ' $idmarketing', '$date_15');";
-                            pdo_execute($sql1);
+                            $sql_check = "SELECT * from vocher where iduser=$idmarketing";
+                            $checktt = pdo_query_one($sql_check);
+                            if ($checktt) {
+                                $sql3 = "UPDATE `vocher` SET `sale` = `sale`+20000 WHERE `vocher`.`iduser` = $idmarketing;";
+                            } else {
+                                $sql3 = "INSERT INTO `vocher` (`sale`, `iduser`) VALUES ('20000', ' $idmarketing');";
+                            }
+                            $sql2 = "INSERT INTO `vocher` (`sale`, `iduser`) VALUES ('50000', '$iddn');";
                             pdo_execute($sql2);
+                            pdo_execute($sql1);
                             pdo_execute($sql3);
                         }
                     }
