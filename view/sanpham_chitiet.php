@@ -14,7 +14,7 @@ if (isset($_SESSION['email_dn'])) {
 if (isset($_GET['delete_love'])) {
     echo $delete_love = $_GET['delete_love'];
     echo $iduser;
-  echo  $sql12 = "DELETE phanloaidh FROM phanloaidh JOIN bienthe ON bienthe.id = phanloaidh.bienthe WHERE phanloaidh.iduser = $iduser AND bienthe.idsp = $delete_love AND phanloaidh.idtrangthai = 1;";
+    echo  $sql12 = "DELETE phanloaidh FROM phanloaidh JOIN bienthe ON bienthe.id = phanloaidh.bienthe WHERE phanloaidh.iduser = $iduser AND bienthe.idsp = $delete_love AND phanloaidh.idtrangthai = 1;";
     pdo_execute($sql12);
     header("Location: index.php?act=sanpham_chitiet&id=$delete_love ");
 }
@@ -191,7 +191,7 @@ if (isset($_GET['delete_love'])) {
     }
     ?>
     <?php
-    if (isset($_POST['dat_chitiet']) and isset($_SESSION['email_dn'])) {
+    if (isset($_POST['dat_chitiet']) && isset($_POST['color']) && isset($_POST['size']) && isset($_SESSION['email_dn'])) {
         if ($loadsl['soluong'] > 0) {
             $idsp = $_POST["id"];
             $color = $_POST['color'];
@@ -208,9 +208,11 @@ if (isset($_GET['delete_love'])) {
                 'size' => $size,
                 'soluong' => $soluong
             ];
-
-            header("Location: index.php?act=dathang");
+            header("Location: index.php?act=giohang");
         }
+    } elseif (isset($_POST['add_cart_chitiet']) && isset($_SESSION['email_dn']) && (!isset($_POST['color']) || !isset($_POST['size']))) {
+        $idsp = $_POST["id"];
+        header("Location: index.php?act=sanpham_chitiet&id=$idsp&addgiotb");
     }
     ?>
     <div style="margin: 50px 0px 10px 100px;">

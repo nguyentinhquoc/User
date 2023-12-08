@@ -32,7 +32,7 @@ if (isset($_POST['submit_dk'])) {
             $err2 = "* Số điện thoại không hợp lệ";
         }
     }
-    if (!preg_match($pattern_email, $email_dk)) { // check_dk không đúng định dạng
+    if (!preg_match($pattern_email, $email_dk)) { 
         if (isset($email_dk)) {
             $check_dk = false;
             $err3 = "* Email không hợp lệ";

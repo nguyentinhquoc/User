@@ -1,3 +1,18 @@
+<?php
+$pattern_tel = '/^(03[2-9]|07[0-9]|08[1-9]|09[0-9])[0-9]{7}$/';
+if (!preg_match($pattern_tel, $_POST['tel'])) {
+  if (isset($_POST['tel'])) {
+    $errtel=0;
+  }
+}
+if (empty($_POST['tinh']) || empty($_POST['huyen']) || empty($_POST['xa']) || empty($_POST['name']) || empty($_POST['tel'])) {
+  $name=$_POST['name'];
+  $tel=$_POST['tel'];
+  header("Location: index.php?act=giohang&thieutt&name=$name&tel=$tel");
+}if (isset($errtel)) {
+  header("Location: index.php?act=giohang&saisdt&name=$name&tel=$tel");
+}
+?>
 <main class="dathang">
   <div class="top">
     <h4 style="color: red;"><i class="fa fa-map-marker" aria-hidden="true"></i>
@@ -18,7 +33,9 @@
     <table class="table table-striped">
       <thead>
         <tr>
-          <th style="width: 45%;" colspan="2">SẢN PHẨM</th>
+          <th style="width: 45%;" colspan="2">SẢN PHẨM
+         
+          </th>
           <th style="width: 10%;">Loại</th>
           <th style="width: 10%;">Đơn giá</th>
           <th style="width: 15%;">Số lượng</th>
@@ -109,15 +126,16 @@
       $date_ht = $date['CURRENT_TIMESTAMP'];
       $madh_ht = $mahd['mahd'];
       $tongthanhtoan = $allprice - $vocher;
+      if ($tongthanhtoan<$allprice) {
+        $tongthanhtoan=0;
+      }
       ?>
       <script>
         function thanhtoan_text(number) {
           if (number == 1) {
             document.getElementById("thanhtoan_text").innerHTML = `
-              <div class="tongtienhang"><p>Tổng tiền hàng : <?php echo $allprice ?></p></div>
-    <p id="selectedValue">Giảm giá : <?php
-                                      echo -$vocher;
-                                      ?></p>
+              <div class="tongtienhang"><p>Tổng tiền hàng :<?=number_format( $allprice  , 0, ',', '.')."đ";?></p></div>
+    <p id="selectedValue">Giảm giá :  <?="-".number_format( $vocher  , 0, ',', '.')."đ";?></p>
 <input type="hidden" name="order_id" value="<?= $madh_ht ?>">
               <input type="hidden" name="order_desc" value="<?= 'Thanh toán hóa đơn: ' . $madh_ht ?>"> 
    <input type="hidden" name="amount" value="<?= $tongthanhtoan ?>">
@@ -125,10 +143,9 @@
 
    <input type="hidden" name="date" value="<?= $date_ht ?>">
    <input type="hidden" name="order_type" value="<?= 'Giày Panda shop' ?>">
-    <div class="tongtienhang"><p>Tổng thanh toán : <?= $tongthanhtoan ?></p></div>
-              <input type="submit" name="dathang" value="Thanh toán">
+    <div class="tongtienhang"><p>Tổng thanh toán : <?=number_format( $tongthanhtoan  , 0, ',', '.')."đ";?></p></div>
+              <input type="submit" name="dathang" value="Thanh toán"  style="width:100%; height: 50px; color: white; background-color: red; font-weight: bolder;">
             `;
-
           } else if (number == 2) {
             // http://localhost:3000/DU_AN_1/user/view/index.php?options-base=on&order_id=20231123082614&order_desc=20231123082614&amount=1499950
             document.getElementById("thanhtoan_text").innerHTML = `
@@ -138,11 +155,13 @@
    <input type="hidden" name="vocher" value="<?= $vocher ?>">
    <input type="hidden" name="date" value="<?= $date_ht ?>">
     <div class="thongtin_dathang">
-    <div class="tongtienhang"><p>Tổng tiền hàng : <?php echo $allprice ?></p></div>
-    <p id="selectedValue">Giảm giá : <?php echo  -$vocher; ?></p>
-    <div class="tongtienhang"><p>Tổng thanh toán : <?= $tongthanhtoan ?></p></div>
-    <div class="tongtienhang"><input type="submit" value="Đặt hàng" name="" id=""></div>
+    <div class="tongtienhang"><p>Tổng tiền hàng : <?= number_format( $allprice , 0, ',', '.')."đ";?></p></div>
+    <p id="selectedValue">Giảm giá : <?="-".number_format($vocher, 0, ',', '.')."đ";?></p>
+    <div class="tongtienhang"><p>Tổng thanh toán : <?=number_format( $tongthanhtoan  , 0, ',', '.')."đ";?></p></div>
+    <div class="tongtienhang"><input  style="width:100%; height: 50px; color: white; background-color: red; font-weight: bolder;" type="submit" value="Đặt hàng" name="" id=""></div>
   </div>
+
+
             `;
           }
         }
@@ -263,8 +282,14 @@
     }
     echo $hinhthuc . '<br>' . $sale . '<br>' . $date . '<br>' . $madh . '<br>' . $tongtien . '<br>' . $hoten . '<br>' . $sdt . '<br>' . $diachi;
     insert_chitietdh($hinhthuc, $sale, $date, $madh, $tongtien, $hoten, $sdt, $diachi);
-    header("Location: index.php?dathangtc");
+    $id_user = $taikhoan_email['id'];
+    if ($vocher != 0) {
+      $sql = "DELETE FROM vocher WHERE `vocher`.`iduser` = $id_user";
 
+      pdo_execute($sql);
+    }
+
+    header("Location: index.php?dathangtc");
     unset($_SESSION['dathang']);
   }
   ?>

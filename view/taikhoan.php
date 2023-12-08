@@ -106,9 +106,10 @@
             case '3': ?>
     <h4>Đơn mua</h4>
     <div class="menu">
-        <a href="index.php?act=myaccout&profile=3&trangthai=3">Chờ xác nhận</a>
-        <a href="index.php?act=myaccout&profile=3&trangthai=4">Đang giao hàng</a>
-        <a href="index.php?act=myaccout&profile=3&trangthai=5">Đã nhận hàng</a>
+        <a  style="width: 23%; font-size: 12px; " href="index.php?act=myaccout&profile=3&trangthai=3">Chờ xác nhận</a>
+        <a style="width: 23%; font-size: 12px; " href="index.php?act=myaccout&profile=3&trangthai=4">Đang giao hàng</a>
+        <a style="width: 23%; font-size: 12px; " href="index.php?act=myaccout&profile=3&trangthai=5">Đã nhận hàng</a>
+        <a style="width: 23%; font-size: 12px; " href="index.php?act=myaccout&profile=3&trangthai=6">Đơn hàng đã hủy</a>
     </div>
 
     <div class="donhang">
@@ -165,7 +166,11 @@
                         if ($idtrangthai == 5 && $value2['danhgia'] == 0) {
                     ?>
                         <a style="border-radius: 10px; color: white; padding: 10px 20px; background-color: red; margin-left: 550px;" href="index.php?act=danhgia&idbt=<?= $value2['idbt'] ?>&idpl=<?= $value2['idpl'] ?>">Đánh giá</a>
-
+                    <?php } ?>
+                    <?php
+                        if ($idtrangthai == 6) {
+                    ?>
+                        <a style="border-radius: 10px; color: white; padding: 10px 20px; background-color: red; margin-left: 550px;" href="index.php?act=sanpham_chitiet&id=<?= $value2['id'] ?>">Mua lại</a>
                     <?php } ?>
                 <?php $tongtiehoadon += $value2['price'] * $value2['soluong'];
                     }
@@ -195,9 +200,7 @@
         <?php
                 if (isset($_GET['huydonhang'])) {
                     $huydonhang = $_GET['huydonhang'];
-                    $sql1 = "DELETE FROM phanloaidh WHERE `phanloaidh`.`madh` = $huydonhang";
-                    $sql2 = "DELETE FROM chitietdh WHERE `chitietdh`.`madh` = $huydonhang";
-                    pdo_execute($sql1);
+                    $sql2 = "UPDATE `phanloaidh` SET `idtrangthai` = '6' WHERE `phanloaidh`.`madh` = $huydonhang;";
                     pdo_execute($sql2);
                     header('Location: index.php?act=myaccout&profile=3&trangthai=3&huydonhangtc');
                 }
@@ -214,14 +217,22 @@
                 $vocher = pdo_query($sql);
 
     ?>
-    <div class="thongbao">
+    <div class="vocher_container">
         <?php foreach ($vocher as $key => $value) { ?>
-            <div class="item" style=" width: 300px; margin: 0 atuo; display: flex; height: 70px;">
-                <div style="background-color: orangered; width: 20%; border-radius: 0px 20px 20px 0px;"></div>
-                <div style="background-color: #588fe8; width: 80%; color: White; border-radius: 0px 20px 20px 0px;">
-                    <p style="font-weight: bolder; margin-left:15px;">VOCHER GIẢM GIÁ</p>
-                    <p><?= '  Trị giá :'.number_format($value['sale'], 0, ',', '.') . 'đ'?></p>
+            <div class="vocher">
+            <div class="logo">
+                <img src="assets/images/logo/light.png" alt="Shop Logo">
+            </div>
+            <div class="voucher" style="width: 80%;">
+                <div class="voucher-header">
+                    <h5>Pandashop Voucher</h5>
                 </div>
+                <div class="voucher-discount">
+                    <hr>
+                    <p style="font-size: 23px; font-weight: bolder;">Giá trị: <strong><?= number_format($value['sale'], 0, ',', '.') ?></strong></p>
+                </div>
+
+            </div>
             </div>
         <?php  } ?>
 

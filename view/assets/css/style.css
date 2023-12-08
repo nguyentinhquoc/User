@@ -26264,3 +26264,60 @@ justify-content: space-between;
   justify-content: space-around;
   text-align: center;
 }
+
+
+
+
+
+.vocher_container {
+  font-family: 'Arial', sans-serif;
+  display: flex;
+  align-items: center;
+  margin: 0;
+
+}
+.vocher_container .vocher{
+display: flex;
+max-width: 800px;
+width: 70%;
+position: relative;
+overflow: hidden;
+height: 140px;
+}
+.vocher_container .logo {
+  padding: 20px;
+  border-radius: 10px 0 0 10px;
+  background-color: #0dcaf0;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+width: 30%;
+
+}
+
+.vocher_container .logo img {
+width: 100px;
+  height: auto;
+  display: block;
+}
+
+.voucher {
+  flex: 1;
+  padding: 20px;
+  background-color: #c0392b;
+  border-radius: 0 10px 10px 0;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+
+
+.voucher-header {
+  text-align: center;
+  color: #fff;
+}
+
+.voucher-discount {
+  font-size: 12px;
+  color: #fff;
+  margin-top: 5px;
+}

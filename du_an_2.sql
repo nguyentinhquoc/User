@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 06, 2023 at 09:57 AM
+-- Generation Time: Dec 08, 2023 at 01:41 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -85,10 +85,10 @@ INSERT INTO `bienthe` (`id`, `idsp`, `idcolor`, `idsize`, `soluong`, `mabienthe`
 (21, 3, 1, 2, 95, '1_2', 0),
 (22, 3, 1, 3, 68, '1_3', 0),
 (23, 3, 2, 1, 45, '2_1', 0),
-(24, 3, 2, 2, 10, '2_2', 0),
+(24, 3, 2, 2, 7, '2_2', 1),
 (25, 3, 2, 3, 6, '2_3', 0),
 (26, 3, 3, 1, 94, '3_1', 0),
-(27, 3, 3, 2, 97, '3_2', 0),
+(27, 3, 3, 2, 96, '3_2', 1),
 (28, 3, 3, 3, 42, '3_3', 0),
 (29, 4, 1, 1, 83, '1_1', 0),
 (30, 4, 1, 2, 58, '1_2', 0),
@@ -363,8 +363,8 @@ INSERT INTO `bienthe` (`id`, `idsp`, `idcolor`, `idsize`, `soluong`, `mabienthe`
 (299, 34, 1, 1, 83, '1_1', 0),
 (300, 34, 1, 2, 11, '1_2', 0),
 (301, 34, 1, 3, 67, '1_3', 0),
-(302, 34, 2, 1, 14, '2_1', 0),
-(303, 34, 2, 2, 70, '2_2', 0),
+(302, 34, 2, 1, 13, '2_1', 1),
+(303, 34, 2, 2, 69, '2_2', 1),
 (304, 34, 2, 3, 61, '2_3', 0),
 (305, 34, 3, 1, 71, '3_1', 0),
 (306, 34, 3, 2, 6, '3_2', 0),
@@ -1348,13 +1348,11 @@ CREATE TABLE `binhluan` (
 --
 
 INSERT INTO `binhluan` (`id`, `comment`, `iduser`, `idsp`, `date`, `trangthai`) VALUES
-(112, '12', 18, 2, '2023-12-03', 0),
 (115, 'dsa', 17, 39, '2023-12-03', 1),
 (116, 'dsa', 17, 82, '2023-12-03', 1),
 (117, 'dá', 17, 82, '2023-12-03', 1),
-(118, 'ádas', 17, 3, '2023-12-03', 1),
-(119, 'ssss', 17, 3, '2023-12-03', 1),
-(120, '111', 19, 33, '2023-12-06', 1);
+(121, 'sản phẩm tốt', 18, 35, '2023-12-06', 1),
+(122, 'Sản phẩm khá ổn', 17, 44, '2023-12-08', 1);
 
 -- --------------------------------------------------------
 
@@ -1363,7 +1361,7 @@ INSERT INTO `binhluan` (`id`, `comment`, `iduser`, `idsp`, `date`, `trangthai`) 
 --
 
 CREATE TABLE `chitietdh` (
-  `thanhtoan` varchar(225) NOT NULL,
+  `thanhtoan` int(11) NOT NULL,
   `date` date NOT NULL,
   `sale` int(11) NOT NULL,
   `thanhtien` int(11) DEFAULT NULL,
@@ -1378,8 +1376,11 @@ CREATE TABLE `chitietdh` (
 --
 
 INSERT INTO `chitietdh` (`thanhtoan`, `date`, `sale`, `thanhtien`, `madh`, `hoten`, `sdt`, `diachi`) VALUES
-('Online', '2023-12-06', 0, 2500000, '20231206113541', 'Admin', 266904133, 'Tỉnh Lào Cai-Huyện Bát Xát-Xã Bản Vược'),
-('Online', '2023-12-06', 0, 1500000, '20231206113854', 'Admin', 892314562, 'Tỉnh Cao Bằng-Huyện Trùng Khánh-Thị trấn Trùng Khánh');
+(1, '2023-12-06', 0, 3000000, '20231206195452', 'Phạm Uyên', 862201005, 'Tỉnh Hà Giang-Huyện Đồng Văn-Xã Phố Là'),
+(0, '2023-12-06', 0, 1500000, '20231206210243', 'Nguyễn Tình', 366904133, '--'),
+(0, '2023-12-08', 0, 7500000, '20231208164307', 'Nguyễn Tình', 366904133, 'Tỉnh Hà Giang-Huyện Mèo Vạc-Xã Pả Vi'),
+(0, '2023-12-08', 20000, 980000, '20231208164341', 'Nguyễn Tình', 366904133, 'Tỉnh Cao Bằng-Huyện Hà Quảng-Xã Ngọc Động'),
+(0, '2023-12-08', 122222222, 0, '20231208185754', 'Nguyễn Tình', 366904133, 'Tỉnh Phú Thọ-Huyện Lâm Thao-Thị trấn Hùng Sơn');
 
 -- --------------------------------------------------------
 
@@ -1421,7 +1422,11 @@ CREATE TABLE `danhgia` (
 
 INSERT INTO `danhgia` (`id`, `iduser`, `binhluan`, `idbienthe`, `danhgia`) VALUES
 (178, 18, '111', 2, 5),
-(179, 17, 'abc', 7, 2);
+(179, 17, 'abc', 7, 2),
+(180, 18, 'Sản phẩm tuyệt vời', 24, 5),
+(181, 17, 'Sản phẩm rất đẹp\r\n', 303, 4),
+(182, 17, 'đẹp', 302, 5),
+(183, 17, 'đã mua lần 3 nhưng vẫn rất ưng', 304, 5);
 
 -- --------------------------------------------------------
 
@@ -1467,7 +1472,7 @@ CREATE TABLE `phanloaidh` (
 --
 
 INSERT INTO `phanloaidh` (`iduser`, `soluong`, `idtrangthai`, `id`, `madh`, `bienthe`, `danhgia`) VALUES
-(19, 1, 3, 318, '20231206103627', 6, 0),
+(19, 1, 6, 318, '20231206103627', 6, 0),
 (19, 1, 3, 319, '20231206103743', 13, 0),
 (19, 1, 3, 320, '20231206103743', 18, 0),
 (19, 1, 3, 322, '20231206103743', 16, 0),
@@ -1487,7 +1492,23 @@ INSERT INTO `phanloaidh` (`iduser`, `soluong`, `idtrangthai`, `id`, `madh`, `bie
 (19, 1, 3, 336, '20231206113541', 26, 0),
 (19, 1, 3, 337, '20231206113541', 291, 0),
 (19, 1, 3, 338, '20231206113854', 299, 0),
-(19, 1, 2, 339, NULL, 303, 0);
+(19, 1, 2, 339, NULL, 303, 0),
+(18, 2, 3, 341, '20231206193045', 25, 0),
+(18, 3, 3, 342, '20231206193045', 204, 0),
+(18, 3, 5, 343, '20231206195452', 24, 1),
+(18, 0, 1, 344, NULL, 11, 0),
+(18, 0, 1, 345, NULL, 308, 0),
+(18, 1, 2, 346, NULL, 300, 0),
+(18, 1, 2, 347, NULL, 31, 0),
+(18, 1, 2, 348, NULL, 238, 0),
+(17, 1, 5, 349, '20231206210243', 303, 1),
+(17, 1, 5, 350, '20231208164307', 302, 1),
+(17, 4, 5, 354, '20231208164307', 304, 1),
+(17, 1, 5, 355, '20231208164341', 27, 0),
+(17, 1, 2, 356, NULL, 294, 0),
+(17, 0, 1, 358, NULL, 389, 0),
+(17, 1, 2, 359, NULL, 304, 0),
+(17, 1, 6, 360, '20231208185754', 24, 0);
 
 -- --------------------------------------------------------
 
@@ -1514,9 +1535,9 @@ CREATE TABLE `sanpham` (
 
 INSERT INTO `sanpham` (`id`, `name`, `price`, `img`, `mota`, `luotxem`, `iddm`, `sale`, `trangthai`, `masp`) VALUES
 (1, 'Nike Bruin', 2000000.00, 'nike (1).jpg', ' Đôi giày bóng rổ đầu tiên của Nike. Nó có đế cao su dày và phần trên bằng da, mang lại sự hỗ trợ và độ bền.', 2053, 1, 40, 1, ' 1701742732'),
-(2, 'Nike Cortez', 1500000.00, 'nike (3).jpg', 'Đôi giày chạy bộ mang tính biểu tượng của Nike. Nó có đế cao su và phần trên bằng da, mang lại sự thoải mái và hỗ trợ.', 1697, 1, 40, 1, ' 1701742735'),
-(3, 'Nike Tailwind', 1000000.00, 'nike (5).jpg', 'Đôi giày chạy bộ đầu tiên của Nike có đế khí. Nó có đế khí lớn ở gót chân, mang lại sự êm ái và thoải mái.', 2986, 1, 40, 1, ' 1701742738'),
-(4, 'Nike Air Force 1', 2000000.00, 'nike (4).jpg', 'Đôi giày bóng rổ mang tính biểu tượng của Nike. Nó có đế khí ở gót chân, mang lại sự êm ái và thoải mái.', 2812, 1, 40, 1, ' 1701742741'),
+(2, 'Nike Cortez', 1500000.00, 'nike (3).jpg', 'Đôi giày chạy bộ mang tính biểu tượng của Nike. Nó có đế cao su và phần trên bằng da, mang lại sự thoải mái và hỗ trợ.', 1735, 1, 40, 1, ' 1701742735'),
+(3, 'Nike Tailwind', 1000000.00, 'nike (5).jpg', 'Đôi giày chạy bộ đầu tiên của Nike có đế khí. Nó có đế khí lớn ở gót chân, mang lại sự êm ái và thoải mái.', 3004, 1, 40, 1, ' 1701742738'),
+(4, 'Nike Air Force 1', 2000000.00, 'nike (4).jpg', 'Đôi giày bóng rổ mang tính biểu tượng của Nike. Nó có đế khí ở gót chân, mang lại sự êm ái và thoải mái.', 2815, 1, 40, 1, ' 1701742741'),
 (5, 'Nike Air Jordan 1', 1500000.00, 'nike (6).jpg', 'Đôi giày bóng rổ mang tính biểu tượng của Michael Jordan. Nó có thiết kế táo bạo và nổi bật, với phần trên bằng da và logo Jumpman.', 4874, 1, 40, 0, ' 1701742744'),
 (6, 'Nike Air Max 1', 1000000.00, 'nike (7).jpg', 'Đôi giày chạy bộ mang tính cách mạng của Nike. Nó là đôi giày đầu tiên có đế khí visible, cho phép người dùng cảm nhận được độ đàn hồi và thoải mái.', 2467, 1, 40, 0, ' 1701742747'),
 (7, 'Nike Air Max 90', 2000000.00, 'nike (8).jpg', 'Phiên bản nâng cấp của Air Max 1, với phần trên được làm bằng chất liệu nhẹ và thoáng khí hơn.', 2457, 1, 40, 0, ' 1701742750'),
@@ -1535,19 +1556,19 @@ INSERT INTO `sanpham` (`id`, `name`, `price`, `img`, `mota`, `luotxem`, `iddm`, 
 (20, 'Adidas Adizero Afterburner V Cleats', 1500000.00, 'mlb (1).jpg', 'Đôi giày chuyên dụng cho môn bóng chày, có đế nổi tiếng Adizero của Adidas, giảm trọng lượng và tăng độ bám trên sân.', 3318, 3, 40, 1, ' 1701743089'),
 (21, 'New Balance 4040v4 Metal Cleats', 1500000.00, 'mlb (2).jpg', 'Đôi giày có đế chắc chắn và miếng lót thoáng khí để hỗ trợ các vận động viên ở vị trí chạy nhanh trên sân.', 4762, 3, 40, 1, ' 1701743092'),
 (22, 'Under Armour Harper 4 Mid Metal Cleats', 1500000.00, 'mlb (3).jpg', 'Đôi giày được thiết kế đặc biệt cho Bryce Harper, với đế chắc chắn, hỗ trợ và mang lại sự ổn định khi chơi bóng.', 4133, 3, 40, 1, ' 1701743095'),
-(23, 'Nike Air Max MVP Elite 3/4 Metal Cleats', 1500000.00, 'mlb (4).jpg', 'Đôi giày chất lượng cao với đế metal và công nghệ Air Max của Nike, đem lại sự thoải mái và độ bám tốt trên sân', 3479, 3, 40, 1, ' 1701743098'),
+(23, 'Nike Air Max MVP Elite 3/4 Metal Cleats', 1500000.00, 'mlb (4).jpg', 'Đôi giày chất lượng cao với đế metal và công nghệ Air Max của Nike, đem lại sự thoải mái và độ bám tốt trên sân', 3482, 3, 40, 1, ' 1701743098'),
 (24, 'Adidas Adizero 8.0 Uncaged Cleats', 1500000.00, 'mlb (5).jpg', 'Được xem là một trong những đôi giày bóng chày nhẹ nhất trên thị trường, với chất liệu nhẹ và kiểu dáng tối giản.', 2094, 3, 40, 1, ' 1701743101'),
 (25, ' Nike Waffle Racer ', 1000000.00, 'nike (1).jpg', ' Đôi giày chạy bộ đầu tiên của Nike, được thiết kế bởi Bill Bowerman. Nó có đế waffle đặc trưng, giúp tăng độ bám ', 3061, 1, 40, 1, ' 1701742789'),
 (26, 'New Balance Fresh Foam LAZR v2 Cleats', 1500000.00, 'mlb (6).jpg', 'Đôi giày cung cấp sự thoải mái và hỗ trợ tốt nhờ công nghệ đệm Fresh Foam đặc biệt của New Balance.', 2403, 3, 40, 1, ' 1701743132'),
-(27, 'Under Armour Yard Low ST Cleats', 1500000.00, 'mlb (7).jpg', 'Đôi giày chuyên dụng cho cỏ tự nhiên, có đế chắc chắn và khả năng bám trên sân cỏ tốt.', 2533, 3, 40, 1, ' 1701743135'),
+(27, 'Under Armour Yard Low ST Cleats', 1500000.00, 'mlb (7).jpg', 'Đôi giày chuyên dụng cho cỏ tự nhiên, có đế chắc chắn và khả năng bám trên sân cỏ tốt.', 2536, 3, 40, 1, ' 1701743135'),
 (28, 'Nike Force Trout 6 Pro Metal Cleats', 1500000.00, 'mlb (8).jpg', 'Đôi giày thiết kế đặc biệt cho Mike Trout, với đế kim loại và công nghệ Nike Zoom Air để tăng cường hiệu suất chơi bóng.', 1346, 3, 40, 1, ' 1701743138'),
 (29, 'Adidas Icon 4 Cleats', 1500000.00, 'mlb (9).jpg', 'Đôi giày bóng chày với thiết kế đơn giản, tạo cảm giác thoải mái và bền bỉ trên sân.', 3916, 3, 40, 1, ' 1701743141'),
 (30, 'New Balance 574 Baseball Cleats', 1500000.00, 'mlb (10).jpg', 'Đôi giày có kiểu dáng retro và thoải mái, đặc biệt được thiết kế cho các hoạt động bóng chày.', 4533, 3, 40, 1, ' 1701743144'),
 (31, 'Under Armour Yard Trainer Shoes', 1500000.00, 'mlb (11).jpg', 'Đôi giày huấn luyện đa năng với đế êm ái và hỗ trợ tốt cho các hoạt động thể thao.', 4000, 3, 40, 1, ' 1701743147'),
 (32, 'Nike Air Max', 1500000.00, 'joden (1).jpg', 'Đôi giày thể thao từ Nike với thiết kế đặc trưng và công nghệ Air Max để cung cấp đệm êm ái và thoáng khí tốt.', 2895, 2, 40, 1, ' 1701743150'),
-(33, 'Adidas Superstar', 1500000.00, 'joden (2).jpg', ': Đôi giày thành danh của Adidas với mũi giày cao su đen và dải sọc ba sọc đặc trưng, mang lại phong cách cổ điển và cá tính.', 2867, 2, 40, 1, ' 1701743174'),
-(34, 'Converse Chuck Taylor All Star', 1500000.00, 'joden (3).jpg', 'Giày cao cổ từ Converse với thiết kế đơn giản, phong cách retro, và là biểu tượng của người sử dụng giày thể thao hàng ngày.', 4673, 2, 40, 1, ' 1701743177'),
-(35, 'Vans Old Skool', 1500000.00, 'joden (4).jpg', 'Giày skateboard cổ điển của Vans với dải sọc hai bên và đế cao su waffle đặc trưng, tạo nên phong cách đơn giản và thời trang.', 2434, 2, 40, 1, ' 1701743180'),
+(33, 'Adidas Superstar', 1500000.00, 'joden (2).jpg', ': Đôi giày thành danh của Adidas với mũi giày cao su đen và dải sọc ba sọc đặc trưng, mang lại phong cách cổ điển và cá tính.', 2870, 2, 40, 1, ' 1701743174'),
+(34, 'Converse Chuck Taylor All Star', 1500000.00, 'joden (3).jpg', 'Giày cao cổ từ Converse với thiết kế đơn giản, phong cách retro, và là biểu tượng của người sử dụng giày thể thao hàng ngày.', 4705, 2, 40, 1, ' 1701743177'),
+(35, 'Vans Old Skool', 1500000.00, 'joden (4).jpg', 'Giày skateboard cổ điển của Vans với dải sọc hai bên và đế cao su waffle đặc trưng, tạo nên phong cách đơn giản và thời trang.', 2439, 2, 40, 1, ' 1701743180'),
 (36, 'Puma Suede Classic', 1500000.00, 'joden (5).jpg', 'Đôi giày da từ Puma với thiết kế thấp cổ và mặt ngoài da lì, mang đến sự thoải mái và phong cách độc đáo.', 1244, 2, 40, 1, ' 1701743183'),
 (37, 'Reebok Classic Leather', 1500000.00, 'joden (6).jpg', 'Đôi giày da từ Reebok với thiết kế đơn giản và đế giữa êm ái, tạo nên phong cách thể thao phối cùng với trang phục hàng ngày.', 3383, 2, 40, 1, ' 1701743186'),
 (38, 'New Balance 574', 1500000.00, 'joden (7).jpg', ': Đôi giày chạy bộ từ New Balance với thiết kế retro và công nghệ đệm tốt, tạo cảm giác thoải mái và hỗ trợ cho đôi chân.', 4447, 2, 40, 1, ' 1701743189'),
@@ -1556,7 +1577,7 @@ INSERT INTO `sanpham` (`id`, `name`, `price`, `img`, `mota`, `luotxem`, `iddm`, 
 (41, 'Jordan Retro', 1500000.00, 'joden (10).jpg', 'Đôi giày từ dòng sản phẩm Air Jordan của Nike, mang lại phong cách thể thao và hình ảnh của huyền thoại Michael Jordan.', 2872, 2, 40, 1, ' 1701743198'),
 (42, 'Timberland 6-Inch Premium Boots', 1500000.00, 'joden (11).jpg', 'Muối của Timberland, đôi giày cao cổ chất liệu da chống nước, đế lugged cho khả năng bám tốt và sự bền bỉ.', 2502, 2, 40, 1, ' 1701743201'),
 (43, 'Dr. Martens 1460', 1500000.00, 'joden (12).jpg', 'Đôi giày cao cổ từ Dr. Martens với thiết kế bền bỉ và kiểu dáng punk, mang đến sự cá tính và phong cách riêng.', 2225, 2, 40, 1, ' 1701743204'),
-(44, 'Converse Jack Purcell', 1500000.00, 'joden (13).jpg', 'Đôi giày thể thao low-top từ Converse với thiết kế đơn giản, màu sắc trang nhã và một chi tiết kẻ xéo ở mũi giày.', 2670, 2, 40, 1, ' 1701743207'),
+(44, 'Converse Jack Purcell', 1500000.00, 'joden (13).jpg', 'Đôi giày thể thao low-top từ Converse với thiết kế đơn giản, màu sắc trang nhã và một chi tiết kẻ xéo ở mũi giày.', 2686, 2, 40, 1, ' 1701743207'),
 (45, 'Adidas Stan Smith', 1500000.00, 'joden (14).jpg', 'Biểu tượng của Adidas, đôi giày thể thao với thiết kế trắng đơn giản và logo Stan Smith đằng sau.', 2649, 2, 40, 1, ' 1701743210'),
 (46, 'Nike Dunk', 1500000.00, 'joden (15).jpg', 'Đôi giày bóng rổ từ Nike với thiết kế mạnh mẽ và màu sắc đa dạng, được yêu thích trong cả thời trang hàng ngày.', 3765, 2, 40, 1, ' 1701743213'),
 (47, 'Vans Sk8-Hi', 1500000.00, 'joden (16).jpg', 'Đôi giày skateboarding cao cổ từ Vans với dải sọc và đế cao su waffle, mang đến sự thoải mái và hỗ trợ cho người sử dụng.', 3847, 2, 40, 1, ' 1701743216'),
@@ -1700,8 +1721,8 @@ CREATE TABLE `taikhoan` (
 --
 
 INSERT INTO `taikhoan` (`id`, `name`, `pass`, `email`, `address`, `tel`, `role`, `img`, `trangthai`, `marketing`) VALUES
-(17, 'Nguyễn tình', '20102004', 'nguyentinh140321@gmail.com', 'Tỉnh Sóc Trăng-Huyện Mỹ Xuyên-Xã Thạnh Quới', '0366904133', 1, 'avatar.png', 1, 1),
-(18, 'Nguyễn Quốc Tình', '123456789', 'phamthiuyen11042004@gmail.com', 'Tỉnh Sóc Trăng-Huyện Mỹ Xuyên-Xã Thạnh Quới', '0862201005', 2, '335944176_225297446646549_6667645462122669625_n.jpg', 1, NULL),
+(17, 'Nguyễn Tình', '20102004', 'nguyentinh140321@gmail.com', 'Tỉnh Sóc Trăng-Huyện Mỹ Xuyên-Xã Thạnh Quới', '0366904133', 1, 'avatar.png', 1, 1),
+(18, 'Phạm Uyên', '123456789', 'phamthiuyen11042004@gmail.com', 'Tỉnh Sóc Trăng-Huyện Mỹ Xuyên-Xã Thạnh Quới', '0862201005', 1, '335944176_225297446646549_6667645462122669625_n.jpg', 1, 1),
 (19, 'Admin', '123', 'admin@gmail.com', NULL, NULL, 2, 'avatar.png', 1, NULL);
 
 -- --------------------------------------------------------
@@ -1722,7 +1743,7 @@ CREATE TABLE `thongbao` (
 --
 
 INSERT INTO `thongbao` (`id`, `img`, `header`, `noidung`) VALUES
-(5, 'thongbao_1.jpg', 'Hội Ngộ Cùng Chúng Tôi - Sự Kiện Offline Kỷ Niệm 1 Năm!', 'Chúng tôi rất vui mừng mời quý khách hàng tham gia sự kiện offline kỷ niệm 1 năm. Đến và trải nghiệm không khí vui vẻ, có cơ hội gặp gỡ đội ngũ chúng tôi và nhận quà tặng đặc biệt.');
+(5, 'thongbao_1.jpg', 'Hội Ngộ Cùng Chúng Tôi - Sự Kiện Offline Kỷ Niệm 1 Năm!111', 'Chúng tôi rất vui mừng mời quý khách hàng tham gia sự kiện offline kỷ niệm 1 năm. Đến và trải nghiệm không khí vui vẻ, có cơ hội gặp gỡ đội ngũ chúng tôi và nhận quà tặng đặc biệt.');
 
 -- --------------------------------------------------------
 
@@ -1880,7 +1901,7 @@ ALTER TABLE `bienthe`
 -- AUTO_INCREMENT for table `binhluan`
 --
 ALTER TABLE `binhluan`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=121;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=123;
 
 --
 -- AUTO_INCREMENT for table `color`
@@ -1892,7 +1913,7 @@ ALTER TABLE `color`
 -- AUTO_INCREMENT for table `danhgia`
 --
 ALTER TABLE `danhgia`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=180;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=184;
 
 --
 -- AUTO_INCREMENT for table `danhmuc`
@@ -1904,7 +1925,7 @@ ALTER TABLE `danhmuc`
 -- AUTO_INCREMENT for table `phanloaidh`
 --
 ALTER TABLE `phanloaidh`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=340;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=361;
 
 --
 -- AUTO_INCREMENT for table `sanpham`
@@ -1940,7 +1961,7 @@ ALTER TABLE `trangthai`
 -- AUTO_INCREMENT for table `vocher`
 --
 ALTER TABLE `vocher`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
 
 --
 -- Constraints for dumped tables

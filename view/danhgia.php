@@ -12,8 +12,9 @@
         $danhgia = $_POST['danhgia'];
         $sql = "INSERT INTO `danhgia` (`iduser`, `binhluan`, `idbienthe`, `danhgia`) VALUES ('$iduser ', '$danhgia', '$id', '$sao');";
         pdo_execute($sql);
-        $sql2 = "UPDATE `phanloaidh` SET `danhgia` = '1' WHERE `phanloaidh`.`id` = $idpl;        ";
+        $sql2 = "UPDATE `phanloaidh` SET `danhgia` = '1' WHERE `phanloaidh`.`id` = $idpl;";
         pdo_execute($sql2);
+        header("Location: index.php?act=myaccout&profile=3&trangthai=5");
     }
 
     ?>

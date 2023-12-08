@@ -194,3 +194,35 @@ Swal.fire({
       
     <?php 
   } ?>
+<?php
+if (isset($_GET['thieutt'])) {
+  
+  ?>
+ <script>
+Swal.fire({
+  position: 'center',
+  icon: 'error',
+  title: 'Vui lòng nhập đủ thông tin đặt hàng !!!',
+  showConfirmButton: false,
+  timer: 1500
+})
+      </script>
+      
+    <?php 
+  } ?>
+<?php
+if (isset($_GET['saisdt'])) {
+  
+  ?>
+ <script>
+Swal.fire({
+  position: 'center',
+  icon: 'error',
+  title: 'Vui lòng nhập đúng số điện thoại !!!',
+  showConfirmButton: false,
+  timer: 1500
+})
+      </script>
+      
+    <?php 
+  } ?>
