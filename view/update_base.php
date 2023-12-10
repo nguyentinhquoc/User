@@ -1,17 +1,17 @@
 <?php
 include '../model/pdo.php';
-$sql1="SELECT sanpham.id FROM sanpham";
-$id_sp=pdo_query($sql1);
-foreach ($id_sp as $key => $value) {
-    $id = $value['id'];
-    $sql2="SELECT SUM(soluong) AS 'Tong' FROM `bienthe` WHERE idsp = $id";
-    $tong = pdo_query($sql2);
-    foreach ($tong as $key => $value) {
-        $tong=$value['Tong'];
-        $sql3="UPDATE `sanpham` SET `soluong` = '$tong' WHERE `sanpham`.`id` = $id;";
-        pdo_execute($sql3);
-    }
+$min = 1000;
+$max = 4000;
+$sql = "SELECT * FROM sanpham";
+$idsp = pdo_query($sql);
+foreach ($idsp as $key => $value) {
+    $randomNumber = rand($min, $max);
+    $numberupd = $randomNumber * 1000;
+    $id_sp = $value['id'];
+    $sql = "UPDATE `sanpham` SET `price` = '$numberupd' WHERE `sanpham`.`id` = $id_sp;";
+    pdo_execute($sql);
 }
+
 
 
 ?>

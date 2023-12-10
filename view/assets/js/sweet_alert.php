@@ -55,7 +55,7 @@ if (isset($_GET['dangxuattc'])) {
 Swal.fire({
   position: 'center',
   icon: 'success',
-  title: 'Tạm biệt quý khách !!!',
+  title: 'Đang xuất thành công !!!',
   showConfirmButton: false,
   timer: 1500
 })
@@ -219,6 +219,54 @@ Swal.fire({
   position: 'center',
   icon: 'error',
   title: 'Vui lòng nhập đúng số điện thoại !!!',
+  showConfirmButton: false,
+  timer: 1500
+})
+      </script>
+      
+    <?php 
+  } ?>
+<?php
+if (isset($_GET['chuadn'])) {
+  
+  ?>
+ <script>
+Swal.fire({
+  position: 'center',
+  icon: 'error',
+  title: 'Vui lòng đang nhập để thực hiện chức năng !!!',
+  showConfirmButton: false,
+  timer: 1500
+})
+      </script>
+      
+    <?php 
+  } ?>
+<?php
+if (isset($_GET['guilhtc'])) {
+  
+  ?>
+ <script>
+Swal.fire({
+  position: 'center',
+  icon: 'success',
+  title: 'Gửi liên hệ thành công !!!',
+  showConfirmButton: false,
+  timer: 1500
+})
+      </script>
+      
+    <?php 
+  } ?>
+<?php
+if (isset($_GET['dathangtc'])) {
+  
+  ?>
+ <script>
+Swal.fire({
+  position: 'center',
+  icon: 'success',
+  title: 'Đặt hàng thành công !!!',
   showConfirmButton: false,
   timer: 1500
 })

@@ -131,7 +131,7 @@ function sanpham_lienquan($idsp)
 }
 function sanpham_yeuthich($email)
 {
-    $sql = "SELECT sanpham.img, sanpham.name, sanpham.price,phanloaidh.id,bienthe.idsp,taikhoan.email FROM phanloaidh join bienthe on bienthe.id= phanloaidh.bienthe JOIN taikhoan ON taikhoan.id=phanloaidh.iduser JOIN sanpham ON sanpham.id=bienthe.idsp WHERE taikhoan.email='$email' AND phanloaidh.idtrangthai=1";
+    $sql = "SELECT sanpham.id 'idsp', sanpham.img, sanpham.name, sanpham.price,phanloaidh.id,bienthe.idsp,taikhoan.email FROM phanloaidh join bienthe on bienthe.id= phanloaidh.bienthe JOIN taikhoan ON taikhoan.id=phanloaidh.iduser JOIN sanpham ON sanpham.id=bienthe.idsp WHERE taikhoan.email='$email' AND phanloaidh.idtrangthai=1";
     $sanpham_yeuthich = pdo_query($sql);
     return $sanpham_yeuthich;
 }

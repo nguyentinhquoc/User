@@ -33,8 +33,12 @@ if (isset($_GET['delete_love'])) {
         <div class="box box_center">
             <div class="name">
                 <h3><?= $sanpham_chitiet['name'] ?>
-                    <?php $sql = "SELECT phanloaidh.id FROM phanloaidh JOIN bienthe ON bienthe.id=phanloaidh.bienthe JOIN sanpham ON sanpham.id=bienthe.idsp WHERE sanpham.id= $idsp and phanloaidh.iduser=$iduser and phanloaidh.idtrangthai=1";
-                    $check_love = pdo_query_one($sql);
+
+                    <?php
+                    if (isset($_SESSION['email_dn'])) {
+                        $sql = "SELECT phanloaidh.id FROM phanloaidh JOIN bienthe ON bienthe.id=phanloaidh.bienthe JOIN sanpham ON sanpham.id=bienthe.idsp WHERE sanpham.id= $idsp and phanloaidh.iduser=$iduser and phanloaidh.idtrangthai=1";
+                        $check_love = pdo_query_one($sql);
+                    }
                     if (empty($check_love)) { ?>
                         <a href="<?= $_SERVER['REQUEST_URI']; ?>&add_love=<?= $sanpham_chitiet['id'] ?>"><i class="fa fa-heart-o" aria-hidden="true"></i></a>
                     <?php  } else { ?>
@@ -166,6 +170,10 @@ if (isset($_GET['delete_love'])) {
         </div>
     </div>
     <?php
+    if (!isset($_SESSION['email_dn']) && (isset($_POST['add_cart_chitiet']) || isset($_GET['add_love']) || isset($_POST['dat_chitiet']))) {
+        header("Location: index.php?act=dangnhap&chuadn");
+    }
+
     if (isset($_POST['add_cart_chitiet']) && isset($_POST['color']) && isset($_POST['size']) && isset($_SESSION['email_dn'])) {
         if ($loadsl['soluong'] > 0) {
             $idsp = $_POST["id"];

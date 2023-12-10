@@ -22,15 +22,24 @@ if (!isset($_GET["act"])) {
         case "dangky":
             include("dangky.php");
             break;
+        case "lienhe":
+            include("lienhe.php");
+            break;
+        case "tintuc":
+            include("tintuc.php");
+            break;
         case "danhgia":
             include("danhgia.php");
             break;
         case "dangnhap":
             include("dangnhap.php");
             break;
-        case "dangxuat":    
+        case "dangxuat":
             unset($_SESSION['email_dn']);
             header('location: index.php?dangxuattc');
+            break;
+        case "quantri":
+            header('location: ../../../../Admin/View/index.php');
             break;
         case "sanpham_list":
             include("sanpham_list.php");

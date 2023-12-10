@@ -19,9 +19,23 @@ if (isset($_GET['danhmuc'])) {
 } else {
     $danhmuc = "";
 }
+if (isset($_GET['timkiem'])) {
+    $search = $_GET['timkiem'];
+}
+?>
+<?php
+if ($danhmuc != 0) {
+    $sql = "SELECT * FROM danhmuc where id=$danhmuc";
+    $named_m = pdo_query_one($sql);
+    $namedm = $named_m['name'];
+} else {
+    $namedm = "Tất cả sản phẩm";
+}
 ?>
 
 <main class="container_sanpham_list">
+    <h4 style='width: 100%; background-color: #fad9f6; text-align: center; padding: 20px;  font-family: "Times New Roman", Times, serif; font-weight: bolder;'>Danh sách sản phẩm: <?= $namedm ?></h4>
+
     <div class="box_top">
 
         <div class="locgia">
@@ -65,7 +79,7 @@ if (isset($_GET['danhmuc'])) {
             <div style="width: 300px;" id="slider-range"></div>
         </div>
         <div class="search" style="margin-right: 100px;">
-            <form action="" method="post">
+            <form action="index.php?act=sanpham_list&page=1&danhmuc=<?= $danhmuc ?>" method="post">
                 <input type="text" class="ip_search" name="search" placeholder="Tìm kiếm" style="width: 300px;">
             </form>
         </div>
@@ -73,5 +87,5 @@ if (isset($_GET['danhmuc'])) {
     </div>
     <div class="box_right">
     </div>
-   
+
 </main>

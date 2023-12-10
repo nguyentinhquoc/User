@@ -105,20 +105,12 @@
                                                 </ul>
                                             </li>
                                             <li class="drop-holder">
-                                                <a href="blog.html">Tin tức
-                                                    <i class="pe-7s-angle-down"></i>
+                                                <a href="index.php?act=tintuc">Tin tức
                                                 </a>
-                                                <ul class="drop-menu">
-                                                    <li>
-                                                        <a href="blog-listview.html">Blog List View</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="blog-detail.html">Blog Detail</a>
-                                                    </li>
-                                                </ul>
+
                                             </li>
                                             <li>
-                                                <a href="contact.html">Liên hệ</a>
+                                                <a href="index.php?act=lienhe">Liên hệ</a>
                                             </li>
                                             <li>
                                                 <?php if (isset($_GET['search'])) {
@@ -157,13 +149,13 @@
                                                 <a href="index.php?act=thongbao" class="minicart-btn">
                                                     <i class="fa fa-bell-o" aria-hidden="true"></i>
                                                     <?php
-$sql="SELECT COUNT(id) 'dem' from thongbao";
-$demtb=pdo_query_one($sql);
+                                                    $sql = "SELECT COUNT(id) 'dem' from thongbao";
+                                                    $demtb = pdo_query_one($sql);
                                                     ?>
-                                                    <span class="quantity"><?=$demtb['dem']?></span>
+                                                    <span class="quantity"><?= $demtb['dem'] ?></span>
                                                 </a>
                                             </li>
-                                            
+
                                             <li class="minicart-wrap me-3 me-lg-0">
                                                 <a href="index.php?act=giohang" class="minicart-btn">
                                                     <i class="pe-7s-shopbag"></i>
@@ -175,6 +167,11 @@ $demtb=pdo_query_one($sql);
                                                     <img src="<?= $img_path . "avarta_user/" . $taikhoan_email['img'] ?>" alt="" width="40px" height="40px" style="border-radius: 50%;">
                                                 </button>
                                                 <ul class="dropdown-menu right-side" aria-labelledby="settingButton">
+                                                    <?php $email = $_SESSION['email_dn'];
+                                                    $taikhoan_email = taikhoan_email($email);
+                                                    if ($taikhoan_email['role'] == 2) { ?>
+                                                        <li><a class="dropdown-item" href="index.php?act=quantri">Tới trang quản trị</a></li>
+                                                    <?php } ?>
                                                     <li><a class="dropdown-item" href="index.php?act=myaccout&profile=1">Tài khoản của tôi</a></li>
                                                     <li><a class="dropdown-item" href="index.php?act=dangxuat">Đang xuất</a></li>
                                                 </ul>

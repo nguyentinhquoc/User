@@ -205,11 +205,7 @@ if (isset($_SESSION['dathang'])) {
                                 </p>
                                 <p class="name_sp"><?= $key['name'] ?></p>
                                 <p class="dabansp">Đã bán :<?= $key['luotban'] ?></p>
-                                <div class="congcu">
-                                    <i class="fa fa-cart-plus" aria-hidden="true"></i>
-                                    <i class="fa fa-heart-o" aria-hidden="true"></i>
-                                    <i class="fa fa-eye" aria-hidden="true"></i>
-                                </div>
+                           
                             </div>
                             </a>
                         <?php }

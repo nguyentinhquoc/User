@@ -75,7 +75,7 @@ if (isset($_GET['congpl'])) {
                                 ?>
                                     <th scope="row"><?= $key + 1;
                                                     $value['id']  ?></th>
-                                    <td><input class="form-check-input mt-0" type="checkbox" class="checkbox" name="idphanloaidh[]" value="<?= $value['id'] ?>"></td>
+                                    <td><input class="form-check-input mt-0 checkbox"  type="checkbox" name="idphanloaidh[]" value="<?= $value['id'] ?>"></td>
                                     <td><img src="<?= $img_path . "sanpham/" . $value['img'] ?>" alt="" width="100px"></td>
                                     <td><?= $value['name'] ?></td>
                                     <td><?= "Màu:" . $value['color'] . "<br>" . "Size:" . $value['size'] ?></td>
