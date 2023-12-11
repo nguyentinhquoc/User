@@ -11,7 +11,7 @@
                                 <img src="<?=$img_path?>logo/light.png" alt="Logo" width="200px">
                             </a>
                         </div>
-                        <p class="short-desc mb-2">Lorem ipsum dolor sit amet, consectet adipisicing elit, sed do eiusmod tempor incidi ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
+                        <p class="short-desc mb-2">Chào mừng đến với Panda shop  WEBSITE BÁN GIÀY SỐ 1 VIỆT NAM.</p>
                         <div class="social-link pt-2">
                             <ul>
                                 <li>
@@ -138,13 +138,13 @@
                     <div class="widget-contact-info pb-2">
                         <ul>
                             <li>
-                                2005 Stokes Isle Apartment. 896, Washington 10010, USA,
+                               FPT HÀ NỘI
                             </li>
                             <li>
-                                <a href="mailto://info@example.com">info@example.com</a>
+                                <a href="mailto://info@example.com">nguyentinh140321@gmail.com</a>
                             </li>
                             <li>
-                                <a href="tel://+68-120034509">(+68) 120034509</a>
+                                <a href="tel://+68-120034509">0862201004</a>
                             </li>
                         </ul>
                     </div>

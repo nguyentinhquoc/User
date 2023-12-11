@@ -9,13 +9,7 @@ function sanpham_moi()
 }
 function sanpham_banchay()
 {
-    $sql = "SELECT sanpham.id,sanpham.name,sanpham.price,sanpham.img,sanpham.luotxem,bienthe.luotban,sanpham.sale
-    FROM sanpham 
-    JOIN bienthe ON bienthe.idsp = sanpham.id 
-    GROUP BY sanpham.id 
-    ORDER BY bienthe.luotban DESC 
-    LIMIT 10;
-    
+    $sql = "SELECT sanpham.id, sanpham.name, sanpham.price, sanpham.img, sanpham.luotxem, SUM(bienthe.luotban) AS 'luotban', sanpham.sale FROM sanpham JOIN bienthe ON bienthe.idsp = sanpham.id GROUP BY sanpham.id, sanpham.name, sanpham.price, sanpham.img, sanpham.luotxem, sanpham.sale ORDER BY luotban DESC LIMIT 10;
     ";
     $sanphambanchay = pdo_query($sql);
     return $sanphambanchay;
@@ -49,15 +43,15 @@ function sanpham_banchay()
 //         return $sanpham_all;
 //     }
 // }
-function sanpham_list($gia_bd, $gia_kt,$search,$danhmuc,$page)
+function sanpham_list($gia_bd, $gia_kt, $search, $danhmuc, $page)
 {
     $c = ($page - 1) * 20;
     if ($danhmuc == 0) {
-    $sql = "SELECT *
+        $sql = "SELECT *
     FROM sanpham
     WHERE price BETWEEN $gia_bd AND $gia_kt AND sanpham.name LIKE '%$search%' AND (iddm = 1 or iddm = 3 or iddm = 2) ORDER BY id ASC LIMIT $c,20 ;
    ";
-    }elseif($danhmuc != ""){
+    } elseif ($danhmuc != "") {
         $sql = "SELECT *
         FROM sanpham
         WHERE price BETWEEN $gia_bd AND $gia_kt AND sanpham.name LIKE '%$search%' AND iddm = $danhmuc ORDER BY id ASC LIMIT $c,20 ;
@@ -67,14 +61,14 @@ function sanpham_list($gia_bd, $gia_kt,$search,$danhmuc,$page)
     return $sanpham_price_list;
 }
 // }
-function cout_sanpham_list($gia_bd, $gia_kt,$search,$danhmuc)
+function cout_sanpham_list($gia_bd, $gia_kt, $search, $danhmuc)
 {
     if ($danhmuc == "" || empty($danhmuc)) {
-    $sql = "SELECT COUNT(id) 'dem'
+        $sql = "SELECT COUNT(id) 'dem'
     FROM sanpham
     WHERE price BETWEEN $gia_bd AND $gia_kt AND sanpham.name LIKE '%$search%' AND (iddm = 1 or iddm = 3 or iddm = 2) ;
    ";
-    }elseif($danhmuc != ""){
+    } elseif ($danhmuc != "") {
         $sql = "SELECT COUNT(id) 'dem'
         FROM sanpham
         WHERE price BETWEEN $gia_bd AND $gia_kt AND sanpham.name LIKE '%$search%' AND iddm = $danhmuc ;
